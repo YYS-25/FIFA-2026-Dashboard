@@ -16,7 +16,26 @@
     <!-- Main Content Area -->
     <main class="main-content">
         <!-- Tab Content Divs -->
-        <div id="upcoming" class="tab-content active"></div>
+        <!-- Tab 1: Upcoming Matches -->
+        <div id="upcoming" class="tab-content active">
+            <div class="tab-header">
+                <h2>Upcoming Matches</h2>
+            </div>
+
+            <!-- Live Matches Section -->
+            <div id="live-matches-container" class="matches-section">
+                <h3 class="section-title">🔴 LIVE NOW</h3>
+                <div id="live-matches-list" class="matches-list"></div>
+            </div>
+
+            <!-- Upcoming Matches Section -->
+            <div id="upcoming-matches-container" class="matches-section">
+                <h3 class="section-title">UPCOMING</h3>
+                <div id="upcoming-matches-list" class="matches-list"></div>
+            </div>
+
+            <div id="upcoming-error" class="error-message"></div>
+        </div>
         <div id="leaderboard" class="tab-content"></div>
         <div id="byGroup" class="tab-content"></div>
         <div id="byUser" class="tab-content"></div>

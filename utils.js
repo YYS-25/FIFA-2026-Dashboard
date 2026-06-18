@@ -1,6 +1,12 @@
 // FIFA 2026 Dashboard Utilities
 // Helper functions and utilities
 
+// Month names for date formatting
+const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Day names for date formatting
+const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 // Country flags emoji mapping (50+ nations)
 const COUNTRY_FLAGS = {
   // CONCACAF (North/Central America & Caribbean)
@@ -105,8 +111,7 @@ function formatDate(isoString) {
   const date = new Date(isoString);
   if (isNaN(date.getTime())) return 'TBD';
 
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const month = monthNames[date.getUTCMonth()];
+  const month = MONTH_NAMES[date.getUTCMonth()];
   const day = date.getUTCDate();
   const hours = String(date.getUTCHours()).padStart(2, '0');
   const minutes = String(date.getUTCMinutes()).padStart(2, '0');
@@ -128,6 +133,88 @@ function determineWinner(homeGoals, awayGoals) {
   if (homeGoals > awayGoals) return 'home';
   if (awayGoals > homeGoals) return 'away';
   return 'draw';
+}
+
+/**
+ * Convert UTC date to GMT+4 local time string
+ * @param {string} utcDateString - ISO date string (e.g., "2026-06-18T16:00:00.000Z")
+ * @returns {object|null} Object with date, time, and full formatted string, or null if input is invalid
+ */
+function convertToGMT4(utcDateString) {
+  // Input validation
+  if (!utcDateString) return null;
+
+  const utcDate = new Date(utcDateString);
+
+  // Check if resulting Date is valid
+  if (isNaN(utcDate.getTime())) return null;
+
+  // GMT+4 is UTC + 4 hours (no DST conversion needed for consistency)
+  const gmt4Date = new Date(utcDate.getTime() + (4 * 60 * 60 * 1000));
+
+  const day = gmt4Date.getUTCDate();
+  const month = MONTH_NAMES[gmt4Date.getUTCMonth()];
+  const dayOfWeek = DAY_NAMES[gmt4Date.getUTCDay()];
+  const hours = String(gmt4Date.getUTCHours()).padStart(2, '0');
+  const minutes = String(gmt4Date.getUTCMinutes()).padStart(2, '0');
+
+  return {
+    date: `${dayOfWeek}, ${month} ${day}`,
+    time: `${hours}:${minutes}`,
+    full: `${dayOfWeek}, ${month} ${day} • ${hours}:${minutes} GMT+4`
+  };
+}
+
+/**
+ * Determine match status based on match data and current time
+ * @param {object} match - Match object with status and date properties
+ * @returns {object} Object with status ('live', 'today', 'upcoming', 'completed') and display label
+ */
+function getMatchStatus(match) {
+  // Input validation
+  if (!match || !match.date) {
+    return { status: 'upcoming', label: 'UPCOMING' };
+  }
+
+  // If match is already completed, return completed
+  if (match.status === 'completed') {
+    return { status: 'completed', label: 'FINAL' };
+  }
+
+  // For upcoming matches, check if it's live now
+  const now = new Date();
+  const matchTime = new Date(match.date);
+
+  // Check if resulting Date is valid
+  if (isNaN(matchTime.getTime())) {
+    return { status: 'upcoming', label: 'UPCOMING' };
+  }
+
+  // Check if match is ongoing (started but not finished)
+  // Assume matches last ~2 hours
+  const matchEndTime = new Date(matchTime.getTime() + (2 * 60 * 60 * 1000));
+  if (now >= matchTime && now < matchEndTime &&
+      match.homeGoals === null && match.awayGoals === null) {
+    return { status: 'live', label: 'LIVE' };
+  }
+
+  // Check if match is today
+  const today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  const matchDay = new Date(matchTime);
+  matchDay.setHours(0, 0, 0, 0);
+
+  if (matchDay.getTime() === today.getTime()) {
+    return { status: 'today', label: 'TODAY' };
+  }
+
+  // Check if match is within next 7 days (only future matches)
+  const daysUntil = Math.floor((matchDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  if (daysUntil > 0 && daysUntil <= 7) {
+    return { status: 'upcoming', label: `IN ${daysUntil} DAY${daysUntil > 1 ? 'S' : ''}` };
+  }
+
+  return { status: 'upcoming', label: 'UPCOMING' };
 }
 
 /**

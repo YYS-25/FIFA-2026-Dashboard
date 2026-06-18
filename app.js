@@ -6,12 +6,13 @@ let appState = {
   predictions: [],
   matchResults: {},
   lastUpdated: null,
-  error: null
+  error: null,
 };
 
 // Configuration constants
-const PREDICTIONS_JSON_URL = './predictions.json';
-const OPENFOOTBALL_URL = 'https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json';
+const PREDICTIONS_JSON_URL = "./predictions.json";
+const OPENFOOTBALL_URL =
+  "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json";
 
 /**
  * Fetch predictions from local JSON export (already loaded by fetchPredictionsAndMatches)
@@ -20,19 +21,21 @@ const OPENFOOTBALL_URL = 'https://raw.githubusercontent.com/openfootball/worldcu
 async function fetchPredictions() {
   try {
     if (!predictionsData) {
-      throw new Error('Predictions not loaded. Call fetchPredictionsAndMatches first.');
+      throw new Error(
+        "Predictions not loaded. Call fetchPredictionsAndMatches first.",
+      );
     }
 
     const predictions = [];
 
     // Flatten nested structure: each person's predictions array into flat array
-    predictionsData.predictions.forEach(personData => {
-      personData.predictions.forEach(pred => {
+    predictionsData.predictions.forEach((personData) => {
+      personData.predictions.forEach((pred) => {
         predictions.push({
           person: personData.person,
           matchId: pred.matchId,
           predictedHomeGoals: pred.predictedHomeGoals,
-          predictedAwayGoals: pred.predictedAwayGoals
+          predictedAwayGoals: pred.predictedAwayGoals,
         });
       });
     });
@@ -41,7 +44,7 @@ async function fetchPredictions() {
     console.log(`✓ Loaded ${predictions.length} predictions from JSON export`);
   } catch (err) {
     appState.error = err.message;
-    console.error('Error processing predictions:', err);
+    console.error("Error processing predictions:", err);
     throw err;
   }
 }
@@ -54,7 +57,9 @@ let predictionsData = null; // Cache predictions data
  */
 async function fetchPredictionsAndMatches() {
   try {
-    console.log(`Fetching predictions and matches from: ${PREDICTIONS_JSON_URL}`);
+    console.log(
+      `Fetching predictions and matches from: ${PREDICTIONS_JSON_URL}`,
+    );
     const response = await fetch(PREDICTIONS_JSON_URL);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -64,13 +69,15 @@ async function fetchPredictionsAndMatches() {
     predictionsData = data;
 
     // Load matches from predictions.json
-    if (data.matches && typeof data.matches === 'object') {
+    if (data.matches && typeof data.matches === "object") {
       appState.matchResults = data.matches;
-      console.log(`✓ Loaded ${Object.keys(data.matches).length} matches from predictions.json`);
+      console.log(
+        `✓ Loaded ${Object.keys(data.matches).length} matches from predictions.json`,
+      );
     }
   } catch (err) {
     appState.error = err.message;
-    console.error('Error fetching predictions and matches:', err);
+    console.error("Error fetching predictions and matches:", err);
     throw err;
   }
 }
@@ -91,18 +98,22 @@ async function fetchMatchResults() {
 function mergeDataAndCalculateScores() {
   const predictions = appState.predictions;
   const matchResults = Object.values(appState.matchResults);
-  console.log(`DEBUG mergeData: ${matchResults.length} matches, ${predictions.length} predictions`);
+  console.log(
+    `DEBUG mergeData: ${matchResults.length} matches, ${predictions.length} predictions`,
+  );
 
-  return predictions.map(pred => {
+  return predictions.map((pred) => {
     // Find matching match by matchId (match object uses 'id' field)
-    const match = matchResults.find(m => m.id === pred.matchId);
+    const match = matchResults.find((m) => m.id === pred.matchId);
 
     // Derive predictedWinner from predicted goals if not present
-    const predictedWinner = pred.predictedWinner || determineWinner(pred.predictedHomeGoals, pred.predictedAwayGoals);
+    const predictedWinner =
+      pred.predictedWinner ||
+      determineWinner(pred.predictedHomeGoals, pred.predictedAwayGoals);
 
     const predWithWinner = {
       ...pred,
-      predictedWinner
+      predictedWinner,
     };
 
     if (match) {
@@ -112,7 +123,7 @@ function mergeDataAndCalculateScores() {
         matchData: match,
         points: scoreData.points,
         breakdown: scoreData.breakdown,
-        scoreClass: getScoreClass(scoreData.points)
+        scoreClass: getScoreClass(scoreData.points),
       };
     }
 
@@ -121,8 +132,8 @@ function mergeDataAndCalculateScores() {
       ...predWithWinner,
       matchData: null,
       points: 0,
-      breakdown: 'Match not found',
-      scoreClass: 'miss'
+      breakdown: "Match not found",
+      scoreClass: "miss",
     };
   });
 }
@@ -133,16 +144,16 @@ function mergeDataAndCalculateScores() {
  */
 async function loadAllData() {
   try {
-    const refreshBtn = document.getElementById('refreshBtn');
-    const mainContent = document.querySelector('.main-content');
+    const refreshBtn = document.getElementById("refreshBtn");
+    const mainContent = document.querySelector(".main-content");
 
     // Set loading state
     refreshBtn.disabled = true;
-    refreshBtn.textContent = '🔄 Loading...';
+    refreshBtn.textContent = "🔄 Loading...";
 
     // Clear any error divs from main content
-    const errorDivs = mainContent.querySelectorAll('.error');
-    errorDivs.forEach(div => div.remove());
+    const errorDivs = mainContent.querySelectorAll(".error");
+    errorDivs.forEach((div) => div.remove());
 
     // Load predictions and matches from single JSON file
     await fetchPredictionsAndMatches();
@@ -153,12 +164,12 @@ async function loadAllData() {
     renderAllTabs();
 
     refreshBtn.disabled = false;
-    refreshBtn.textContent = '🔄 Refresh';
+    refreshBtn.textContent = "🔄 Refresh";
   } catch (err) {
-    console.error('Error loading data:', err);
-    const refreshBtn = document.getElementById('refreshBtn');
+    console.error("Error loading data:", err);
+    const refreshBtn = document.getElementById("refreshBtn");
     refreshBtn.disabled = false;
-    refreshBtn.textContent = '🔄 Refresh (Error)';
+    refreshBtn.textContent = "🔄 Refresh (Error)";
     showError(`Failed to load data: ${err.message}`);
   }
 }
@@ -167,19 +178,19 @@ async function loadAllData() {
  * Update footer with last updated timestamp
  */
 function updateFooter() {
-  const lastUpdatedEl = document.getElementById('lastUpdated');
+  const lastUpdatedEl = document.getElementById("lastUpdated");
 
   if (appState.lastUpdated) {
-    const timeString = appState.lastUpdated.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZone: 'UTC',
-      hour12: false
+    const timeString = appState.lastUpdated.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "Asia/Dubai",
+      hour12: false,
     });
-    lastUpdatedEl.textContent = `Last updated: ${timeString} UTC`;
+    lastUpdatedEl.textContent = `Last updated: ${timeString} GMT+4`;
   } else {
-    lastUpdatedEl.textContent = 'Last updated: Never';
+    lastUpdatedEl.textContent = "Last updated: Never";
   }
 }
 
@@ -188,11 +199,11 @@ function updateFooter() {
  * @param {string} message - Error message to display
  */
 function showError(message) {
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'error';
+  const errorDiv = document.createElement("div");
+  errorDiv.className = "error";
   errorDiv.textContent = message;
 
-  const mainContent = document.querySelector('.main-content');
+  const mainContent = document.querySelector(".main-content");
   mainContent.insertBefore(errorDiv, mainContent.firstChild);
 
   // Auto-remove after 5 seconds
@@ -207,22 +218,41 @@ function showError(message) {
  */
 function switchTab(tabName) {
   // Hide all tab content
-  const tabContents = document.querySelectorAll('.tab-content');
-  tabContents.forEach(tab => tab.classList.remove('active'));
+  const tabContents = document.querySelectorAll(".tab-content");
+  tabContents.forEach((tab) => tab.classList.remove("active"));
 
   // Show selected tab
   const selectedTab = document.getElementById(tabName);
   if (selectedTab) {
-    selectedTab.classList.add('active');
+    selectedTab.classList.add("active");
   }
 
   // Update nav button states
-  const navBtns = document.querySelectorAll('.nav-btn');
-  navBtns.forEach(btn => btn.classList.remove('active'));
+  const navBtns = document.querySelectorAll(".nav-btn");
+  navBtns.forEach((btn) => btn.classList.remove("active"));
 
   const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
   if (activeBtn) {
-    activeBtn.classList.add('active');
+    activeBtn.classList.add("active");
+  }
+
+  // Re-render the active tab content
+  switch (tabName) {
+    case "upcoming":
+      renderUpcomingMatches();
+      break;
+    case "leaderboard":
+      renderLeaderboard();
+      break;
+    case "byGroup":
+      renderByGroup();
+      break;
+    case "byUser":
+      renderByUser();
+      break;
+    case "stats":
+      renderStats();
+      break;
   }
 }
 
@@ -230,80 +260,109 @@ function switchTab(tabName) {
  * Render upcoming matches view
  */
 function renderUpcomingMatches() {
-  const container = document.getElementById('upcoming');
+  const container = document.getElementById("upcoming");
   if (!container) return;
 
-  // Check if predictions are empty or null
-  if (!appState.predictions || appState.predictions.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
+  const liveMatchesList = document.getElementById("live-matches-list");
+  const upcomingMatchesList = document.getElementById("upcoming-matches-list");
+  const errorDiv = document.getElementById("upcoming-error");
+
+  console.log("renderUpcomingMatches called, matchResults:", Object.keys(appState.matchResults).length, "matches");
+
+  if (
+    !appState.matchResults ||
+    Object.keys(appState.matchResults).length === 0
+  ) {
+    console.error("No match data available!");
+    errorDiv.textContent = "No match data available";
+    errorDiv.style.display = "block";
     return;
   }
 
-  // Get merged data with scores
-  const mergedData = mergeDataAndCalculateScores();
-  console.log(`DEBUG: Total merged predictions: ${mergedData.length}`);
-  console.log(`DEBUG: Sample matches:`, Object.values(appState.matchResults).slice(0, 3));
+  // Get all matches
+  const allMatches = Object.values(appState.matchResults);
 
-  // Filter for upcoming matches only
-  const upcomingPredictions = mergedData.filter(pred => {
-    const hasData = pred.matchData && pred.matchData.status;
-    if (!hasData) {
-      console.log(`DEBUG: Missing match data for ${pred.matchId}`);
+  // Separate live and upcoming matches
+  const liveMatches = [];
+  const upcomingMatches = [];
+
+  allMatches.forEach((match) => {
+    const statusInfo = getMatchStatus(match);
+    if (statusInfo.status === "live") {
+      liveMatches.push({ ...match, statusInfo });
+    } else if (statusInfo.status !== "completed") {
+      upcomingMatches.push({ ...match, statusInfo });
     }
-    return pred.matchData && pred.matchData.status === 'upcoming';
   });
 
-  console.log(`DEBUG: Upcoming predictions found: ${upcomingPredictions.length}`);
+  // Sort by date
+  upcomingMatches.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  // If no upcoming matches, show message
-  if (upcomingPredictions.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No upcoming matches</p>';
-    return;
-  }
+  // Clear previous content
+  liveMatchesList.innerHTML = "";
+  upcomingMatchesList.innerHTML = "";
+  errorDiv.style.display = "none";
 
-  // Group predictions by matchId
-  const matchGroups = {};
-  upcomingPredictions.forEach(pred => {
-    if (!matchGroups[pred.matchId]) {
-      matchGroups[pred.matchId] = [];
-    }
-    matchGroups[pred.matchId].push(pred);
-  });
-
-  // Build HTML for all matches
-  let html = '';
-  Object.values(matchGroups).forEach(predictions => {
-    if (predictions.length === 0) return;
-
-    const firstPred = predictions[0];
-    const match = firstPred.matchData;
-
-    // Get team flags
-    const homeFlag = getCountryFlag(match.home);
-    const awayFlag = getCountryFlag(match.away);
-
-    // Format date
-    const formattedDate = formatDate(match.date);
-
-    // Start match card
-    html += '<div class="match-card">';
-    html += '<div class="match-header">';
-    html += `<div class="match-teams"><span class="flag">${homeFlag}</span> <span class="team">${match.home}</span> vs <span class="team">${match.away}</span> <span class="flag">${awayFlag}</span></div>`;
-    html += `<div class="match-time">${formattedDate}</div>`;
-    html += '</div>';
-    html += '<div class="predictions-list">';
-
-    // Add predictions for this match
-    predictions.forEach(pred => {
-      const scoreDisplay = `${pred.predictedHomeGoals !== null ? pred.predictedHomeGoals : '?'}-${pred.predictedAwayGoals !== null ? pred.predictedAwayGoals : '?'}`;
-      html += `<div class="prediction"><strong>${pred.person}:</strong> ${pred.predictedWinner === 'home' ? match.home : (pred.predictedWinner === 'away' ? match.away : 'Draw')} ${scoreDisplay}</div>`;
+  // Render live matches
+  if (liveMatches.length > 0) {
+    document.getElementById("live-matches-container").style.display = "block";
+    liveMatches.forEach((match) => {
+      liveMatchesList.appendChild(createMatchCard(match));
     });
+  } else {
+    document.getElementById("live-matches-container").style.display = "none";
+  }
 
-    html += '</div>';
-    html += '</div>';
-  });
+  // Render upcoming matches
+  if (upcomingMatches.length > 0) {
+    document.getElementById("upcoming-matches-container").style.display =
+      "block";
+    upcomingMatches.forEach((match) => {
+      upcomingMatchesList.appendChild(createMatchCard(match));
+    });
+  } else {
+    upcomingMatchesList.innerHTML =
+      '<p class="no-matches">No upcoming matches</p>';
+  }
+}
 
-  container.innerHTML = html;
+/**
+ * Create a match card element
+ * @param {object} match - Match object with statusInfo property
+ * @returns {HTMLElement} Match card DOM element
+ */
+function createMatchCard(match) {
+  const card = document.createElement("div");
+  card.className = `match-card ${match.statusInfo.status === "live" ? "live" : ""}`;
+
+  const timeInfo = convertToGMT4(match.date);
+  const homeFlag = getCountryFlag(match.home);
+  const awayFlag = getCountryFlag(match.away);
+
+  card.innerHTML = `
+    <div class="match-header">
+      <div class="match-time">${timeInfo.full}</div>
+      <span class="match-status-badge badge-${match.statusInfo.status}">
+        ${match.statusInfo.label}
+      </span>
+    </div>
+
+    <div class="match-teams">
+      <div class="team">
+        <div class="team-flag">${homeFlag}</div>
+        <div class="team-name">${match.home}</div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="team">
+        <div class="team-flag">${awayFlag}</div>
+        <div class="team-name">${match.away}</div>
+      </div>
+    </div>
+
+    <div class="match-venue">${match.stadium}</div>
+  `;
+
+  return card;
 }
 
 /**
@@ -314,18 +373,18 @@ async function initApp() {
   await loadAllData();
 
   // Set up nav button click handlers
-  const navButtons = document.querySelectorAll('.nav-btn');
-  navButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const tabName = this.getAttribute('data-tab');
+  const navButtons = document.querySelectorAll(".nav-btn");
+  navButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      const tabName = this.getAttribute("data-tab");
       switchTab(tabName);
     });
   });
 
   // Set up refresh button click handler
-  const refreshBtn = document.getElementById('refreshBtn');
+  const refreshBtn = document.getElementById("refreshBtn");
   if (refreshBtn) {
-    refreshBtn.addEventListener('click', () => {
+    refreshBtn.addEventListener("click", () => {
       loadAllData();
     });
   }
@@ -335,12 +394,13 @@ async function initApp() {
  * Render leaderboard view
  */
 function renderLeaderboard() {
-  const container = document.getElementById('leaderboard');
+  const container = document.getElementById("leaderboard");
   if (!container) return;
 
   // Check if predictions are empty or null
   if (!appState.predictions || appState.predictions.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
     return;
   }
 
@@ -348,17 +408,18 @@ function renderLeaderboard() {
   const mergedData = mergeDataAndCalculateScores();
 
   // Get unique people
-  const uniquePeople = Array.from(new Set(mergedData.map(p => p.person)));
+  const uniquePeople = Array.from(new Set(mergedData.map((p) => p.person)));
 
   if (uniquePeople.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data available</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No data available</p>';
     return;
   }
 
   // Calculate stats for each person
-  const personStats = uniquePeople.map(person => {
-    const personPreds = mergedData.filter(p => p.person === person);
-    const matches = personPreds.map(p => p.matchData).filter(Boolean);
+  const personStats = uniquePeople.map((person) => {
+    const personPreds = mergedData.filter((p) => p.person === person);
+    const matches = personPreds.map((p) => p.matchData).filter(Boolean);
     const stats = calculatePersonStats(personPreds, matches);
 
     return {
@@ -366,7 +427,7 @@ function renderLeaderboard() {
       totalPoints: stats.totalPoints,
       accuracy: stats.accuracy,
       correctWinners: stats.correctWinners,
-      totalPredictions: stats.totalPredictions
+      totalPredictions: stats.totalPredictions,
     };
   });
 
@@ -375,22 +436,23 @@ function renderLeaderboard() {
 
   // Build HTML table
   let html = '<table class="leaderboard-table">';
-  html += '<thead><tr><th>Rank</th><th>Person</th><th>Points</th><th>Accuracy</th><th>Winners</th></tr></thead>';
-  html += '<tbody>';
+  html +=
+    "<thead><tr><th>Rank</th><th>Person</th><th>Points</th><th>Accuracy</th><th>Winners</th></tr></thead>";
+  html += "<tbody>";
 
   personStats.forEach((person, index) => {
     const rank = index + 1;
-    const rankClass = rank === 1 ? ' class="first"' : '';
-    html += '<tr>';
+    const rankClass = rank === 1 ? ' class="first"' : "";
+    html += "<tr>";
     html += `<td${rankClass}>${rank}</td>`;
     html += `<td>${person.person}</td>`;
     html += `<td>${person.totalPoints}</td>`;
     html += `<td>${person.accuracy}%</td>`;
     html += `<td>${person.correctWinners}</td>`;
-    html += '</tr>';
+    html += "</tr>";
   });
 
-  html += '</tbody></table>';
+  html += "</tbody></table>";
   container.innerHTML = html;
 }
 
@@ -398,12 +460,13 @@ function renderLeaderboard() {
  * Render by group view with group selector
  */
 function renderByGroup() {
-  const container = document.getElementById('byGroup');
+  const container = document.getElementById("byGroup");
   if (!container) return;
 
   // Check if predictions are empty or null
   if (!appState.predictions || appState.predictions.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
     return;
   }
 
@@ -412,12 +475,13 @@ function renderByGroup() {
 
   // Get unique groups from matchData
   const groups = Array.from(
-    new Set(mergedData.map(p => p.matchData?.group).filter(Boolean))
+    new Set(mergedData.map((p) => p.matchData?.group).filter(Boolean)),
   ).sort();
 
   // If no groups, show message
   if (groups.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No groups available</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No groups available</p>';
     return;
   }
 
@@ -426,18 +490,18 @@ function renderByGroup() {
   html += '<label for="groupFilter">Select Group</label>';
   html += '<select id="groupFilter" onchange="updateByGroupView()">';
   html += '<option value="">-- Choose a group --</option>';
-  groups.forEach(group => {
+  groups.forEach((group) => {
     html += `<option value="${group}">Group ${group}</option>`;
   });
-  html += '</select>';
-  html += '</div>';
+  html += "</select>";
+  html += "</div>";
   html += '<div id="groupContent"></div>';
 
   container.innerHTML = html;
 
   // Pre-select first group
   setTimeout(() => {
-    const groupFilter = document.getElementById('groupFilter');
+    const groupFilter = document.getElementById("groupFilter");
     if (groupFilter) {
       groupFilter.value = groups[0];
       updateByGroupView();
@@ -449,8 +513,8 @@ function renderByGroup() {
  * Update by group view when selection changes
  */
 function updateByGroupView() {
-  const groupFilter = document.getElementById('groupFilter');
-  const groupContent = document.getElementById('groupContent');
+  const groupFilter = document.getElementById("groupFilter");
+  const groupContent = document.getElementById("groupContent");
 
   if (!groupFilter || !groupContent) return;
 
@@ -458,7 +522,8 @@ function updateByGroupView() {
 
   // If no selection, show message
   if (!selectedGroup) {
-    groupContent.innerHTML = '<p class="text-center text-secondary">Select a group</p>';
+    groupContent.innerHTML =
+      '<p class="text-center text-secondary">Select a group</p>';
     return;
   }
 
@@ -466,17 +531,20 @@ function updateByGroupView() {
   const mergedData = mergeDataAndCalculateScores();
 
   // Filter for selected group
-  const groupPredictions = mergedData.filter(pred => pred.matchData && pred.matchData.group === selectedGroup);
+  const groupPredictions = mergedData.filter(
+    (pred) => pred.matchData && pred.matchData.group === selectedGroup,
+  );
 
   // If no matches, show message
   if (groupPredictions.length === 0) {
-    groupContent.innerHTML = '<p class="text-center text-secondary">No matches in this group</p>';
+    groupContent.innerHTML =
+      '<p class="text-center text-secondary">No matches in this group</p>';
     return;
   }
 
   // Group by matchId
   const matchGroups = {};
-  groupPredictions.forEach(pred => {
+  groupPredictions.forEach((pred) => {
     if (!matchGroups[pred.matchId]) {
       matchGroups[pred.matchId] = [];
     }
@@ -484,8 +552,8 @@ function updateByGroupView() {
   });
 
   // Build HTML for all matches
-  let html = '';
-  Object.values(matchGroups).forEach(predictions => {
+  let html = "";
+  Object.values(matchGroups).forEach((predictions) => {
     if (predictions.length === 0) return;
 
     const firstPred = predictions[0];
@@ -496,7 +564,7 @@ function updateByGroupView() {
     const awayFlag = getCountryFlag(match.away);
 
     // Format actual result
-    let resultDisplay = 'TBD';
+    let resultDisplay = "TBD";
     if (match.homeGoals !== null && match.awayGoals !== null) {
       resultDisplay = `${match.homeGoals}-${match.awayGoals}`;
     }
@@ -505,18 +573,19 @@ function updateByGroupView() {
     html += '<div class="match-card">';
     html += '<div class="match-header">';
     html += `<div class="match-teams"><span class="flag">${homeFlag}</span> <span class="team">${match.home}</span> <strong>${resultDisplay}</strong> <span class="team">${match.away}</span> <span class="flag">${awayFlag}</span></div>`;
-    html += '</div>';
+    html += "</div>";
 
     // Add predictions grid
     html += '<div class="match-predictions">';
-    predictions.forEach(pred => {
-      const scoreDisplay = `${pred.predictedHomeGoals !== null ? pred.predictedHomeGoals : '?'}-${pred.predictedAwayGoals !== null ? pred.predictedAwayGoals : '?'}`;
-      const pointsText = pred.points === 3 ? '3 pts' : (pred.points === 1 ? '1 pt' : '0 pts');
+    predictions.forEach((pred) => {
+      const scoreDisplay = `${pred.predictedHomeGoals !== null ? pred.predictedHomeGoals : "?"}-${pred.predictedAwayGoals !== null ? pred.predictedAwayGoals : "?"}`;
+      const pointsText =
+        pred.points === 3 ? "3 pts" : pred.points === 1 ? "1 pt" : "0 pts";
       html += `<div class="prediction-box ${pred.scoreClass}"><strong>${pred.person}</strong><br>${scoreDisplay}<br>${pointsText}</div>`;
     });
-    html += '</div>';
+    html += "</div>";
 
-    html += '</div>';
+    html += "</div>";
   });
 
   groupContent.innerHTML = html;
@@ -526,12 +595,13 @@ function updateByGroupView() {
  * Render by user view with user selector
  */
 function renderByUser() {
-  const container = document.getElementById('byUser');
+  const container = document.getElementById("byUser");
   if (!container) return;
 
   // Check if predictions are empty or null
   if (!appState.predictions || appState.predictions.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
     return;
   }
 
@@ -539,11 +609,14 @@ function renderByUser() {
   const mergedData = mergeDataAndCalculateScores();
 
   // Get unique people
-  const uniquePeople = Array.from(new Set(mergedData.map(p => p.person))).sort();
+  const uniquePeople = Array.from(
+    new Set(mergedData.map((p) => p.person)),
+  ).sort();
 
   // If no people, show message
   if (uniquePeople.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No people available</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No people available</p>';
     return;
   }
 
@@ -552,18 +625,18 @@ function renderByUser() {
   html += '<label for="userFilter">Select User</label>';
   html += '<select id="userFilter" onchange="updateByUserView()">';
   html += '<option value="">-- Choose a person --</option>';
-  uniquePeople.forEach(person => {
+  uniquePeople.forEach((person) => {
     html += `<option value="${person}">${person}</option>`;
   });
-  html += '</select>';
-  html += '</div>';
+  html += "</select>";
+  html += "</div>";
   html += '<div id="userContent"></div>';
 
   container.innerHTML = html;
 
   // Pre-select first person
   setTimeout(() => {
-    const userFilter = document.getElementById('userFilter');
+    const userFilter = document.getElementById("userFilter");
     if (userFilter) {
       userFilter.value = uniquePeople[0];
       updateByUserView();
@@ -575,8 +648,8 @@ function renderByUser() {
  * Update by user view when selection changes
  */
 function updateByUserView() {
-  const userFilter = document.getElementById('userFilter');
-  const userContent = document.getElementById('userContent');
+  const userFilter = document.getElementById("userFilter");
+  const userContent = document.getElementById("userContent");
 
   if (!userFilter || !userContent) return;
 
@@ -584,7 +657,8 @@ function updateByUserView() {
 
   // If no selection, show message
   if (!selectedUser) {
-    userContent.innerHTML = '<p class="text-center text-secondary">Select a person</p>';
+    userContent.innerHTML =
+      '<p class="text-center text-secondary">Select a person</p>';
     return;
   }
 
@@ -592,43 +666,46 @@ function updateByUserView() {
   const mergedData = mergeDataAndCalculateScores();
 
   // Filter for selected user
-  const userPredictions = mergedData.filter(pred => pred.person === selectedUser);
+  const userPredictions = mergedData.filter(
+    (pred) => pred.person === selectedUser,
+  );
 
   // If no predictions, show message
   if (userPredictions.length === 0) {
-    userContent.innerHTML = '<p class="text-center text-secondary">No predictions for this person</p>';
+    userContent.innerHTML =
+      '<p class="text-center text-secondary">No predictions for this person</p>';
     return;
   }
 
   // Calculate person stats
-  const matches = userPredictions.map(p => p.matchData).filter(Boolean);
+  const matches = userPredictions.map((p) => p.matchData).filter(Boolean);
   const stats = calculatePersonStats(userPredictions, matches);
 
   // Build HTML
-  let html = '';
+  let html = "";
 
   // Render summary card
   html += '<div class="stat-card">';
   html += '<div class="stat-row">';
   html += `<span class="stat-label">Person</span>`;
   html += `<span class="stat-value">${selectedUser}</span>`;
-  html += '</div>';
+  html += "</div>";
   html += '<div class="stat-row">';
   html += `<span class="stat-label">Total Points</span>`;
   html += `<span class="stat-value">${stats.totalPoints}</span>`;
-  html += '</div>';
+  html += "</div>";
   html += '<div class="stat-row">';
   html += `<span class="stat-label">Accuracy</span>`;
   html += `<span class="stat-value">${stats.accuracy}%</span>`;
-  html += '</div>';
+  html += "</div>";
   html += '<div class="stat-row">';
   html += `<span class="stat-label">Correct Predictions</span>`;
   html += `<span class="stat-value">${stats.correctWinners}/${stats.totalPredictions}</span>`;
-  html += '</div>';
-  html += '</div>';
+  html += "</div>";
+  html += "</div>";
 
   // Render each prediction as card
-  userPredictions.forEach(pred => {
+  userPredictions.forEach((pred) => {
     if (!pred.matchData) return;
 
     const match = pred.matchData;
@@ -636,19 +713,19 @@ function updateByUserView() {
     const awayFlag = getCountryFlag(match.away);
 
     // Format actual result
-    let resultDisplay = 'TBD';
+    let resultDisplay = "TBD";
     if (match.homeGoals !== null && match.awayGoals !== null) {
       resultDisplay = `${match.homeGoals}-${match.awayGoals}`;
     }
 
     // Format prediction
-    const predictionDisplay = `${pred.predictedHomeGoals !== null ? pred.predictedHomeGoals : '?'}-${pred.predictedAwayGoals !== null ? pred.predictedAwayGoals : '?'}`;
+    const predictionDisplay = `${pred.predictedHomeGoals !== null ? pred.predictedHomeGoals : "?"}-${pred.predictedAwayGoals !== null ? pred.predictedAwayGoals : "?"}`;
 
     // Determine predicted winner name
-    let predictedWinnerName = 'Draw';
-    if (pred.predictedWinner === 'home') {
+    let predictedWinnerName = "Draw";
+    if (pred.predictedWinner === "home") {
       predictedWinnerName = match.home;
-    } else if (pred.predictedWinner === 'away') {
+    } else if (pred.predictedWinner === "away") {
       predictedWinnerName = match.away;
     }
 
@@ -656,17 +733,17 @@ function updateByUserView() {
     html += '<div class="card">';
     html += '<div class="match-header">';
     html += `<div class="match-teams"><span class="flag">${homeFlag}</span> <span class="team">${match.home}</span> <strong>${resultDisplay}</strong> <span class="team">${match.away}</span> <span class="flag">${awayFlag}</span></div>`;
-    html += '</div>';
+    html += "</div>";
     html += '<div class="prediction-details">';
     html += `<div class="prediction-text">Prediction: <strong>${predictedWinnerName}</strong> ${predictionDisplay}</div>`;
-    html += '</div>';
+    html += "</div>";
 
     // Colored prediction box with points and breakdown
     html += `<div class="prediction-box ${pred.scoreClass}">`;
-    html += `<strong>${pred.points} ${pred.points === 1 ? 'point' : 'points'}</strong> — ${pred.breakdown}`;
-    html += '</div>';
+    html += `<strong>${pred.points} ${pred.points === 1 ? "point" : "points"}</strong> — ${pred.breakdown}`;
+    html += "</div>";
 
-    html += '</div>';
+    html += "</div>";
   });
 
   userContent.innerHTML = html;
@@ -676,12 +753,13 @@ function updateByUserView() {
  * Render stats view with medals and detailed stats for each person
  */
 function renderStats() {
-  const container = document.getElementById('stats');
+  const container = document.getElementById("stats");
   if (!container) return;
 
   // Check if predictions are empty or null
   if (!appState.predictions || appState.predictions.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No data loaded. Please refresh.</p>';
     return;
   }
 
@@ -689,17 +767,18 @@ function renderStats() {
   const mergedData = mergeDataAndCalculateScores();
 
   // Get unique people
-  const uniquePeople = Array.from(new Set(mergedData.map(p => p.person)));
+  const uniquePeople = Array.from(new Set(mergedData.map((p) => p.person)));
 
   if (uniquePeople.length === 0) {
-    container.innerHTML = '<p class="text-center text-secondary">No data available</p>';
+    container.innerHTML =
+      '<p class="text-center text-secondary">No data available</p>';
     return;
   }
 
   // Calculate stats for each person
-  const personStats = uniquePeople.map(person => {
-    const personPreds = mergedData.filter(p => p.person === person);
-    const matches = personPreds.map(p => p.matchData).filter(Boolean);
+  const personStats = uniquePeople.map((person) => {
+    const personPreds = mergedData.filter((p) => p.person === person);
+    const matches = personPreds.map((p) => p.matchData).filter(Boolean);
     const stats = calculatePersonStats(personPreds, matches);
 
     return {
@@ -707,7 +786,7 @@ function renderStats() {
       totalPoints: stats.totalPoints,
       accuracy: stats.accuracy,
       correctWinners: stats.correctWinners,
-      totalPredictions: stats.totalPredictions
+      totalPredictions: stats.totalPredictions,
     };
   });
 
@@ -715,18 +794,18 @@ function renderStats() {
   personStats.sort((a, b) => b.totalPoints - a.totalPoints);
 
   // Build HTML for stat cards with medals
-  let html = '';
+  let html = "";
   personStats.forEach((person, index) => {
     const rank = index + 1;
 
     // Determine medal emoji
-    let medal = '';
+    let medal = "";
     if (rank === 1) {
-      medal = '🥇';
+      medal = "🥇";
     } else if (rank === 2) {
-      medal = '🥈';
+      medal = "🥈";
     } else if (rank === 3) {
-      medal = '🥉';
+      medal = "🥉";
     }
 
     // Build stat card
@@ -734,20 +813,20 @@ function renderStats() {
     html += '<div class="stat-header">';
     html += `<span class="medal">${medal}</span>`;
     html += `<span class="person-name">${person.person}</span>`;
-    html += '</div>';
+    html += "</div>";
     html += '<div class="stat-row">';
     html += `<span class="stat-label">Total Points</span>`;
     html += `<span class="stat-value">${person.totalPoints}</span>`;
-    html += '</div>';
+    html += "</div>";
     html += '<div class="stat-row">';
     html += `<span class="stat-label">Accuracy</span>`;
     html += `<span class="stat-value">${person.accuracy}%</span>`;
-    html += '</div>';
+    html += "</div>";
     html += '<div class="stat-row">';
     html += `<span class="stat-label">Correct Winners</span>`;
     html += `<span class="stat-value">${person.correctWinners}/${person.totalPredictions}</span>`;
-    html += '</div>';
-    html += '</div>';
+    html += "</div>";
+    html += "</div>";
   });
 
   container.innerHTML = html;
@@ -757,7 +836,7 @@ function renderStats() {
  * Render all tabs with current data
  */
 function renderAllTabs() {
-  console.log('Rendering tabs...');
+  console.log("Rendering tabs...");
   // Render upcoming matches tab
   renderUpcomingMatches();
   // Render leaderboard tab
@@ -771,8 +850,8 @@ function renderAllTabs() {
 }
 
 // Auto-start the application when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initApp);
 } else {
   initApp();
 }
