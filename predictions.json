@@ -1,0 +1,5706 @@
+{
+  "exportedAt": "2026-06-18T13:30:02.259Z",
+  "predictions": [
+    {
+      "person": "Ravi",
+      "predictions": [
+        {
+          "matchId": "match_1",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_2",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_7",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_19",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_8",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_13",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_14",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_20",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_25",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_31",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_26",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_32",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_43",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_37",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_44",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_38",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_49",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_50",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_55",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_56",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_61",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_67",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_68",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_62",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_3",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_9",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_10",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_4",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_21",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_15",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_16",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_22",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_33",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_27",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_28",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_34",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_45",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_39",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_46",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_40",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_57",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_51",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_52",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_58",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_63",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_69",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_70",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_64",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_11",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_12",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_17",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_18",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_5",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_6",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_29",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_30",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_35",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_36",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_23",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_24",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_53",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_54",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_47",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_48",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_41",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_42",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_71",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_72",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_65",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_66",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_59",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_60",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_73",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_76",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_74",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_75",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_78",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_77",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_79",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_80",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_82",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_81",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_84",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_83",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_85",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_88",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_86",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_87",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_90",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_89",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_91",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_92",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_93",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_94",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_95",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_96",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_97",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_98",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_99",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_100",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_101",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_102",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_103",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_104",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        }
+      ]
+    },
+    {
+      "person": "Preety",
+      "predictions": [
+        {
+          "matchId": "match_1",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_2",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_7",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_19",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_8",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_13",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_14",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_20",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_25",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_31",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_26",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_32",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_43",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_37",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_44",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_38",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_49",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_50",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_55",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_56",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_61",
+          "predictedHomeGoals": 4,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_67",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_68",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_62",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_3",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_9",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_10",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_4",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_21",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_15",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_16",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_22",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_33",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_27",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_28",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_34",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_45",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_39",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_46",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_40",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_57",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_51",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_52",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_58",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_63",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_69",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_70",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_64",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_11",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_12",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_17",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_18",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_5",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_6",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_29",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_30",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_35",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_36",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_23",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_24",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_53",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_54",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_47",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_48",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_41",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_42",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_71",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_72",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_65",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_66",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_59",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_60",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_73",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_76",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_74",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_75",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_78",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_77",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_79",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_80",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_82",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_81",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_84",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_83",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_85",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_88",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_86",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_87",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_90",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_89",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_91",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_92",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_93",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_94",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_95",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_96",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_97",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_98",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_99",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_100",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_101",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_102",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_103",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_104",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        }
+      ]
+    },
+    {
+      "person": "Kunal",
+      "predictions": [
+        {
+          "matchId": "match_1",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_2",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_7",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_19",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_8",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_13",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_14",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_20",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_25",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_31",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_26",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_32",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_43",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_37",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_44",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_38",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_49",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_50",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_55",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_56",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_61",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_67",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_68",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_62",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_3",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_9",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_10",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_4",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_21",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_15",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_16",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_22",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_33",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_27",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_28",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_34",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_45",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_39",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_46",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_40",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_57",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_51",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_52",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_58",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_63",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_69",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_70",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_64",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_11",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_12",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_17",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_18",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_5",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_6",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_29",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_30",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_35",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_36",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_23",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_24",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_53",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_54",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_47",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_48",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_41",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_42",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_71",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_72",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_65",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_66",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_59",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_60",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_73",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_76",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_74",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_75",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_78",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_77",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_79",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_80",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_82",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_81",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_84",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_83",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_85",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_88",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_86",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_87",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_90",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_89",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_91",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_92",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_93",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_94",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_95",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_96",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_97",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_98",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_99",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_100",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_101",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_102",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_103",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_104",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        }
+      ]
+    },
+    {
+      "person": "Anisha",
+      "predictions": [
+        {
+          "matchId": "match_1",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_2",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_7",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_19",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_8",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_13",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_14",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_20",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_25",
+          "predictedHomeGoals": 6,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_31",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_26",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_32",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_43",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_37",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_44",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_38",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_49",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_50",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_55",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_56",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_61",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_67",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_68",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_62",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_3",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_9",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_10",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_4",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_21",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_15",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_16",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_22",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_33",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_27",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_28",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_34",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_45",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_39",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_46",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_40",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_57",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_51",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_52",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_58",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_63",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_69",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_70",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_64",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_11",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_12",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_17",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_18",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_5",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_6",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_29",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_30",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_35",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_36",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_23",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_24",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_53",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_54",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_47",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_48",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_41",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_42",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_71",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_72",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_65",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_66",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_59",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_60",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_73",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_76",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_74",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_75",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_78",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_77",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_79",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_80",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_82",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_81",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_84",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_83",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_85",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_88",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_86",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_87",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_90",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_89",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_91",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_92",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_93",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_94",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_95",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_96",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_97",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_98",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_99",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_100",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_101",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_102",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_103",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_104",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        }
+      ]
+    },
+    {
+      "person": "Yeshnav",
+      "predictions": [
+        {
+          "matchId": "match_1",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_2",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_7",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_19",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_8",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_13",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_14",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_20",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_25",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_31",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_26",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_32",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_43",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_37",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_44",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_38",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_49",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_50",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_55",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_56",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_61",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_67",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_68",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_62",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_3",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_9",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_10",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_4",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_21",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_15",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_16",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_22",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_33",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_27",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_28",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_34",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_45",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_39",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_46",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_40",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_57",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_51",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_52",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_58",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_63",
+          "predictedHomeGoals": 3,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_69",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_70",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_64",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_11",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_12",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_17",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_18",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_5",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_6",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_29",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 4
+        },
+        {
+          "matchId": "match_30",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 4
+        },
+        {
+          "matchId": "match_35",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_36",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_23",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_24",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_53",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_54",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_47",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_48",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_41",
+          "predictedHomeGoals": 2,
+          "predictedAwayGoals": 1
+        },
+        {
+          "matchId": "match_42",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_71",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_72",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_65",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 2
+        },
+        {
+          "matchId": "match_66",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_59",
+          "predictedHomeGoals": 1,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_60",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 3
+        },
+        {
+          "matchId": "match_73",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_76",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_74",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_75",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_78",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_77",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_79",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_80",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_82",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_81",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_84",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_83",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_85",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_88",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_86",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_87",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_90",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_89",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_91",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_92",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_93",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_94",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_95",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_96",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_97",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_98",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_99",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_100",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_101",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_102",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_103",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        },
+        {
+          "matchId": "match_104",
+          "predictedHomeGoals": 0,
+          "predictedAwayGoals": 0
+        }
+      ]
+    }
+  ],
+  "matches": {
+    "match_1": {
+      "id": "match_1",
+      "fixtureId": "mexico_south africa_2026-06-11",
+      "date": "2026-06-11T19:00:00.000Z",
+      "home": "Mexico",
+      "away": "South Africa",
+      "stadium": "Mexico City",
+      "group": "A",
+      "stage": "Group Stage",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "status": "completed"
+    },
+    "match_2": {
+      "id": "match_2",
+      "fixtureId": "korea republic_czechia_2026-06-11",
+      "date": "2026-06-12T02:00:00.000Z",
+      "home": "Korea Republic",
+      "away": "Czechia",
+      "stadium": "Guadalajara (Zapopan)",
+      "group": "A",
+      "stage": "Group Stage",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_3": {
+      "id": "match_3",
+      "fixtureId": "760438",
+      "date": "2026-06-18T16:00:00.000Z",
+      "home": "Czechia",
+      "away": "South Africa",
+      "stadium": "Atlanta",
+      "group": "A",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_4": {
+      "id": "match_4",
+      "fixtureId": "mexico_korea republic_2026-06-18",
+      "date": "2026-06-19T01:00:00.000Z",
+      "home": "Mexico",
+      "away": "Korea Republic",
+      "stadium": "Guadalajara (Zapopan)",
+      "group": "A",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_5": {
+      "id": "match_5",
+      "fixtureId": "czechia_mexico_2026-06-24",
+      "date": "2026-06-25T01:00:00.000Z",
+      "home": "Czechia",
+      "away": "Mexico",
+      "stadium": "Mexico City",
+      "group": "A",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_6": {
+      "id": "match_6",
+      "fixtureId": "south africa_korea republic_2026-06-24",
+      "date": "2026-06-25T01:00:00.000Z",
+      "home": "South Africa",
+      "away": "Korea Republic",
+      "stadium": "Monterrey (Guadalupe)",
+      "group": "A",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_7": {
+      "id": "match_7",
+      "fixtureId": "canada_bosnia & herzegovina_2026-06-12",
+      "date": "2026-06-12T19:00:00.000Z",
+      "home": "Canada",
+      "away": "Bosnia & Herzegovina",
+      "stadium": "Toronto",
+      "group": "B",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_8": {
+      "id": "match_8",
+      "fixtureId": "qatar_switzerland_2026-06-13",
+      "date": "2026-06-13T19:00:00.000Z",
+      "home": "Qatar",
+      "away": "Switzerland",
+      "stadium": "San Francisco Bay Area (Santa Clara)",
+      "group": "B",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_9": {
+      "id": "match_9",
+      "fixtureId": "switzerland_bosnia & herzegovina_2026-06-18",
+      "date": "2026-06-18T19:00:00.000Z",
+      "home": "Switzerland",
+      "away": "Bosnia & Herzegovina",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "B",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_10": {
+      "id": "match_10",
+      "fixtureId": "760440",
+      "date": "2026-06-18T22:00:00.000Z",
+      "home": "Canada",
+      "away": "Qatar",
+      "stadium": "Vancouver",
+      "group": "B",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_11": {
+      "id": "match_11",
+      "fixtureId": "switzerland_canada_2026-06-24",
+      "date": "2026-06-24T19:00:00.000Z",
+      "home": "Switzerland",
+      "away": "Canada",
+      "stadium": "Vancouver",
+      "group": "B",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_12": {
+      "id": "match_12",
+      "fixtureId": "bosnia & herzegovina_qatar_2026-06-24",
+      "date": "2026-06-24T19:00:00.000Z",
+      "home": "Bosnia & Herzegovina",
+      "away": "Qatar",
+      "stadium": "Seattle",
+      "group": "B",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_13": {
+      "id": "match_13",
+      "fixtureId": "brazil_morocco_2026-06-13",
+      "date": "2026-06-13T22:00:00.000Z",
+      "home": "Brazil",
+      "away": "Morocco",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "C",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_14": {
+      "id": "match_14",
+      "fixtureId": "haiti_scotland_2026-06-13",
+      "date": "2026-06-14T01:00:00.000Z",
+      "home": "Haiti",
+      "away": "Scotland",
+      "stadium": "Boston (Foxborough)",
+      "group": "C",
+      "stage": "Group Stage",
+      "homeGoals": 0,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_15": {
+      "id": "match_15",
+      "fixtureId": "scotland_morocco_2026-06-19",
+      "date": "2026-06-19T22:00:00.000Z",
+      "home": "Scotland",
+      "away": "Morocco",
+      "stadium": "Boston (Foxborough)",
+      "group": "C",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_16": {
+      "id": "match_16",
+      "fixtureId": "brazil_haiti_2026-06-19",
+      "date": "2026-06-20T00:30:00.000Z",
+      "home": "Brazil",
+      "away": "Haiti",
+      "stadium": "Philadelphia",
+      "group": "C",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_17": {
+      "id": "match_17",
+      "fixtureId": "scotland_brazil_2026-06-24",
+      "date": "2026-06-24T22:00:00.000Z",
+      "home": "Scotland",
+      "away": "Brazil",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "C",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_18": {
+      "id": "match_18",
+      "fixtureId": "morocco_haiti_2026-06-24",
+      "date": "2026-06-24T22:00:00.000Z",
+      "home": "Morocco",
+      "away": "Haiti",
+      "stadium": "Atlanta",
+      "group": "C",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_19": {
+      "id": "match_19",
+      "fixtureId": "usa_paraguay_2026-06-12",
+      "date": "2026-06-13T01:00:00.000Z",
+      "home": "USA",
+      "away": "Paraguay",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "D",
+      "stage": "Group Stage",
+      "homeGoals": 4,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_20": {
+      "id": "match_20",
+      "fixtureId": "australia_turkey_2026-06-13",
+      "date": "2026-06-14T04:00:00.000Z",
+      "home": "Australia",
+      "away": "Turkey",
+      "stadium": "Vancouver",
+      "group": "D",
+      "stage": "Group Stage",
+      "homeGoals": 2,
+      "awayGoals": 0,
+      "status": "completed"
+    },
+    "match_21": {
+      "id": "match_21",
+      "fixtureId": "usa_australia_2026-06-19",
+      "date": "2026-06-19T19:00:00.000Z",
+      "home": "USA",
+      "away": "Australia",
+      "stadium": "Seattle",
+      "group": "D",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_22": {
+      "id": "match_22",
+      "fixtureId": "turkey_paraguay_2026-06-19",
+      "date": "2026-06-20T03:00:00.000Z",
+      "home": "Turkey",
+      "away": "Paraguay",
+      "stadium": "San Francisco Bay Area (Santa Clara)",
+      "group": "D",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_23": {
+      "id": "match_23",
+      "fixtureId": "turkey_usa_2026-06-25",
+      "date": "2026-06-26T02:00:00.000Z",
+      "home": "Turkey",
+      "away": "USA",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "D",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_24": {
+      "id": "match_24",
+      "fixtureId": "paraguay_australia_2026-06-25",
+      "date": "2026-06-26T02:00:00.000Z",
+      "home": "Paraguay",
+      "away": "Australia",
+      "stadium": "San Francisco Bay Area (Santa Clara)",
+      "group": "D",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_25": {
+      "id": "match_25",
+      "fixtureId": "germany_curaçao_2026-06-14",
+      "date": "2026-06-14T17:00:00.000Z",
+      "home": "Germany",
+      "away": "Curaçao",
+      "stadium": "Houston",
+      "group": "E",
+      "stage": "Group Stage",
+      "homeGoals": 7,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_26": {
+      "id": "match_26",
+      "fixtureId": "ivory coast_ecuador_2026-06-14",
+      "date": "2026-06-14T23:00:00.000Z",
+      "home": "Ivory Coast",
+      "away": "Ecuador",
+      "stadium": "Philadelphia",
+      "group": "E",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "status": "completed"
+    },
+    "match_27": {
+      "id": "match_27",
+      "fixtureId": "germany_ivory coast_2026-06-20",
+      "date": "2026-06-20T20:00:00.000Z",
+      "home": "Germany",
+      "away": "Ivory Coast",
+      "stadium": "Toronto",
+      "group": "E",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_28": {
+      "id": "match_28",
+      "fixtureId": "ecuador_curaçao_2026-06-20",
+      "date": "2026-06-21T00:00:00.000Z",
+      "home": "Ecuador",
+      "away": "Curaçao",
+      "stadium": "Kansas City",
+      "group": "E",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_29": {
+      "id": "match_29",
+      "fixtureId": "curaçao_ivory coast_2026-06-25",
+      "date": "2026-06-25T20:00:00.000Z",
+      "home": "Curaçao",
+      "away": "Ivory Coast",
+      "stadium": "Philadelphia",
+      "group": "E",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_30": {
+      "id": "match_30",
+      "fixtureId": "ecuador_germany_2026-06-25",
+      "date": "2026-06-25T20:00:00.000Z",
+      "home": "Ecuador",
+      "away": "Germany",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "E",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_31": {
+      "id": "match_31",
+      "fixtureId": "netherlands_japan_2026-06-14",
+      "date": "2026-06-14T20:00:00.000Z",
+      "home": "Netherlands",
+      "away": "Japan",
+      "stadium": "Dallas (Arlington)",
+      "group": "F",
+      "stage": "Group Stage",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "status": "completed"
+    },
+    "match_32": {
+      "id": "match_32",
+      "fixtureId": "sweden_tunisia_2026-06-14",
+      "date": "2026-06-15T02:00:00.000Z",
+      "home": "Sweden",
+      "away": "Tunisia",
+      "stadium": "Monterrey (Guadalupe)",
+      "group": "F",
+      "stage": "Group Stage",
+      "homeGoals": 5,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_33": {
+      "id": "match_33",
+      "fixtureId": "netherlands_sweden_2026-06-20",
+      "date": "2026-06-20T17:00:00.000Z",
+      "home": "Netherlands",
+      "away": "Sweden",
+      "stadium": "Houston",
+      "group": "F",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_34": {
+      "id": "match_34",
+      "fixtureId": "tunisia_japan_2026-06-20",
+      "date": "2026-06-21T04:00:00.000Z",
+      "home": "Tunisia",
+      "away": "Japan",
+      "stadium": "Monterrey (Guadalupe)",
+      "group": "F",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_35": {
+      "id": "match_35",
+      "fixtureId": "japan_sweden_2026-06-25",
+      "date": "2026-06-25T23:00:00.000Z",
+      "home": "Japan",
+      "away": "Sweden",
+      "stadium": "Dallas (Arlington)",
+      "group": "F",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_36": {
+      "id": "match_36",
+      "fixtureId": "tunisia_netherlands_2026-06-25",
+      "date": "2026-06-25T23:00:00.000Z",
+      "home": "Tunisia",
+      "away": "Netherlands",
+      "stadium": "Kansas City",
+      "group": "F",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_37": {
+      "id": "match_37",
+      "fixtureId": "belgium_egypt_2026-06-15",
+      "date": "2026-06-15T19:00:00.000Z",
+      "home": "Belgium",
+      "away": "Egypt",
+      "stadium": "Seattle",
+      "group": "G",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_38": {
+      "id": "match_38",
+      "fixtureId": "iran_new zealand_2026-06-15",
+      "date": "2026-06-16T01:00:00.000Z",
+      "home": "Iran",
+      "away": "New Zealand",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "G",
+      "stage": "Group Stage",
+      "homeGoals": 2,
+      "awayGoals": 2,
+      "status": "completed"
+    },
+    "match_39": {
+      "id": "match_39",
+      "fixtureId": "belgium_iran_2026-06-21",
+      "date": "2026-06-21T19:00:00.000Z",
+      "home": "Belgium",
+      "away": "Iran",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "G",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_40": {
+      "id": "match_40",
+      "fixtureId": "new zealand_egypt_2026-06-21",
+      "date": "2026-06-22T01:00:00.000Z",
+      "home": "New Zealand",
+      "away": "Egypt",
+      "stadium": "Vancouver",
+      "group": "G",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_41": {
+      "id": "match_41",
+      "fixtureId": "egypt_iran_2026-06-26",
+      "date": "2026-06-27T03:00:00.000Z",
+      "home": "Egypt",
+      "away": "Iran",
+      "stadium": "Seattle",
+      "group": "G",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_42": {
+      "id": "match_42",
+      "fixtureId": "new zealand_belgium_2026-06-26",
+      "date": "2026-06-27T03:00:00.000Z",
+      "home": "New Zealand",
+      "away": "Belgium",
+      "stadium": "Vancouver",
+      "group": "G",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_43": {
+      "id": "match_43",
+      "fixtureId": "spain_cape verde_2026-06-15",
+      "date": "2026-06-15T16:00:00.000Z",
+      "home": "Spain",
+      "away": "Cape Verde",
+      "stadium": "Atlanta",
+      "group": "H",
+      "stage": "Group Stage",
+      "homeGoals": 0,
+      "awayGoals": 0,
+      "status": "completed"
+    },
+    "match_44": {
+      "id": "match_44",
+      "fixtureId": "saudi arabia_uruguay_2026-06-15",
+      "date": "2026-06-15T22:00:00.000Z",
+      "home": "Saudi Arabia",
+      "away": "Uruguay",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "H",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_45": {
+      "id": "match_45",
+      "fixtureId": "spain_saudi arabia_2026-06-21",
+      "date": "2026-06-21T16:00:00.000Z",
+      "home": "Spain",
+      "away": "Saudi Arabia",
+      "stadium": "Atlanta",
+      "group": "H",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_46": {
+      "id": "match_46",
+      "fixtureId": "uruguay_cape verde_2026-06-21",
+      "date": "2026-06-21T22:00:00.000Z",
+      "home": "Uruguay",
+      "away": "Cape Verde",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "H",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_47": {
+      "id": "match_47",
+      "fixtureId": "cape verde_saudi arabia_2026-06-26",
+      "date": "2026-06-27T00:00:00.000Z",
+      "home": "Cape Verde",
+      "away": "Saudi Arabia",
+      "stadium": "Houston",
+      "group": "H",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_48": {
+      "id": "match_48",
+      "fixtureId": "uruguay_spain_2026-06-26",
+      "date": "2026-06-27T00:00:00.000Z",
+      "home": "Uruguay",
+      "away": "Spain",
+      "stadium": "Guadalajara (Zapopan)",
+      "group": "H",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_49": {
+      "id": "match_49",
+      "fixtureId": "france_senegal_2026-06-16",
+      "date": "2026-06-16T19:00:00.000Z",
+      "home": "France",
+      "away": "Senegal",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "I",
+      "stage": "Group Stage",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_50": {
+      "id": "match_50",
+      "fixtureId": "iraq_norway_2026-06-16",
+      "date": "2026-06-16T22:00:00.000Z",
+      "home": "Iraq",
+      "away": "Norway",
+      "stadium": "Boston (Foxborough)",
+      "group": "I",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 4,
+      "status": "completed"
+    },
+    "match_51": {
+      "id": "match_51",
+      "fixtureId": "france_iraq_2026-06-22",
+      "date": "2026-06-22T21:00:00.000Z",
+      "home": "France",
+      "away": "Iraq",
+      "stadium": "Philadelphia",
+      "group": "I",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_52": {
+      "id": "match_52",
+      "fixtureId": "norway_senegal_2026-06-22",
+      "date": "2026-06-23T00:00:00.000Z",
+      "home": "Norway",
+      "away": "Senegal",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "I",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_53": {
+      "id": "match_53",
+      "fixtureId": "norway_france_2026-06-26",
+      "date": "2026-06-26T19:00:00.000Z",
+      "home": "Norway",
+      "away": "France",
+      "stadium": "Boston (Foxborough)",
+      "group": "I",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_54": {
+      "id": "match_54",
+      "fixtureId": "senegal_iraq_2026-06-26",
+      "date": "2026-06-26T19:00:00.000Z",
+      "home": "Senegal",
+      "away": "Iraq",
+      "stadium": "Toronto",
+      "group": "I",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_55": {
+      "id": "match_55",
+      "fixtureId": "argentina_algeria_2026-06-16",
+      "date": "2026-06-17T01:00:00.000Z",
+      "home": "Argentina",
+      "away": "Algeria",
+      "stadium": "Kansas City",
+      "group": "J",
+      "stage": "Group Stage",
+      "homeGoals": 3,
+      "awayGoals": 0,
+      "status": "completed"
+    },
+    "match_56": {
+      "id": "match_56",
+      "fixtureId": "austria_jordan_2026-06-16",
+      "date": "2026-06-17T04:00:00.000Z",
+      "home": "Austria",
+      "away": "Jordan",
+      "stadium": "San Francisco Bay Area (Santa Clara)",
+      "group": "J",
+      "stage": "Group Stage",
+      "homeGoals": 3,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_57": {
+      "id": "match_57",
+      "fixtureId": "argentina_austria_2026-06-22",
+      "date": "2026-06-22T17:00:00.000Z",
+      "home": "Argentina",
+      "away": "Austria",
+      "stadium": "Dallas (Arlington)",
+      "group": "J",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_58": {
+      "id": "match_58",
+      "fixtureId": "jordan_algeria_2026-06-22",
+      "date": "2026-06-23T03:00:00.000Z",
+      "home": "Jordan",
+      "away": "Algeria",
+      "stadium": "San Francisco Bay Area (Santa Clara)",
+      "group": "J",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_59": {
+      "id": "match_59",
+      "fixtureId": "algeria_austria_2026-06-27",
+      "date": "2026-06-28T02:00:00.000Z",
+      "home": "Algeria",
+      "away": "Austria",
+      "stadium": "Kansas City",
+      "group": "J",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_60": {
+      "id": "match_60",
+      "fixtureId": "jordan_argentina_2026-06-27",
+      "date": "2026-06-28T02:00:00.000Z",
+      "home": "Jordan",
+      "away": "Argentina",
+      "stadium": "Dallas (Arlington)",
+      "group": "J",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_61": {
+      "id": "match_61",
+      "fixtureId": "portugal_dr congo_2026-06-17",
+      "date": "2026-06-17T17:00:00.000Z",
+      "home": "Portugal",
+      "away": "DR Congo",
+      "stadium": "Houston",
+      "group": "K",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "status": "completed"
+    },
+    "match_62": {
+      "id": "match_62",
+      "fixtureId": "uzbekistan_colombia_2026-06-17",
+      "date": "2026-06-18T02:00:00.000Z",
+      "home": "Uzbekistan",
+      "away": "Colombia",
+      "stadium": "Mexico City",
+      "group": "K",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 3,
+      "status": "completed"
+    },
+    "match_63": {
+      "id": "match_63",
+      "fixtureId": "portugal_uzbekistan_2026-06-23",
+      "date": "2026-06-23T17:00:00.000Z",
+      "home": "Portugal",
+      "away": "Uzbekistan",
+      "stadium": "Houston",
+      "group": "K",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_64": {
+      "id": "match_64",
+      "fixtureId": "colombia_dr congo_2026-06-23",
+      "date": "2026-06-24T02:00:00.000Z",
+      "home": "Colombia",
+      "away": "DR Congo",
+      "stadium": "Guadalajara (Zapopan)",
+      "group": "K",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_65": {
+      "id": "match_65",
+      "fixtureId": "colombia_portugal_2026-06-27",
+      "date": "2026-06-27T23:30:00.000Z",
+      "home": "Colombia",
+      "away": "Portugal",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "K",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_66": {
+      "id": "match_66",
+      "fixtureId": "dr congo_uzbekistan_2026-06-27",
+      "date": "2026-06-27T23:30:00.000Z",
+      "home": "DR Congo",
+      "away": "Uzbekistan",
+      "stadium": "Atlanta",
+      "group": "K",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_67": {
+      "id": "match_67",
+      "fixtureId": "england_croatia_2026-06-17",
+      "date": "2026-06-17T20:00:00.000Z",
+      "home": "England",
+      "away": "Croatia",
+      "stadium": "Dallas (Arlington)",
+      "group": "L",
+      "stage": "Group Stage",
+      "homeGoals": 4,
+      "awayGoals": 2,
+      "status": "completed"
+    },
+    "match_68": {
+      "id": "match_68",
+      "fixtureId": "ghana_panama_2026-06-17",
+      "date": "2026-06-17T23:00:00.000Z",
+      "home": "Ghana",
+      "away": "Panama",
+      "stadium": "Toronto",
+      "group": "L",
+      "stage": "Group Stage",
+      "homeGoals": 1,
+      "awayGoals": 0,
+      "status": "completed"
+    },
+    "match_69": {
+      "id": "match_69",
+      "fixtureId": "england_ghana_2026-06-23",
+      "date": "2026-06-23T20:00:00.000Z",
+      "home": "England",
+      "away": "Ghana",
+      "stadium": "Boston (Foxborough)",
+      "group": "L",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_70": {
+      "id": "match_70",
+      "fixtureId": "panama_croatia_2026-06-23",
+      "date": "2026-06-23T23:00:00.000Z",
+      "home": "Panama",
+      "away": "Croatia",
+      "stadium": "Toronto",
+      "group": "L",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_71": {
+      "id": "match_71",
+      "fixtureId": "panama_england_2026-06-27",
+      "date": "2026-06-27T21:00:00.000Z",
+      "home": "Panama",
+      "away": "England",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "L",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_72": {
+      "id": "match_72",
+      "fixtureId": "croatia_ghana_2026-06-27",
+      "date": "2026-06-27T21:00:00.000Z",
+      "home": "Croatia",
+      "away": "Ghana",
+      "stadium": "Philadelphia",
+      "group": "L",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_73": {
+      "id": "match_73",
+      "fixtureId": "2a_2b_2026-06-28",
+      "date": "2026-06-28T19:00:00.000Z",
+      "home": "2A",
+      "away": "2B",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_74": {
+      "id": "match_74",
+      "fixtureId": "1e_3a/b/c/d/f_2026-06-29",
+      "date": "2026-06-29T20:30:00.000Z",
+      "home": "1E",
+      "away": "3A/B/C/D/F",
+      "stadium": "Boston (Foxborough)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_75": {
+      "id": "match_75",
+      "fixtureId": "1f_2c_2026-06-29",
+      "date": "2026-06-30T01:00:00.000Z",
+      "home": "1F",
+      "away": "2C",
+      "stadium": "Monterrey (Guadalupe)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_76": {
+      "id": "match_76",
+      "fixtureId": "1c_2f_2026-06-29",
+      "date": "2026-06-29T17:00:00.000Z",
+      "home": "1C",
+      "away": "2F",
+      "stadium": "Houston",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_77": {
+      "id": "match_77",
+      "fixtureId": "1i_3c/d/f/g/h_2026-06-30",
+      "date": "2026-06-30T21:00:00.000Z",
+      "home": "1I",
+      "away": "3C/D/F/G/H",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_78": {
+      "id": "match_78",
+      "fixtureId": "2e_2i_2026-06-30",
+      "date": "2026-06-30T17:00:00.000Z",
+      "home": "2E",
+      "away": "2I",
+      "stadium": "Dallas (Arlington)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_79": {
+      "id": "match_79",
+      "fixtureId": "1a_3c/e/f/h/i_2026-06-30",
+      "date": "2026-07-01T01:00:00.000Z",
+      "home": "1A",
+      "away": "3C/E/F/H/I",
+      "stadium": "Mexico City",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_80": {
+      "id": "match_80",
+      "fixtureId": "1l_3e/h/i/j/k_2026-07-01",
+      "date": "2026-07-01T16:00:00.000Z",
+      "home": "1L",
+      "away": "3E/H/I/J/K",
+      "stadium": "Atlanta",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_81": {
+      "id": "match_81",
+      "fixtureId": "1d_3b/e/f/i/j_2026-07-01",
+      "date": "2026-07-02T00:00:00.000Z",
+      "home": "1D",
+      "away": "3B/E/F/I/J",
+      "stadium": "San Francisco Bay Area (Santa Clara)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_82": {
+      "id": "match_82",
+      "fixtureId": "1g_3a/e/h/i/j_2026-07-01",
+      "date": "2026-07-01T20:00:00.000Z",
+      "home": "1G",
+      "away": "3A/E/H/I/J",
+      "stadium": "Seattle",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_83": {
+      "id": "match_83",
+      "fixtureId": "2k_2l_2026-07-02",
+      "date": "2026-07-02T23:00:00.000Z",
+      "home": "2K",
+      "away": "2L",
+      "stadium": "Toronto",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_84": {
+      "id": "match_84",
+      "fixtureId": "1h_2j_2026-07-02",
+      "date": "2026-07-02T19:00:00.000Z",
+      "home": "1H",
+      "away": "2J",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_85": {
+      "id": "match_85",
+      "fixtureId": "1b_3e/f/g/i/j_2026-07-02",
+      "date": "2026-07-03T03:00:00.000Z",
+      "home": "1B",
+      "away": "3E/F/G/I/J",
+      "stadium": "Vancouver",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_86": {
+      "id": "match_86",
+      "fixtureId": "1j_2h_2026-07-03",
+      "date": "2026-07-03T22:00:00.000Z",
+      "home": "1J",
+      "away": "2H",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_87": {
+      "id": "match_87",
+      "fixtureId": "1k_3d/e/i/j/l_2026-07-03",
+      "date": "2026-07-04T01:30:00.000Z",
+      "home": "1K",
+      "away": "3D/E/I/J/L",
+      "stadium": "Kansas City",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_88": {
+      "id": "match_88",
+      "fixtureId": "2d_2g_2026-07-03",
+      "date": "2026-07-03T18:00:00.000Z",
+      "home": "2D",
+      "away": "2G",
+      "stadium": "Dallas (Arlington)",
+      "group": "",
+      "stage": "Group Stage",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_89": {
+      "id": "match_89",
+      "fixtureId": "w74_w77_2026-07-04",
+      "date": "2026-07-04T21:00:00.000Z",
+      "home": "W74",
+      "away": "W77",
+      "stadium": "Philadelphia",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_90": {
+      "id": "match_90",
+      "fixtureId": "w73_w75_2026-07-04",
+      "date": "2026-07-04T17:00:00.000Z",
+      "home": "W73",
+      "away": "W75",
+      "stadium": "Houston",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_91": {
+      "id": "match_91",
+      "fixtureId": "w76_w78_2026-07-05",
+      "date": "2026-07-05T20:00:00.000Z",
+      "home": "W76",
+      "away": "W78",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_92": {
+      "id": "match_92",
+      "fixtureId": "w79_w80_2026-07-05",
+      "date": "2026-07-06T00:00:00.000Z",
+      "home": "W79",
+      "away": "W80",
+      "stadium": "Mexico City",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_93": {
+      "id": "match_93",
+      "fixtureId": "w83_w84_2026-07-06",
+      "date": "2026-07-06T19:00:00.000Z",
+      "home": "W83",
+      "away": "W84",
+      "stadium": "Dallas (Arlington)",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_94": {
+      "id": "match_94",
+      "fixtureId": "w81_w82_2026-07-06",
+      "date": "2026-07-07T00:00:00.000Z",
+      "home": "W81",
+      "away": "W82",
+      "stadium": "Seattle",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_95": {
+      "id": "match_95",
+      "fixtureId": "w86_w88_2026-07-07",
+      "date": "2026-07-07T16:00:00.000Z",
+      "home": "W86",
+      "away": "W88",
+      "stadium": "Atlanta",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_96": {
+      "id": "match_96",
+      "fixtureId": "w85_w87_2026-07-07",
+      "date": "2026-07-07T20:00:00.000Z",
+      "home": "W85",
+      "away": "W87",
+      "stadium": "Vancouver",
+      "group": "",
+      "stage": "Round of 16",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_97": {
+      "id": "match_97",
+      "fixtureId": "w89_w90_2026-07-09",
+      "date": "2026-07-09T20:00:00.000Z",
+      "home": "W89",
+      "away": "W90",
+      "stadium": "Boston (Foxborough)",
+      "group": "",
+      "stage": "Quarterfinals",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_98": {
+      "id": "match_98",
+      "fixtureId": "w93_w94_2026-07-10",
+      "date": "2026-07-10T19:00:00.000Z",
+      "home": "W93",
+      "away": "W94",
+      "stadium": "Los Angeles (Inglewood)",
+      "group": "",
+      "stage": "Quarterfinals",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_99": {
+      "id": "match_99",
+      "fixtureId": "w91_w92_2026-07-11",
+      "date": "2026-07-11T21:00:00.000Z",
+      "home": "W91",
+      "away": "W92",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "",
+      "stage": "Quarterfinals",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_100": {
+      "id": "match_100",
+      "fixtureId": "w95_w96_2026-07-11",
+      "date": "2026-07-12T01:00:00.000Z",
+      "home": "W95",
+      "away": "W96",
+      "stadium": "Kansas City",
+      "group": "",
+      "stage": "Quarterfinals",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_101": {
+      "id": "match_101",
+      "fixtureId": "w97_w98_2026-07-14",
+      "date": "2026-07-14T19:00:00.000Z",
+      "home": "W97",
+      "away": "W98",
+      "stadium": "Dallas (Arlington)",
+      "group": "",
+      "stage": "Semifinals",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_102": {
+      "id": "match_102",
+      "fixtureId": "w99_w100_2026-07-15",
+      "date": "2026-07-15T19:00:00.000Z",
+      "home": "W99",
+      "away": "W100",
+      "stadium": "Atlanta",
+      "group": "",
+      "stage": "Semifinals",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_103": {
+      "id": "match_103",
+      "fixtureId": "l101_l102_2026-07-18",
+      "date": "2026-07-18T21:00:00.000Z",
+      "home": "L101",
+      "away": "L102",
+      "stadium": "Miami (Miami Gardens)",
+      "group": "",
+      "stage": "Third Place Match",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    },
+    "match_104": {
+      "id": "match_104",
+      "fixtureId": "w101_w102_2026-07-19",
+      "date": "2026-07-19T19:00:00.000Z",
+      "home": "W101",
+      "away": "W102",
+      "stadium": "New York/New Jersey (East Rutherford)",
+      "group": "",
+      "stage": "Final",
+      "homeGoals": null,
+      "awayGoals": null,
+      "status": "upcoming"
+    }
+  },
+  "scores": [
+    {
+      "person": "Ravi",
+      "totalPoints": 19,
+      "matchScores": [
+        {
+          "matchId": "match_1",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 3
+        },
+        {
+          "matchId": "match_2",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_7",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_19",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_8",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_13",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_14",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_20",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_25",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 7,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_31",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 3
+        },
+        {
+          "matchId": "match_26",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_32",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 5,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_43",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 0,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_37",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_44",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_38",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_49",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_50",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 4
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_55",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_56",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_61",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_67",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 2
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_68",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_62",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 3
+          },
+          "points": 1
+        }
+      ],
+      "accuracy": "62.5",
+      "matchesWithResults": 24
+    },
+    {
+      "person": "Yeshnav",
+      "totalPoints": 18,
+      "matchScores": [
+        {
+          "matchId": "match_1",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_2",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_7",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 3
+        },
+        {
+          "matchId": "match_19",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_8",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_13",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_14",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_20",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_25",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 7,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_31",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_26",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_32",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 5,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_43",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 0,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_37",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_44",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_38",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_49",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_50",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 4
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_55",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "points": 3
+        },
+        {
+          "matchId": "match_56",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_61",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_67",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 2
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_68",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_62",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 0,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 3
+          },
+          "points": 0
+        }
+      ],
+      "accuracy": "58.3",
+      "matchesWithResults": 24
+    },
+    {
+      "person": "Preety",
+      "totalPoints": 13,
+      "matchScores": [
+        {
+          "matchId": "match_1",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_2",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_7",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 3
+        },
+        {
+          "matchId": "match_19",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_8",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_13",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_14",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 3
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_20",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_25",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 7,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_31",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_26",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_32",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 5,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_43",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 0,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_37",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_44",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_38",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_49",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_50",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 4
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_55",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_56",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_61",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_67",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 2
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_68",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_62",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 3
+          },
+          "points": 0
+        }
+      ],
+      "accuracy": "45.8",
+      "matchesWithResults": 24
+    },
+    {
+      "person": "Kunal",
+      "totalPoints": 12,
+      "matchScores": [
+        {
+          "matchId": "match_1",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_2",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_7",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_19",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_8",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_13",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_14",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 3
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_20",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_25",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 7,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_31",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_26",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_32",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 5,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_43",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 0,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_37",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_44",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_38",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_49",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_50",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 4
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_55",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_56",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_61",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_67",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 2
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_68",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 3
+        },
+        {
+          "matchId": "match_62",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 3
+          },
+          "points": 1
+        }
+      ],
+      "accuracy": "41.7",
+      "matchesWithResults": 24
+    },
+    {
+      "person": "Anisha",
+      "totalPoints": 9,
+      "matchScores": [
+        {
+          "matchId": "match_1",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_2",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_7",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_19",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_8",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_13",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_14",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_20",
+          "prediction": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_25",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 6,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 7,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_31",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_26",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_32",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 5,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_43",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 0,
+            "awayGoals": 0
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_37",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_44",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_38",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 2,
+            "awayGoals": 2
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_49",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 2
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_50",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 4
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_55",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_56",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_61",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 3,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "draw",
+            "homeGoals": 1,
+            "awayGoals": 1
+          },
+          "points": 0
+        },
+        {
+          "matchId": "match_67",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 4,
+            "awayGoals": 2
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_68",
+          "prediction": {
+            "winner": "home",
+            "homeGoals": 2,
+            "awayGoals": 0
+          },
+          "actual": {
+            "winner": "home",
+            "homeGoals": 1,
+            "awayGoals": 0
+          },
+          "points": 1
+        },
+        {
+          "matchId": "match_62",
+          "prediction": {
+            "winner": "away",
+            "homeGoals": 0,
+            "awayGoals": 1
+          },
+          "actual": {
+            "winner": "away",
+            "homeGoals": 1,
+            "awayGoals": 3
+          },
+          "points": 1
+        }
+      ],
+      "accuracy": "37.5",
+      "matchesWithResults": 24
+    }
+  ]
+}

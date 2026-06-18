@@ -1,0 +1,498 @@
+/* FIFA 2026 Dashboard - Mobile-First CSS */
+
+/* ===== CSS Variables ===== */
+:root {
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #252525;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --accent: #4CAF50;
+    --accent-warn: #ff9800;
+    --accent-gray: #666666;
+    --border-color: #333333;
+    --score-exact: #4CAF50;
+    --score-partial: #ff9800;
+    --score-miss: #999999;
+    --error-color: #ff6b6b;
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ===== Main Container ===== */
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ===== Header ===== */
+.header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.refresh-btn {
+    background-color: var(--accent);
+    border: none;
+    color: #000000;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.refresh-btn:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.refresh-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.refresh-btn:disabled {
+    background-color: #999999;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ===== Main Content ===== */
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    padding-bottom: 80px;
+    background-color: var(--bg-primary);
+}
+
+/* ===== Tab Content ===== */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== Cards ===== */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+    transition: background-color 0.2s;
+}
+
+.card:hover {
+    background-color: var(--bg-tertiary);
+}
+
+/* ===== Match Card Styles ===== */
+.match-teams {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.match-time {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 4px;
+}
+
+.match-predictions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.prediction-box {
+    background-color: var(--bg-tertiary);
+    padding: 6px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.prediction-box.exact {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: var(--score-exact);
+    font-weight: 600;
+    border-color: var(--score-exact);
+}
+
+.prediction-box.partial {
+    background-color: rgba(255, 152, 0, 0.2);
+    color: var(--score-partial);
+    font-weight: 600;
+    border-color: var(--score-partial);
+}
+
+.prediction-box.miss {
+    background-color: rgba(153, 153, 153, 0.3);
+    color: var(--score-miss);
+    border-color: var(--score-miss);
+}
+
+/* ===== Leaderboard Table ===== */
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 12px;
+    overflow-x: auto;
+}
+
+.leaderboard-table th {
+    background-color: var(--bg-tertiary);
+    padding: 8px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.leaderboard-table td {
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.leaderboard-table tr:nth-child(even) {
+    background-color: var(--bg-tertiary);
+}
+
+.leaderboard-table tr:hover {
+    background-color: #2a2a2a;
+}
+
+.rank-column {
+    font-weight: 600;
+    width: 40px;
+}
+
+.rank-column.first {
+    color: var(--score-exact);
+}
+
+/* ===== Bottom Navigation ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    height: 60px;
+    z-index: 20;
+}
+
+.nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    transition: color 0.2s;
+    padding: 8px;
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn.active {
+    color: var(--accent);
+}
+
+.nav-btn .icon {
+    font-size: 20px;
+}
+
+.nav-btn .label {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ===== Footer ===== */
+.footer {
+    text-align: center;
+    padding: 8px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    right: 0;
+}
+
+/* ===== Filters & Dropdowns ===== */
+select, input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+select:focus, input[type="text"]:focus, input[type="date"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+/* ===== Filter Group ===== */
+.filter-group {
+    margin-bottom: 12px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+/* ===== Prediction Details ===== */
+.prediction-details {
+    padding: 8px 0;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.prediction-text {
+    color: var(--text-primary);
+}
+
+/* ===== Stat Cards ===== */
+.stat-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.medal {
+    font-size: 24px;
+    min-width: 32px;
+    text-align: center;
+}
+
+.person-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13px;
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* ===== Utility Classes ===== */
+.text-center {
+    text-align: center;
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.loading {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-secondary);
+}
+
+.error {
+    background-color: rgba(255, 107, 107, 0.1);
+    color: var(--error-color);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    border: 1px solid var(--error-color);
+}
+
+.success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--score-exact);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    border: 1px solid var(--score-exact);
+}
+
+/* ===== Responsive Design ===== */
+@media (min-width: 768px) {
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .main-content {
+        padding: 24px;
+        padding-bottom: 90px;
+    }
+
+    .leaderboard-table {
+        font-size: 15px;
+    }
+
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 12px;
+    }
+
+    .bottom-nav {
+        height: 70px;
+    }
+
+    .footer {
+        bottom: 70px;
+    }
+
+    .nav-btn .icon {
+        font-size: 24px;
+    }
+
+    .nav-btn .label {
+        font-size: 13px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    .match-teams {
+        font-size: 18px;
+    }
+
+    .match-time {
+        font-size: 13px;
+    }
+
+    .match-predictions {
+        margin-top: 12px;
+    }
+
+    .prediction-box {
+        padding: 8px;
+    }
+
+    .stat-row {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+}
+
+/* ===== Scrollbar Styling ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}

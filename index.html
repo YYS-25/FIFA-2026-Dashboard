@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA 2026 Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1>⚽ FIFA 2026</h1>
+        <button id="refreshBtn" class="refresh-btn">🔄 Refresh</button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Tab Content Divs -->
+        <div id="upcoming" class="tab-content active"></div>
+        <div id="leaderboard" class="tab-content"></div>
+        <div id="byGroup" class="tab-content"></div>
+        <div id="byUser" class="tab-content"></div>
+        <div id="stats" class="tab-content"></div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-tab="upcoming">
+            <span class="icon">🎯</span>
+            <span class="label">Matches</span>
+        </button>
+        <button class="nav-btn" data-tab="leaderboard">
+            <span class="icon">🏆</span>
+            <span class="label">Leaderboard</span>
+        </button>
+        <button class="nav-btn" data-tab="byGroup">
+            <span class="icon">👥</span>
+            <span class="label">By Group</span>
+        </button>
+        <button class="nav-btn" data-tab="byUser">
+            <span class="icon">👤</span>
+            <span class="label">By User</span>
+        </button>
+        <button class="nav-btn" data-tab="stats">
+            <span class="icon">📊</span>
+            <span class="label">Stats</span>
+        </button>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <span id="lastUpdated">Last updated: never</span>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./utils.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>
