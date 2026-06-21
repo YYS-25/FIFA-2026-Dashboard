@@ -91,6 +91,7 @@ async function fetchMatchResults() {
   return Promise.resolve();
 }
 
+
 /**
  * Merge prediction data with match results and calculate scores
  * @returns {array} Array of merged prediction objects
@@ -158,6 +159,13 @@ async function loadAllData() {
     // Load predictions and matches from single JSON file
     await fetchPredictionsAndMatches();
     await fetchPredictions();
+
+    // Save matches to localStorage so refreshMatchResults() can use them
+    saveMatches(appState.matchResults);
+
+    // Use the same API refresh mechanism as the admin panel
+    console.log("🔄 Refreshing match results from ESPN API...");
+    appState.matchResults = await refreshMatchResults();
 
     appState.lastUpdated = new Date();
     updateFooter();
