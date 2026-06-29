@@ -1,7 +1,7 @@
 // storage.js - Local storage and file I/O
 
 const STORAGE_KEYS = {
-  MATCHES: 'wcPredictor_matches_v2',
+  MATCHES: 'wcPredictor_matches',
   PREDICTIONS: 'wcPredictor_predictions',
   SCORES: 'wcPredictor_scores',
   LAST_UPDATED: 'wcPredictor_lastUpdated'

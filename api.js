@@ -6,9 +6,6 @@
 const OPENFOOTBALL_WORLDCUP_URL =
   "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json";
 
-const OPENFOOTBALL_CUP_FINALS_URL =
-  "https://raw.githubusercontent.com/openfootball/worldcup/master/2026--usa/cup_finals.txt";
-
 const ESPN_SCOREBOARD_URL =
   "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
 
@@ -41,182 +38,6 @@ async function fetchFromGithub() {
     console.error("Error fetching from openfootball GitHub:", error);
     return null;
   }
-}
-
-/**
- * Fetch cup finals data from openfootball (knockout rounds)
- * @returns {string} Raw text data from cup_finals.txt
- */
-async function fetchCupFinalsText() {
-  try {
-    const response = await fetch(OPENFOOTBALL_CUP_FINALS_URL);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch cup_finals.txt: ${response.status}`);
-    }
-
-    const text = await response.text();
-    console.log("Fetched cup_finals.txt for knockout rounds");
-    return text;
-  } catch (error) {
-    console.error("Error fetching cup_finals.txt:", error);
-    return null;
-  }
-}
-
-/**
- * Parse openfootball cup_finals.txt format
- * Format: (matchNum) HH:MM UTC±X  Team1 score1-score2 Team2 @ Stadium
- * @param {string} cupFinalsText - Raw text from cup_finals.txt
- * @param {number} matchStartIndex - Starting match index for ID generation
- * @returns {Object} Parsed matches in app format
- */
-function parseCupFinalsText(cupFinalsText, matchStartIndex = 49) {
-  if (!cupFinalsText) return {};
-
-  const matches = {};
-  const lines = cupFinalsText.split("\n");
-  let currentDate = null;
-  let currentStage = "Round of 32";
-  const stageMap = {
-    "round of 32": "Round of 32",
-    "round of 16": "Round of 16",
-    "quarter-final": "Quarterfinals",
-    "semi-final": "Semifinals",
-    "match for third place": "Third Place Playoff",
-    "final": "Final"
-  };
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    // Skip empty lines
-    if (!trimmed) continue;
-
-    // Check for section headers (▪ Round of 32, ▪ Round of 16, etc.)
-    const sectionMatch = trimmed.match(/^▪\s+(.+)$/);
-    if (sectionMatch) {
-      const sectionName = sectionMatch[1].toLowerCase();
-      currentStage = stageMap[sectionName] || currentStage;
-      continue;
-    }
-
-    // Skip comment lines that start with #
-    if (trimmed.startsWith("#")) continue;
-
-    // Check for day-of-week and date (Mon Jun 29, Sun Jul 4, etc.)
-    const dayMatch = trimmed.match(/^([A-Za-z]+)\s+([A-Za-z]+)\s+(\d+)/);
-    if (dayMatch) {
-      const monthStr = dayMatch[2].toLowerCase();
-      const dayNum = dayMatch[3];
-
-      // Map month abbreviations to numbers
-      const monthMap = {
-        jun: "06",
-        jul: "07",
-      };
-
-      if (monthMap[monthStr]) {
-        // Assume year 2026
-        currentDate = `2026-${monthMap[monthStr]}-${dayNum.padStart(2, "0")}`;
-      }
-      continue;
-    }
-
-    // Skip if no date set yet
-    if (!currentDate) continue;
-
-    // Parse match line format: (74) 16:30 UTC-4  Germany v Paraguay   @ Boston (Foxborough)
-    // or with scores: (73) 12:00 UTC-7  South Africa 0-1 (0-0) Canada   @ Los Angeles
-    const matchLineRegex =
-      /\(\d+\)\s+(\d{1,2}):(\d{2})\s+UTC([+-]\d{1,2})\s+(.+?)\s+@\s+(.+)/;
-    const matchData = line.match(matchLineRegex);
-
-    if (matchData) {
-      const hours = parseInt(matchData[1], 10);
-      const minutes = parseInt(matchData[2], 10);
-      const utcOffset = parseInt(matchData[3], 10);
-      let teamInfo = matchData[4].trim();
-      let stadium = matchData[5].trim();
-
-      // Remove trailing comments (## ...)
-      stadium = stadium.replace(/\s+##\s+.+$/, "").trim();
-
-      // Extract score if present
-      // Format: "South Africa 0-1 (0-0) Canada" or "South Africa 0-1 Canada" or "Germany v Paraguay"
-      let homeGoals = null;
-      let awayGoals = null;
-      let status = "upcoming";
-
-      const scoreRegex = /^(.+?)\s+(\d+)-(\d+)\s+(?:\(\d+-\d+\)\s+)?(.+?)\s*$/;
-      const scoreMatch = teamInfo.match(scoreRegex);
-
-      let home, away;
-      if (scoreMatch) {
-        home = scoreMatch[1].trim();
-        homeGoals = parseInt(scoreMatch[2], 10);
-        awayGoals = parseInt(scoreMatch[3], 10);
-        away = scoreMatch[4].trim();
-        status = "completed";
-      } else {
-        // No score - match not played yet
-        // Format: "Team1 v Team2"
-        const versusMatch = teamInfo.match(/^(.+?)\s+v\s+(.+)$/i);
-        if (versusMatch) {
-          home = versusMatch[1].trim();
-          away = versusMatch[2].trim();
-        } else {
-          continue; // Skip if can't parse
-        }
-      }
-
-      // Normalize team names
-      home = normalizeTeamName(home);
-      away = normalizeTeamName(away);
-
-      // Convert to UTC datetime
-      const utcHours = hours - utcOffset;
-      const dateObj = new Date(`${currentDate}T00:00:00Z`);
-      dateObj.setUTCHours(utcHours, minutes, 0, 0);
-      const dateTime = dateObj.toISOString();
-
-      // Calculate match ID based on match number - Round of 32 starts at match 49
-      const matchId = `match_${matchStartIndex}`;
-      matchStartIndex++;
-
-      matches[matchId] = {
-        id: matchId,
-        fixtureId: `${home.toLowerCase()}_${away.toLowerCase()}_${currentDate}`,
-        date: dateTime,
-        home: home,
-        away: away,
-        stadium: stadium,
-        group: null,
-        stage: currentStage,
-        homeGoals: homeGoals,
-        awayGoals: awayGoals,
-        status: status,
-      };
-    }
-  }
-
-  console.log(`Parsed ${Object.keys(matches).length} matches from cup_finals.txt`);
-  return matches;
-}
-
-/**
- * Determine tournament stage based on match index
- * @param {number} matchIndex - Match number (starting from 49 for Round of 16)
- * @returns {string} Stage name
- */
-function determineStageFromRound(matchIndex) {
-  if (matchIndex >= 49 && matchIndex <= 56) return "Round of 16";
-  if (matchIndex >= 57 && matchIndex <= 60) return "Quarterfinals";
-  if (matchIndex >= 61 && matchIndex <= 62) return "Semifinals";
-  if (matchIndex === 63) return "Third Place Playoff";
-  if (matchIndex === 64) return "Final";
-  return "Group Stage";
 }
 
 /**
@@ -478,41 +299,30 @@ async function loadLocalMatches() {
 
 /**
  * Fetch all World Cup 2026 matches
- * Primary sources:
- * - openfootball worldcup.json (group stage)
- * - openfootball cup_finals.txt (knockout rounds)
+ * Primary: Official openfootball worldcup.json from GitHub
  * Fallback: Local cache (data/matches.json)
  * Enhancement: ESPN live data enrichment if available
  * @returns {Object} Object with match data keyed by match ID
  */
 async function fetchWorldCupMatches() {
   try {
+    // Try to fetch from official openfootball source first
+    const openfootballData = await fetchFromGithub();
+
     let matches = {};
 
-    // Fetch group stage from worldcup.json
-    const openfootballData = await fetchFromGithub();
     if (openfootballData) {
+      // Parse official data into our format
       matches = parseOpenfootballData(openfootballData);
-      console.log("Using official openfootball group stage data");
-    }
-
-    // Fetch knockout rounds from cup_finals.txt
-    const cupFinalsText = await fetchCupFinalsText();
-    if (cupFinalsText) {
-      const knockoutMatches = parseCupFinalsText(cupFinalsText, 49);
-      // Merge knockout matches with group stage (overwriting placeholder matches)
-      matches = { ...matches, ...knockoutMatches };
-      console.log("Merged cup finals knockout rounds data");
-    }
-
-    // Fallback to local cache if both GitHub fetches fail
-    if (Object.keys(matches).length === 0) {
-      console.warn("GitHub fetches failed, falling back to local cache");
+      console.log("Using official openfootball data source");
+    } else {
+      // Fallback to local cache if GitHub fetch fails
+      console.warn("GitHub fetch failed, falling back to local cache");
       matches = await loadLocalMatches();
     }
 
     if (Object.keys(matches).length === 0) {
-      console.warn("No matches loaded from any source");
+      console.warn("No matches loaded from either source");
       return loadMatches();
     }
 
@@ -623,20 +433,20 @@ function mapEspnStatus(espnStatusObj) {
 
 /**
  * Fetch latest results for all matches
- * Primary: openfootball (worldcup.json for group stage, cup_finals.txt for knockouts)
+ * Primary: openfootball (has all historical + future matches)
  * Backup: ESPN API (live/recent data overlay)
  * @returns {Object} Updated match data
  */
 async function refreshMatchResults() {
   try {
-    let matches = loadMatches();
+    const matches = loadMatches();
 
     if (Object.keys(matches).length === 0) {
       console.log("No matches to refresh");
       return matches;
     }
 
-    // Step 1: Fetch from openfootball (group stage)
+    // Step 1: Fetch from openfootball (primary source - has ALL results)
     console.log("📚 Fetching match data from openfootball...");
     const openfootballData = await fetchFromGithub();
 
@@ -655,30 +465,6 @@ async function refreshMatchResults() {
             matches[matchId].awayGoals = awayGoals;
             matches[matchId].status = status;
           }
-        }
-      });
-    }
-
-    // Step 1b: Fetch cup finals (knockout rounds)
-    console.log("🏆 Fetching cup finals knockout data from openfootball...");
-    const cupFinalsText = await fetchCupFinalsText();
-    if (cupFinalsText) {
-      const knockoutMatches = parseCupFinalsText(cupFinalsText, 49);
-      // Merge knockout matches, updating status and scores
-      Object.entries(knockoutMatches).forEach(([matchId, match]) => {
-        if (matches[matchId]) {
-          matches[matchId].home = match.home;
-          matches[matchId].away = match.away;
-          matches[matchId].stadium = match.stadium;
-          matches[matchId].homeGoals = match.homeGoals;
-          matches[matchId].awayGoals = match.awayGoals;
-          matches[matchId].status = match.status;
-          if (match.homeGoals !== null) {
-            console.log(`  🏆 ${match.home} ${match.homeGoals}-${match.awayGoals} ${match.away}`);
-          }
-        } else {
-          // Add new knockout match if not in current matches
-          matches[matchId] = match;
         }
       });
     }
