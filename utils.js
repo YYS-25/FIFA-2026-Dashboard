@@ -59,10 +59,15 @@ const COUNTRY_FLAGS = {
   'Slovenia': '🇸🇮',
   'Albania': '🇦🇱',
   'Bosnia and Herzegovina': '🇧🇦',
+  'Bosnia & Herzegovina': '🇧🇦',
   'Montenegro': '🇲🇪',
   'North Macedonia': '🇲🇰',
   'Bulgaria': '🇧🇬',
   'Moldova': '🇲🇩',
+  'Sweden': '🇸🇪',
+  'Norway': '🇳🇴',
+  'Denmark': '🇩🇰',
+  'Finland': '🇫🇮',
 
   // AFC (Asia & Oceania)
   'Japan': '🇯🇵',
@@ -87,7 +92,12 @@ const COUNTRY_FLAGS = {
   'Morocco': '🇲🇦',
   'Ghana': '🇬🇭',
   'Tunisia': '🇹🇳',
-  'Algeria': '🇩🇿'
+  'Algeria': '🇩🇿',
+  'DR Congo': '🇨🇩',
+  'Cape Verde': '🇨🇻',
+  'Mali': '🇲🇱',
+  'Guinea': '🇬🇳',
+  'Burkina Faso': '🇧🇫'
 };
 
 /**
@@ -254,33 +264,41 @@ function calculatePredictionPoints(prediction, actualResult) {
  */
 function calculatePersonStats(predictions, matchResults) {
   if (!predictions || !matchResults) {
-    return { totalPoints: 0, accuracy: 0, correctWinners: 0, totalPredictions: 0 };
+    return { totalPoints: 0, accuracy: 0, correctWinners: 0, exactScores: 0, matchesPlayed: 0, totalPredictions: 0 };
   }
 
   let totalPoints = 0;
   let correctWinners = 0;
+  let exactScores = 0;
+  let matchesPlayed = 0;
   const totalPredictions = predictions.length;
 
   predictions.forEach(prediction => {
     // Find matching match result by match ID or index
     const matchResult = matchResults.find(m => m.id === prediction.matchId || m.matchId === prediction.matchId);
 
-    if (matchResult) {
+    if (matchResult && matchResult.status === 'completed') {
+      matchesPlayed++;
       const result = calculatePredictionPoints(prediction, matchResult);
       totalPoints += result.points;
 
       if (result.points >= 1) {
         correctWinners++;
       }
+      if (result.points === 3) {
+        exactScores++;
+      }
     }
   });
 
-  const accuracy = totalPredictions > 0 ? Math.round((correctWinners / totalPredictions) * 100) : 0;
+  const accuracy = matchesPlayed > 0 ? Math.round((correctWinners / matchesPlayed) * 100) : 0;
 
   return {
     totalPoints,
     accuracy,
     correctWinners,
+    exactScores,
+    matchesPlayed,
     totalPredictions
   };
 }

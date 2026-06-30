@@ -261,6 +261,9 @@ function switchTab(tabName) {
     case "stats":
       renderStats();
       break;
+    case "bracket":
+      renderBracket();
+      break;
   }
 }
 
@@ -434,34 +437,106 @@ function renderLeaderboard() {
       person,
       totalPoints: stats.totalPoints,
       accuracy: stats.accuracy,
-      correctWinners: stats.correctWinners,
-      totalPredictions: stats.totalPredictions,
+      exactScores: stats.exactScores,
+      matchesPlayed: stats.matchesPlayed,
+      avgPoints: stats.matchesPlayed > 0 ? (stats.totalPoints / stats.matchesPlayed).toFixed(2) : "0.00",
     };
   });
 
   // Sort by totalPoints descending
   personStats.sort((a, b) => b.totalPoints - a.totalPoints);
 
+  const medals = { 1: "🥇", 2: "🥈", 3: "🥉" };
+
   // Build HTML table
-  let html = '<table class="leaderboard-table">';
+  let html = '<div class="table-scroll"><table class="leaderboard-table">';
   html +=
-    "<thead><tr><th>Rank</th><th>Person</th><th>Points</th><th>Accuracy</th><th>Winners</th></tr></thead>";
+    "<thead><tr><th>Rank</th><th>Person</th><th>Points</th><th>Accuracy</th><th>Exact</th></tr></thead>";
   html += "<tbody>";
 
   personStats.forEach((person, index) => {
     const rank = index + 1;
     const rankClass = rank === 1 ? ' class="first"' : "";
+    const medal = medals[rank] ? `<span class="rank-medal">${medals[rank]}</span>` : "";
     html += "<tr>";
-    html += `<td${rankClass}>${rank}</td>`;
+    html += `<td${rankClass}>${medal}${rank}</td>`;
     html += `<td>${person.person}</td>`;
-    html += `<td>${person.totalPoints}</td>`;
+    html += `<td>${person.totalPoints}<br><span class="points-sub">${person.avgPoints} pts/match</span></td>`;
     html += `<td>${person.accuracy}%</td>`;
-    html += `<td>${person.correctWinners}</td>`;
+    html += `<td>${person.exactScores}</td>`;
     html += "</tr>";
   });
 
-  html += "</tbody></table>";
+  html += "</tbody></table></div>";
+
+  html += buildLeaderboardBreakdown(mergedData, uniquePeople.slice().sort());
+
   container.innerHTML = html;
+}
+
+/**
+ * Build the "match breakdown" section for the Leaderboard tab:
+ * a table with one row per completed match (newest first) and one
+ * column per person, so predictions can be scanned across people.
+ * @param {array} mergedData - Output of mergeDataAndCalculateScores()
+ * @param {array} people - Sorted list of person names (column order)
+ * @returns {string} HTML for the breakdown section
+ */
+function buildLeaderboardBreakdown(mergedData, people) {
+  const completedPreds = mergedData.filter(
+    (pred) => pred.matchData && pred.matchData.status === "completed",
+  );
+
+  if (completedPreds.length === 0) {
+    return "";
+  }
+
+  // Group predictions and match metadata by matchId
+  const predsByMatch = {};
+  const matchById = {};
+  completedPreds.forEach((pred) => {
+    if (!predsByMatch[pred.matchId]) {
+      predsByMatch[pred.matchId] = {};
+    }
+    predsByMatch[pred.matchId][pred.person] = pred;
+    matchById[pred.matchId] = pred.matchData;
+  });
+
+  // Newest match first
+  const sortedMatchIds = Object.keys(matchById).sort(
+    (a, b) => new Date(matchById[b].date) - new Date(matchById[a].date),
+  );
+
+  let html = `<h3 class="section-title">Match Breakdown (${sortedMatchIds.length} completed)</h3>`;
+  html += '<div class="table-scroll"><table class="breakdown-table"><thead><tr><th>Match</th>';
+  people.forEach((person) => {
+    html += `<th>${person}</th>`;
+  });
+  html += "</tr></thead><tbody>";
+
+  sortedMatchIds.forEach((matchId) => {
+    const match = matchById[matchId];
+    const penaltyLine = match.penaltyScore
+      ? `<br><span class="breakdown-penalty">${match.penaltyScore}</span>`
+      : "";
+    html += "<tr>";
+    html += `<td class="breakdown-match-cell">${match.home}<span class="breakdown-score">${match.homeGoals}-${match.awayGoals}</span>${match.away}${penaltyLine}</td>`;
+
+    people.forEach((person) => {
+      const pred = predsByMatch[matchId][person];
+      if (pred) {
+        const scoreDisplay = `${pred.predictedHomeGoals !== null ? pred.predictedHomeGoals : "?"}-${pred.predictedAwayGoals !== null ? pred.predictedAwayGoals : "?"}`;
+        html += `<td><span class="prediction-box ${pred.scoreClass}">${scoreDisplay}<br>${pred.points}pt${pred.points === 1 ? "" : "s"}</span></td>`;
+      } else {
+        html += "<td>-</td>";
+      }
+    });
+
+    html += "</tr>";
+  });
+
+  html += "</tbody></table></div>";
+  return html;
 }
 
 /**
@@ -855,6 +930,8 @@ function renderAllTabs() {
   renderByUser();
   // Render stats tab
   renderStats();
+  // Render bracket tab
+  renderBracket();
 }
 
 // Auto-start the application when DOM is ready
