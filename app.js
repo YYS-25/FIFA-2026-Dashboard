@@ -96,6 +96,7 @@ function mergeBracketPredictionsIntoPredictions() {
   if (!appState.bracketPredictions) return;
 
   Object.values(appState.bracketPredictions).forEach((doc) => {
+    if (!doc.predictions) return;
     Object.entries(doc.predictions).forEach(([matchId, pick]) => {
       appState.predictions = appState.predictions.filter(
         (p) => !(p.person === doc.person && p.matchId === matchId)

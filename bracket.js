@@ -224,11 +224,18 @@ function createBracketMatchCard(matchId, extraClass, context) {
     ? `<div class="bracket-penalty">${match.penaltyScore}</div>`
     : "";
 
+  // In the locked predictions view, _finalResult carries the actual result so
+  // both the predicted score (primary) and the real final score can be shown.
+  const finalNote = match._finalResult != null
+    ? `<div class="bracket-final-score">Final: ${match._finalResult.homeGoals}–${match._finalResult.awayGoals}${match._finalResult.penaltyScore ? ` (${match._finalResult.penaltyScore})` : ""}</div>`
+    : "";
+
   card.innerHTML = `
     <div class="bracket-match-status badge-${statusInfo.status}">${badgeLabel}</div>
     ${renderTeamRow(homeInfo, match.homeGoals, "home")}
     ${renderTeamRow(awayInfo, match.awayGoals, "away")}
     ${penaltyNote}
+    ${finalNote}
   `;
 
   if (isEditableMatch && context.onScoreChange) {
@@ -399,7 +406,8 @@ function buildBracketGrid(context) {
  * percentage readout.
  */
 function applyBracketZoom() {
-  const grid = document.querySelector(".bracket-grid");
+  const grid = document.querySelector("#bracket-view-content .bracket-grid") ||
+               document.querySelector(".bracket-grid");
   const readout = document.querySelector(".bracket-zoom-readout");
   if (!grid) return;
   grid.style.zoom = bracketZoomLevel;
@@ -444,8 +452,10 @@ function createBracketZoomToolbar() {
   fitBtn.className = "bracket-zoom-btn bracket-zoom-fit";
   fitBtn.textContent = "Fit all";
   fitBtn.addEventListener("click", () => {
-    const scrollWrap = document.querySelector(".bracket-scroll");
-    const grid = document.querySelector(".bracket-grid");
+    const scrollWrap = document.querySelector("#bracket-view-content .bracket-scroll") ||
+                       document.querySelector(".bracket-scroll");
+    const grid = document.querySelector("#bracket-view-content .bracket-grid") ||
+                 document.querySelector(".bracket-grid");
     if (!scrollWrap || !grid) return;
     const previousZoom = bracketZoomLevel;
     grid.style.zoom = 1;

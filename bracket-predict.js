@@ -134,10 +134,11 @@ function renderClosedBanner(container, person) {
  */
 function createPredictingContext(person) {
   const draft = bracketPredictState.draft;
+  const predictableSet = new Set(getPredictableMatchIds());
   return {
     editable: true,
     isPredictable(matchId) {
-      return getPredictableMatchIds().includes(matchId);
+      return predictableSet.has(matchId);
     },
     getMatch(matchId) {
       const real = appState.matchResults[matchId];
@@ -159,8 +160,10 @@ function createPredictingContext(person) {
 }
 
 /**
- * Context for the locked read-only view: real results where already
- * decided, otherwise the locked, immutable prediction from Firestore.
+ * Context for the locked read-only view. The predicted score is always shown
+ * as the primary score; if the real match has since been played, a small
+ * "Final: X-Y" note appears under the card (via match._finalResult) so the
+ * person can see how their pick compared to the actual result.
  * @param {object} doc - the loaded bracketPredictions doc { predictions, ... }
  * @returns {object}
  */
@@ -170,15 +173,25 @@ function createLockedContext(doc) {
     getMatch(matchId) {
       const real = appState.matchResults[matchId];
       if (!real) return null;
-      if (real.status === "completed") return real;
       const pick = doc.predictions[matchId];
-      if (pick) {
-        return { ...real, homeGoals: pick.predictedHomeGoals, awayGoals: pick.predictedAwayGoals, status: "predicted" };
-      }
-      return real;
+      return {
+        ...real,
+        // Predicted scores are always the primary display values.
+        homeGoals: pick ? pick.predictedHomeGoals : null,
+        awayGoals: pick ? pick.predictedAwayGoals : null,
+        // Clear real penalty note - it belongs to the real result, not the prediction.
+        penaltyScore: null,
+        // If the real match has finished, attach actual result so the card can
+        // render a small "Final: X–Y" note alongside the predicted score.
+        _finalResult: real.status === "completed" ? {
+          homeGoals: real.homeGoals,
+          awayGoals: real.awayGoals,
+          penaltyScore: real.penaltyScore || null,
+        } : null,
+      };
     },
     isDecided(match) {
-      return !!match && (match.status === "completed" || match.status === "predicted");
+      return !!match && match.status === "completed";
     },
   };
 }
@@ -316,6 +329,7 @@ async function submitBracketPredictions(person) {
 
     appState.bracketPredictions = appState.bracketPredictions || {};
     appState.bracketPredictions[person] = { person, predictions, submittedAt: new Date().toISOString() };
+    mergeBracketPredictionsIntoPredictions();
     clearBracketDraft(person);
     bracketPredictState.submitting = false;
     bracketPredictState.pinInput = "";
