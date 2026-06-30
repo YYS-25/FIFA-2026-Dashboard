@@ -12,7 +12,7 @@
 // buildBracketGrid, resolveBracketTeam, ...) via a pluggable "context" object,
 // so this file only owns state + the identity/submit UI around that tree.
 
-const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T15:30:00Z"; // 19:30 GMT+4, 30min before match_80 (England v DR Congo, 16:00 UTC)
+const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T19:00:00Z"; // 23:00 GMT+4
 const FALLBACK_PEOPLE = ["Ravi", "Preety", "Kunal", "Anisha", "Yeshnav"];
 
 let bracketPredictState = {
@@ -121,7 +121,7 @@ function renderIdentityGate(container) {
 function renderClosedBanner(container, person) {
   const banner = document.createElement("div");
   banner.className = "bracket-predict-banner bracket-predict-closed";
-  banner.innerHTML = `⏰ <strong>Predictions are closed.</strong> ${person} didn't submit before the deadline (Jul 1, 19:30 GMT+4).`;
+  banner.innerHTML = `⏰ <strong>Predictions are closed.</strong> ${person} didn't submit before the deadline (Jul 1, 23:00 GMT+4).`;
   container.appendChild(banner);
   renderSwitchPersonButton(container);
 }
@@ -343,7 +343,7 @@ async function submitBracketPredictions(person) {
     // so this covers the three possible causes together rather than
     // guessing which one applies.
     bracketPredictState.error =
-      "Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the deadline (Jul 1, 19:30 GMT+4) hasn't passed.";
+      "Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the deadline (Jul 1, 23:00 GMT+4) hasn't passed.";
     renderBracket();
   }
 }
