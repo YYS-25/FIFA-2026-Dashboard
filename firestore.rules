@@ -1,0 +1,61 @@
+// Firestore security rules for the FIFA 2026 dashboard bracket predictions
+// feature. Paste into Firebase console -> Firestore Database -> Rules (or
+// deploy with `firebase deploy --only firestore:rules` if using the CLI).
+//
+// Threat model: this protects a 5-person friend-group bracket pool, not a
+// public product - the goal is to stop casual impersonation (someone
+// submitting picks under a friend's name) and to make submissions provably
+// immutable, not to defend against a determined attacker.
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admin-seeded PIN hashes, one per person. Seeded manually via the
+    // Firebase console before the feature goes live - never written by
+    // clients. Not directly readable by clients either; only read
+    // server-side (i.e. by these rules, via get()) to validate a
+    // bracketPredictions submission below.
+    match /pins/{person} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // One doc per person, created exactly once at final submission and
+    // never modified afterward.
+    match /bracketPredictions/{person} {
+      // Predictions are public once locked, same as the rest of the
+      // dashboard already shows everyone's predictions/scores openly.
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.person == person &&
+        request.resource.data.pinHash is string &&
+        request.resource.data.pinHash ==
+          get(/databases/$(database)/documents/pins/$(person)).data.pinHash &&
+        isValidPredictionsMap(request.resource.data.predictions) &&
+        request.time < deadline();
+
+      allow update, delete: if false;
+    }
+
+    // Submission deadline: 2026-07-01T15:30:00Z (19:30 GMT+4), 30 min before
+    // match_80 (England v DR Congo, 16:00 UTC) — the first of the remaining R32.
+    function deadline() {
+      return timestamp.date(2026, 7, 1) + duration.value(55800, 's'); // 15:30:00 UTC
+    }
+
+    // Checks that predictions is a map with exactly the currently-open round's
+    // match keys (remaining Round of 32: match_80-88; match_73-79 are admin-
+    // filled). Bump this alongside PREDICTABLE_MATCH_RANGE in bracket.js and
+    // the deadline() above when the next round (R16) opens.
+    function isValidPredictionsMap(p) {
+      return p.size() == 9 &&
+        p.keys().hasAll([
+          'match_80', 'match_81', 'match_82',
+          'match_83', 'match_84', 'match_85',
+          'match_86', 'match_87', 'match_88'
+        ]);
+    }
+  }
+}

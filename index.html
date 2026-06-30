@@ -80,7 +80,13 @@
     <script src="./utils.js"></script>
     <script src="./storage.js"></script>
     <script src="./api.js"></script>
+    <!-- Firebase (bracket predictions backend) - safe to load even before
+         dashboard/firebase-config.js has real project values filled in. -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+    <script src="./firebase-config.js"></script>
     <script src="./bracket.js"></script>
+    <script src="./bracket-predict.js"></script>
     <script src="./app.js"></script>
 </body>
 </html>

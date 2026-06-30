@@ -1097,6 +1097,167 @@ select:focus, input[type="text"]:focus, input[type="date"]:focus {
   transform: scaleX(-1);
 }
 
+/* ===== Bracket predictions ("My Picks") ===== */
+
+.bracket-view-toggle {
+  display: flex;
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+
+.bracket-view-btn {
+  flex: 1;
+  background: var(--bracket-navy-900);
+  border: 1px solid var(--bracket-navy-700);
+  color: var(--bracket-text-dim);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.bracket-view-btn.active {
+  background: var(--bracket-navy-700);
+  border-color: var(--bracket-gold);
+  color: var(--bracket-gold);
+}
+
+.bracket-predict-gate {
+  padding: 16px 0;
+}
+
+.bracket-predict-intro {
+  color: var(--bracket-text-dim);
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.bracket-predict-person-select {
+  width: 100%;
+  max-width: 320px;
+}
+
+.bracket-predict-banner {
+  background: var(--bracket-navy-900);
+  border: 1px solid var(--bracket-navy-700);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: var(--bracket-text);
+  margin: 12px 0 6px;
+}
+
+.bracket-predict-banner.bracket-predict-locked {
+  border-color: var(--bracket-gold-dim);
+}
+
+.bracket-predict-banner.bracket-predict-closed {
+  border-color: var(--bracket-live);
+}
+
+.bracket-predict-switch-link {
+  background: none;
+  border: none;
+  color: var(--bracket-text-faint);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0 0 10px;
+}
+
+.bracket-score-input {
+  width: 30px;
+  flex-shrink: 0;
+  background: var(--bracket-navy-950);
+  border: 1px solid var(--bracket-navy-700);
+  border-radius: 5px;
+  color: var(--bracket-gold);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  padding: 2px 0;
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.bracket-score-input:focus {
+  outline: none;
+  border-color: var(--bracket-gold);
+}
+
+.bracket-predicted-tag {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--bracket-text-faint);
+}
+
+.bracket-predict-submit-panel {
+  background: var(--bracket-navy-900);
+  border: 1px solid var(--bracket-navy-700);
+  border-radius: 10px;
+  padding: 14px;
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.bracket-predict-progress {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--bracket-text-dim);
+  flex: 1 1 100%;
+}
+
+.bracket-predict-pin-input {
+  width: 120px;
+  background: var(--bracket-navy-950);
+  border: 1px solid var(--bracket-navy-700);
+  border-radius: 6px;
+  color: var(--bracket-text);
+  padding: 8px 10px;
+  font-size: 0.85rem;
+}
+
+.bracket-predict-pin-input:focus {
+  outline: none;
+  border-color: var(--bracket-gold);
+}
+
+.bracket-predict-submit-btn {
+  background: var(--bracket-gold);
+  border: none;
+  color: var(--bracket-navy-950);
+  font-weight: 700;
+  padding: 9px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.bracket-predict-submit-btn:disabled {
+  background: var(--bracket-navy-700);
+  color: var(--bracket-text-faint);
+  cursor: not-allowed;
+}
+
+.bracket-predict-error {
+  flex: 1 1 100%;
+  color: var(--bracket-live);
+  font-size: 0.75rem;
+}
+
+.bracket-predict-hint {
+  flex: 1 1 100%;
+  color: var(--bracket-text-faint);
+  font-size: 0.7rem;
+}
+
 @media (min-width: 768px) {
   .bracket-round {
     width: 188px;

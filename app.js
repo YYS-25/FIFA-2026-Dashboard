@@ -5,6 +5,7 @@
 let appState = {
   predictions: [],
   matchResults: {},
+  bracketPredictions: {}, // locked match_80+ predictions from Firestore, keyed by person
   lastUpdated: null,
   error: null,
 };
@@ -47,6 +48,66 @@ async function fetchPredictions() {
     console.error("Error processing predictions:", err);
     throw err;
   }
+}
+
+/**
+ * Fetch everyone's locked-in bracket predictions (match_80+) from Firestore.
+ * Populates appState.bracketPredictions, keyed by person. Safe to call
+ * before Firebase is configured (dashboard/firebase-config.js still has
+ * placeholder values) - just leaves it empty.
+ * @returns {Promise<void>}
+ */
+async function fetchBracketPredictions() {
+  appState.bracketPredictions = {};
+
+  const db = typeof getFirestoreDb === "function" ? getFirestoreDb() : null;
+  if (!db) return;
+
+  try {
+    const snapshot = await db.collection("bracketPredictions").get();
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      appState.bracketPredictions[doc.id] = {
+        person: data.person,
+        predictions: data.predictions,
+        submittedAt: data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toISOString() : null,
+      };
+    });
+    console.log(`✓ Loaded ${snapshot.size} locked bracket prediction(s) from Firestore`);
+  } catch (err) {
+    console.warn("Could not load bracket predictions from Firestore:", err.message);
+  }
+}
+
+/**
+ * Flatten appState.bracketPredictions into appState.predictions, in the
+ * same { person, matchId, predictedHomeGoals, predictedAwayGoals } shape as
+ * the group-stage predictions, so the existing scoring/leaderboard pipeline
+ * (mergeDataAndCalculateScores, calculatePredictionPoints) picks them up
+ * automatically.
+ *
+ * predictions.json already has placeholder (0-0) rows for match_80+ for
+ * everyone, so any (person, matchId) pair being replaced here is first
+ * removed - otherwise both the stale placeholder and the real locked
+ * prediction would end up in appState.predictions and double-count on the
+ * leaderboard.
+ */
+function mergeBracketPredictionsIntoPredictions() {
+  if (!appState.bracketPredictions) return;
+
+  Object.values(appState.bracketPredictions).forEach((doc) => {
+    Object.entries(doc.predictions).forEach(([matchId, pick]) => {
+      appState.predictions = appState.predictions.filter(
+        (p) => !(p.person === doc.person && p.matchId === matchId)
+      );
+      appState.predictions.push({
+        person: doc.person,
+        matchId,
+        predictedHomeGoals: pick.predictedHomeGoals,
+        predictedAwayGoals: pick.predictedAwayGoals,
+      });
+    });
+  });
 }
 
 let predictionsData = null; // Cache predictions data
@@ -159,6 +220,12 @@ async function loadAllData() {
     // Load predictions and matches from single JSON file
     await fetchPredictionsAndMatches();
     await fetchPredictions();
+
+    // Load any locked-in match_80+ predictions from Firestore and fold them
+    // into appState.predictions so they score/leaderboard exactly like the
+    // existing group-stage predictions, no separate totals to track.
+    await fetchBracketPredictions();
+    mergeBracketPredictionsIntoPredictions();
 
     // Save matches to localStorage so refreshMatchResults() can use them
     saveMatches(appState.matchResults);

@@ -4,7 +4,8 @@ const STORAGE_KEYS = {
   MATCHES: 'wcPredictor_matches_v2',
   PREDICTIONS: 'wcPredictor_predictions',
   SCORES: 'wcPredictor_scores',
-  LAST_UPDATED: 'wcPredictor_lastUpdated'
+  LAST_UPDATED: 'wcPredictor_lastUpdated',
+  BRACKET_DRAFT_PREFIX: 'wcPredictor_bracketDraft_'
 };
 
 /**
@@ -94,6 +95,43 @@ function updateLastUpdated() {
  */
 function getLastUpdated() {
   return localStorage.getItem(STORAGE_KEYS.LAST_UPDATED) || 'Never';
+}
+
+/**
+ * Save a person's in-progress (not yet submitted) bracket predictions draft.
+ * Drafts are local-only - nothing is written to Firestore until final submit.
+ * @param {string} person
+ * @param {object} predictions - { match_80: { predictedHomeGoals, predictedAwayGoals }, ... }
+ */
+function saveBracketDraft(person, predictions) {
+  if (!person) return;
+  localStorage.setItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + person, JSON.stringify(predictions));
+}
+
+/**
+ * Load a person's in-progress bracket predictions draft.
+ * @param {string} person
+ * @returns {object} predictions keyed by matchId, or {} if none saved
+ */
+function loadBracketDraft(person) {
+  if (!person) return {};
+  const data = localStorage.getItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + person);
+  if (!data) return {};
+  try {
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('Failed to parse bracket draft:', err);
+    return {};
+  }
+}
+
+/**
+ * Clear a person's draft (e.g. once their bracket has been submitted/locked).
+ * @param {string} person
+ */
+function clearBracketDraft(person) {
+  if (!person) return;
+  localStorage.removeItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + person);
 }
 
 /**

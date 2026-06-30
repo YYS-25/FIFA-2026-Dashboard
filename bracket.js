@@ -38,6 +38,41 @@ const BRACKET_CENTER = {
   thirdPlace: "match_103",
 };
 
+// Currently-open round for end-user predictions: remaining Round of 32
+// matches (match_80-88). Matches 73-79 are already filled in by the admin.
+// Later rounds (R16, QF, SF, Final) aren't open yet - bump this range and
+// update the matching Firestore rules + BRACKET_PREDICTIONS_DEADLINE in
+// bracket-predict.js when the next round opens.
+const PREDICTABLE_MATCH_RANGE = { from: 80, to: 88 };
+
+function getPredictableMatchIds() {
+  const ids = [];
+  for (let n = PREDICTABLE_MATCH_RANGE.from; n <= PREDICTABLE_MATCH_RANGE.to; n++) {
+    ids.push(`match_${n}`);
+  }
+  return ids;
+}
+
+/**
+ * The default rendering context: reads real results from appState and never
+ * shows score inputs. Every render function below takes a context so the
+ * same tree-building code can also power the editable "My Picks" view and
+ * its locked read-only view (see bracket-predict.js), which supply their
+ * own getMatch/isDecided and an editable flag instead.
+ * @returns {object}
+ */
+function createOfficialBracketContext() {
+  return {
+    editable: false,
+    getMatch(matchId) {
+      return appState.matchResults[matchId];
+    },
+    isDecided(match) {
+      return !!match && match.status === "completed";
+    },
+  };
+}
+
 /**
  * Determine the winner of a knockout match, accounting for penalty shootouts.
  * Regular/extra-time goals decide it when they differ; when they're level,
@@ -67,59 +102,72 @@ function determineBracketWinner(match) {
 /**
  * Resolve a team field that may still be a placeholder:
  * - group position code ("2A", "3A/B/C/D/F") — can't be resolved client-side
- * - knockout winner/loser reference ("W74"/"L101") — resolved locally by
- *   looking up that match's own result, so a team advances on the bracket
- *   the moment its feeder match is decided, without waiting for the
- *   upstream data source to rewrite the next round's fixture text
+ * - knockout winner/loser reference ("W74"/"L101") — resolved by looking up
+ *   that match's own result/prediction via the context, so a team advances
+ *   on the bracket the moment its feeder match is decided (either a real
+ *   completed result, or - for the editable predictions context - the
+ *   user's own predicted score for that feeder)
  * - already a real team name — passed through as-is
  * @param {string} team
- * @returns {{name: string|null, isPlaceholder: boolean, subtitle: string}}
+ * @param {object} [context] - defaults to the official (real-results) context
+ * @returns {{name: string|null, isPlaceholder: boolean, subtitle: string, isPredicted: boolean}}
  */
-function resolveBracketTeam(team) {
-  if (!team) return { name: null, isPlaceholder: true, subtitle: "" };
+function resolveBracketTeam(team, context) {
+  context = context || createOfficialBracketContext();
+  if (!team) return { name: null, isPlaceholder: true, subtitle: "", isPredicted: false };
 
   const winnerMatch = team.match(/^W(\d+)$/);
   const loserMatch = !winnerMatch && team.match(/^L(\d+)$/);
 
   if (winnerMatch || loserMatch) {
     const feederNum = (winnerMatch || loserMatch)[1];
-    const feeder = appState.matchResults[`match_${feederNum}`];
+    const feeder = context.getMatch(`match_${feederNum}`);
     const feederWinnerSide = determineBracketWinner(feeder);
 
-    if (feeder && feeder.status === "completed" && feederWinnerSide && feederWinnerSide !== "draw") {
+    if (feeder && context.isDecided(feeder) && feederWinnerSide && feederWinnerSide !== "draw") {
       const wantSide = winnerMatch ? feederWinnerSide : feederWinnerSide === "home" ? "away" : "home";
       const resolvedName = wantSide === "home" ? feeder.home : feeder.away;
       const stillPlaceholder = resolvedName && /^([WL]\d+|[123][A-N](\/[A-N])*)$/.test(resolvedName);
       if (resolvedName && !stillPlaceholder) {
-        return { name: resolvedName, isPlaceholder: false, subtitle: "" };
+        return {
+          name: resolvedName,
+          isPlaceholder: false,
+          subtitle: "",
+          isPredicted: feeder.status !== "completed",
+        };
       }
     }
 
     const label = winnerMatch ? "Winner" : "Loser";
-    return { name: null, isPlaceholder: true, subtitle: `${label} Match ${feederNum}` };
+    return { name: null, isPlaceholder: true, subtitle: `${label} Match ${feederNum}`, isPredicted: false };
   }
 
   const groupMatch = team.match(/^([123])([A-N])(\/[A-N])*$/);
   if (groupMatch) {
     const positionLabel = groupMatch[1] === "1" ? "Winner" : groupMatch[1] === "2" ? "Runner-up" : "Best 3rd";
     const groups = team.slice(1).split("/").join("/");
-    return { name: null, isPlaceholder: true, subtitle: `${positionLabel} Group ${groups}` };
+    return { name: null, isPlaceholder: true, subtitle: `${positionLabel} Group ${groups}`, isPredicted: false };
   }
 
-  return { name: team, isPlaceholder: false, subtitle: "" };
+  return { name: team, isPlaceholder: false, subtitle: "", isPredicted: false };
 }
 
 /**
- * Build a single bracket match node (compact card for the tree).
+ * Build a single bracket match node (compact card for the tree). When
+ * context.editable is true and this matchId falls in the predictable range,
+ * each resolved team gets a number input instead of a static score, wired
+ * to context.onScoreChange.
  * @param {string} matchId
  * @param {string} extraClass - optional extra class (e.g. "bracket-match-final")
+ * @param {object} [context] - defaults to the official (real-results) context
  * @returns {HTMLElement}
  */
-function createBracketMatchCard(matchId, extraClass) {
+function createBracketMatchCard(matchId, extraClass, context) {
+  context = context || createOfficialBracketContext();
   const wrap = document.createElement("div");
   wrap.className = "bracket-match-wrap";
 
-  const match = appState.matchResults[matchId];
+  const match = context.getMatch(matchId);
   const card = document.createElement("div");
   card.className = `bracket-match ${extraClass || ""}`;
 
@@ -130,23 +178,44 @@ function createBracketMatchCard(matchId, extraClass) {
   }
 
   const winner = determineBracketWinner(match);
-  const isCompleted = match.status === "completed";
+  const isDecided = context.isDecided(match);
   const statusInfo = getMatchStatus(match);
   const badgeLabel = statusInfo.status === "completed" ? "FINISHED" : statusInfo.label;
 
-  const renderTeamRow = (team, goals, side) => {
-    const info = resolveBracketTeam(team);
-    const isWinner = isCompleted && winner === side;
+  // Only show score inputs once BOTH teams are known - predicting a score
+  // against a still-TBD opponent isn't meaningful, even if this side's own
+  // team is already resolved.
+  const homeInfo = resolveBracketTeam(match.home, context);
+  const awayInfo = resolveBracketTeam(match.away, context);
+  const bothTeamsKnown = !homeInfo.isPlaceholder && !awayInfo.isPlaceholder;
+  const isEditableMatch = !!(
+    context.editable &&
+    context.isPredictable &&
+    context.isPredictable(matchId) &&
+    bothTeamsKnown
+  );
+
+  const renderTeamRow = (info, goals, side) => {
+    const isWinner = isDecided && winner === side;
     const rowClass = `bracket-team${info.isPlaceholder ? " bracket-tbd" : ""}${isWinner ? " bracket-winner" : ""}`;
     const name = info.isPlaceholder ? "TBD" : info.name;
     const flag = info.isPlaceholder ? "" : `<span class="bracket-flag">${getCountryFlag(info.name)}</span>`;
-    const score = goals !== null && goals !== undefined ? `<span class="bracket-score">${goals}</span>` : "";
+    const predictedTag = info.isPredicted ? '<span class="bracket-predicted-tag">your pick</span>' : "";
     const subtitle = info.isPlaceholder && info.subtitle ? `<span class="bracket-subtitle">${info.subtitle}</span>` : "";
+
+    let scoreHtml;
+    if (isEditableMatch) {
+      const value = goals !== null && goals !== undefined ? goals : "";
+      scoreHtml = `<input type="number" class="bracket-score-input" min="0" max="20" inputmode="numeric" data-match-id="${matchId}" data-side="${side}" value="${value}" placeholder="-">`;
+    } else {
+      scoreHtml = goals !== null && goals !== undefined ? `<span class="bracket-score">${goals}</span>` : "";
+    }
+
     return `
       <div class="${rowClass}">
         ${flag}
-        <span class="bracket-team-name">${name}${subtitle}</span>
-        ${score}
+        <span class="bracket-team-name">${name}${subtitle}${predictedTag}</span>
+        ${scoreHtml}
       </div>
     `;
   };
@@ -157,10 +226,18 @@ function createBracketMatchCard(matchId, extraClass) {
 
   card.innerHTML = `
     <div class="bracket-match-status badge-${statusInfo.status}">${badgeLabel}</div>
-    ${renderTeamRow(match.home, match.homeGoals, "home")}
-    ${renderTeamRow(match.away, match.awayGoals, "away")}
+    ${renderTeamRow(homeInfo, match.homeGoals, "home")}
+    ${renderTeamRow(awayInfo, match.awayGoals, "away")}
     ${penaltyNote}
   `;
+
+  if (isEditableMatch && context.onScoreChange) {
+    card.querySelectorAll(".bracket-score-input").forEach((input) => {
+      input.addEventListener("change", () => {
+        context.onScoreChange(matchId, input.dataset.side, input.value);
+      });
+    });
+  }
 
   wrap.appendChild(card);
   return wrap;
@@ -169,9 +246,10 @@ function createBracketMatchCard(matchId, extraClass) {
 /**
  * Build a round column: label + a fixed-height, vertically-centered stack of match cards.
  * @param {object} round - { key, label, matches }
+ * @param {object} [context]
  * @returns {HTMLElement}
  */
-function createRoundColumn(round) {
+function createRoundColumn(round, context) {
   const col = document.createElement("div");
   col.className = `bracket-round bracket-round-${round.key}`;
 
@@ -184,7 +262,7 @@ function createRoundColumn(round) {
   matchesContainer.className = "bracket-round-matches";
   matchesContainer.style.height = `${BRACKET_TOTAL_HEIGHT}px`;
   round.matches.forEach((matchId) => {
-    matchesContainer.appendChild(createBracketMatchCard(matchId));
+    matchesContainer.appendChild(createBracketMatchCard(matchId, null, context));
   });
   col.appendChild(matchesContainer);
 
@@ -231,9 +309,10 @@ function createConnectorColumn(sourceCount, mirrored) {
  * Build one side (left or right) of the bracket: rounds interleaved with connectors.
  * @param {Array} rounds - BRACKET_SIDES.left or BRACKET_SIDES.right
  * @param {boolean} mirrored - true for the right side (DOM + connector direction flipped)
+ * @param {object} [context]
  * @returns {HTMLElement}
  */
-function createBracketSide(rounds, mirrored) {
+function createBracketSide(rounds, mirrored, context) {
   const side = document.createElement("div");
   side.className = `bracket-side ${mirrored ? "bracket-side-right" : "bracket-side-left"}`;
 
@@ -249,7 +328,7 @@ function createBracketSide(rounds, mirrored) {
 
   ordered.forEach((piece) => {
     if (piece.type === "round") {
-      side.appendChild(createRoundColumn(piece.round));
+      side.appendChild(createRoundColumn(piece.round, context));
     } else {
       side.appendChild(createConnectorColumn(piece.sourceCount, mirrored));
     }
@@ -262,9 +341,10 @@ function createBracketSide(rounds, mirrored) {
  * Build the center column: Final true-centered on the column (matching the
  * semifinal convergence point on both sides), Third Place Playoff anchored
  * directly beneath it.
+ * @param {object} [context]
  * @returns {HTMLElement}
  */
-function createBracketCenter() {
+function createBracketCenter(context) {
   const center = document.createElement("div");
   center.className = "bracket-center";
   center.style.height = `${BRACKET_TOTAL_HEIGHT}px`;
@@ -278,7 +358,7 @@ function createBracketCenter() {
   finalLabel.className = "bracket-round-label bracket-final-label";
   finalLabel.textContent = "🏆 Final";
   finalBlock.appendChild(finalLabel);
-  finalBlock.appendChild(createBracketMatchCard(BRACKET_CENTER.final, "bracket-match-final"));
+  finalBlock.appendChild(createBracketMatchCard(BRACKET_CENTER.final, "bracket-match-final", context));
   center.appendChild(finalBlock);
 
   // Anchored just below the Final block, not pulled into the same height
@@ -289,10 +369,29 @@ function createBracketCenter() {
   thirdLabel.className = "bracket-round-label";
   thirdLabel.textContent = "3rd Place Playoff";
   thirdBlock.appendChild(thirdLabel);
-  thirdBlock.appendChild(createBracketMatchCard(BRACKET_CENTER.thirdPlace, "bracket-match-third"));
+  thirdBlock.appendChild(createBracketMatchCard(BRACKET_CENTER.thirdPlace, "bracket-match-third", context));
   center.appendChild(thirdBlock);
 
   return center;
+}
+
+/**
+ * Build the full bracket grid (left side + center + right side) for a given
+ * context. Shared by the official read-only view and the editable/locked
+ * "My Picks" views in bracket-predict.js.
+ * @param {object} [context]
+ * @returns {HTMLElement}
+ */
+function buildBracketGrid(context) {
+  context = context || createOfficialBracketContext();
+  const grid = document.createElement("div");
+  grid.className = "bracket-grid";
+
+  grid.appendChild(createBracketSide(BRACKET_SIDES.left, false, context));
+  grid.appendChild(createBracketCenter(context));
+  grid.appendChild(createBracketSide(BRACKET_SIDES.right, true, context));
+
+  return grid;
 }
 
 /**
@@ -380,8 +479,15 @@ function createBracketZoomToolbar() {
   return toolbar;
 }
 
+// Which bracket sub-view is showing: the official read-only tree, or the
+// end user's own predictions (editable / locked, see bracket-predict.js).
+let bracketActiveView = "official";
+
 /**
- * Render the knockout bracket view
+ * Render the knockout bracket view: a header/zoom toolbar shared by both
+ * sub-views, an Official/My Picks toggle, and the active sub-view's content.
+ * The "My Picks" sub-view is delegated to bracket-predict.js (if loaded) so
+ * this file stays usable on its own for the read-only official tree.
  */
 function renderBracket() {
   const container = document.getElementById("bracket");
@@ -400,18 +506,34 @@ function renderBracket() {
   header.appendChild(createBracketZoomToolbar());
   container.appendChild(header);
 
-  const scrollWrap = document.createElement("div");
-  scrollWrap.className = "bracket-scroll";
+  if (typeof renderBracketPredictionsView === "function") {
+    const toggle = document.createElement("div");
+    toggle.className = "bracket-view-toggle";
+    toggle.innerHTML = `
+      <button type="button" class="bracket-view-btn${bracketActiveView === "official" ? " active" : ""}" data-view="official">🏆 Official Bracket</button>
+      <button type="button" class="bracket-view-btn${bracketActiveView === "predict" ? " active" : ""}" data-view="predict">🔮 My Picks</button>
+    `;
+    toggle.querySelectorAll(".bracket-view-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        bracketActiveView = btn.dataset.view;
+        renderBracket();
+      });
+    });
+    container.appendChild(toggle);
+  }
 
-  const grid = document.createElement("div");
-  grid.className = "bracket-grid";
+  const content = document.createElement("div");
+  content.id = "bracket-view-content";
+  container.appendChild(content);
 
-  grid.appendChild(createBracketSide(BRACKET_SIDES.left, false));
-  grid.appendChild(createBracketCenter());
-  grid.appendChild(createBracketSide(BRACKET_SIDES.right, true));
-
-  scrollWrap.appendChild(grid);
-  container.appendChild(scrollWrap);
+  if (bracketActiveView === "predict" && typeof renderBracketPredictionsView === "function") {
+    renderBracketPredictionsView(content);
+  } else {
+    const scrollWrap = document.createElement("div");
+    scrollWrap.className = "bracket-scroll";
+    scrollWrap.appendChild(buildBracketGrid(createOfficialBracketContext()));
+    content.appendChild(scrollWrap);
+  }
 
   applyBracketZoom();
 }
