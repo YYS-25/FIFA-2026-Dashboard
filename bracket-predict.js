@@ -23,7 +23,7 @@
 const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T19:00:00Z"; // R32 - historical, kept for reference
 const BRACKET_ROUND_KEY = "r16";
 const BRACKET_PREDICTIONS_COLLECTION = "bracketPredictionsR16";
-const BRACKET_R16_DEADLINE = "2026-07-04T16:30:00Z"; // 30 min before match_90 (earliest R16 kickoff)
+const BRACKET_R16_DEADLINE = "2026-07-05T19:00:00Z"; // 23:00 GMT+4 Jul 5
 const FALLBACK_PEOPLE = ["Ravi", "Preety", "Kunal", "Anisha", "Yeshnav"];
 
 let bracketPredictState = {
