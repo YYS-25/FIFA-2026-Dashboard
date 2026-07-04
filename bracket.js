@@ -38,12 +38,15 @@ const BRACKET_CENTER = {
   thirdPlace: "match_103",
 };
 
-// Currently-open round for end-user predictions: remaining Round of 32
-// matches (match_80-88). Matches 73-79 are already filled in by the admin.
-// Later rounds (R16, QF, SF, Final) aren't open yet - bump this range and
-// update the matching Firestore rules + BRACKET_PREDICTIONS_DEADLINE in
-// bracket-predict.js when the next round opens.
-const PREDICTABLE_MATCH_RANGE = { from: 80, to: 88 };
+// Currently-open round for end-user predictions: Round of 16 (match_89-96).
+// Round of 32 (match_73-88) is closed - those predictions are locked in the
+// "bracketPredictions" Firestore collection. Round of 16 predictions live in
+// their own "bracketPredictionsR16" collection instead (see bracket-predict.js),
+// so this range only ever needs to describe the round currently open for
+// picks. Later rounds (QF, SF, Final) aren't open yet - bump this range and
+// add a new collection/rule block (following the same pattern) when the next
+// round opens.
+const PREDICTABLE_MATCH_RANGE = { from: 89, to: 96 };
 
 function getPredictableMatchIds() {
   const ids = [];
@@ -195,12 +198,15 @@ function createBracketMatchCard(matchId, extraClass, context) {
     bothTeamsKnown
   );
 
+  const penaltyPickSide = match.predictedPenaltyWinner || null;
+
   const renderTeamRow = (info, goals, side) => {
     const isWinner = isDecided && winner === side;
     const rowClass = `bracket-team${info.isPlaceholder ? " bracket-tbd" : ""}${isWinner ? " bracket-winner" : ""}`;
     const name = info.isPlaceholder ? "TBD" : info.name;
     const flag = info.isPlaceholder ? "" : `<span class="bracket-flag">${getCountryFlag(info.name)}</span>`;
     const predictedTag = info.isPredicted ? '<span class="bracket-predicted-tag">your pick</span>' : "";
+    const pensTag = penaltyPickSide === side ? '<span class="bracket-pens-tag">on pens</span>' : "";
     const subtitle = info.isPlaceholder && info.subtitle ? `<span class="bracket-subtitle">${info.subtitle}</span>` : "";
 
     let scoreHtml;
@@ -214,7 +220,7 @@ function createBracketMatchCard(matchId, extraClass, context) {
     return `
       <div class="${rowClass}">
         ${flag}
-        <span class="bracket-team-name">${name}${subtitle}${predictedTag}</span>
+        <span class="bracket-team-name">${name}${subtitle}${predictedTag}${pensTag}</span>
         ${scoreHtml}
       </div>
     `;
@@ -230,13 +236,27 @@ function createBracketMatchCard(matchId, extraClass, context) {
     ? `<div class="bracket-final-score">Final: ${match._finalResult.homeGoals}–${match._finalResult.awayGoals}${match._finalResult.penaltyScore ? ` (${match._finalResult.penaltyScore})` : ""}</div>`
     : "";
 
+  // Only the editable context ever supplies needsPenaltyPick - the official
+  // and locked contexts don't, so this is always false there.
+  const showPenaltyPrompt = isEditableMatch && context.needsPenaltyPick && context.needsPenaltyPick(matchId);
+  const penaltyPromptHtml = showPenaltyPrompt
+    ? `<button type="button" class="bracket-penalty-prompt-btn" data-match-id="${matchId}">⚽ Pick penalty winner</button>`
+    : "";
+
   card.innerHTML = `
     <div class="bracket-match-status badge-${statusInfo.status}">${badgeLabel}</div>
     ${renderTeamRow(homeInfo, match.homeGoals, "home")}
     ${renderTeamRow(awayInfo, match.awayGoals, "away")}
     ${penaltyNote}
     ${finalNote}
+    ${penaltyPromptHtml}
   `;
+
+  if (showPenaltyPrompt && context.onPenaltyPromptClick) {
+    card.querySelector(".bracket-penalty-prompt-btn").addEventListener("click", () => {
+      context.onPenaltyPromptClick(matchId);
+    });
+  }
 
   if (isEditableMatch && context.onScoreChange) {
     card.querySelectorAll(".bracket-score-input").forEach((input) => {

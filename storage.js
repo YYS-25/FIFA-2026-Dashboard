@@ -100,22 +100,26 @@ function getLastUpdated() {
 /**
  * Save a person's in-progress (not yet submitted) bracket predictions draft.
  * Drafts are local-only - nothing is written to Firestore until final submit.
+ * Scoped by round so a stale draft from an earlier round (e.g. Round of 32)
+ * never bleeds into a later round's (e.g. Round of 16) editable view.
+ * @param {string} round - e.g. "r16"
  * @param {string} person
- * @param {object} predictions - { match_80: { predictedHomeGoals, predictedAwayGoals }, ... }
+ * @param {object} predictions - { match_89: { predictedHomeGoals, predictedAwayGoals, predictedPenaltyWinner }, ... }
  */
-function saveBracketDraft(person, predictions) {
+function saveBracketDraft(round, person, predictions) {
   if (!person) return;
-  localStorage.setItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + person, JSON.stringify(predictions));
+  localStorage.setItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + round + '_' + person, JSON.stringify(predictions));
 }
 
 /**
  * Load a person's in-progress bracket predictions draft.
+ * @param {string} round - e.g. "r16"
  * @param {string} person
  * @returns {object} predictions keyed by matchId, or {} if none saved
  */
-function loadBracketDraft(person) {
+function loadBracketDraft(round, person) {
   if (!person) return {};
-  const data = localStorage.getItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + person);
+  const data = localStorage.getItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + round + '_' + person);
   if (!data) return {};
   try {
     return JSON.parse(data);
@@ -127,11 +131,12 @@ function loadBracketDraft(person) {
 
 /**
  * Clear a person's draft (e.g. once their bracket has been submitted/locked).
+ * @param {string} round - e.g. "r16"
  * @param {string} person
  */
-function clearBracketDraft(person) {
+function clearBracketDraft(round, person) {
   if (!person) return;
-  localStorage.removeItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + person);
+  localStorage.removeItem(STORAGE_KEYS.BRACKET_DRAFT_PREFIX + round + '_' + person);
 }
 
 /**

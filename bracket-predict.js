@@ -1,30 +1,42 @@
 // bracket-predict.js - End-user bracket predictions ("My Picks")
 //
 // Lets each of the 5 people predict scores for the current open round (see
-// PREDICTABLE_MATCH_RANGE in bracket.js - currently remaining Round of 32,
-// match_80-88; matches 73-79 are admin-filled, later rounds aren't open yet). Submission is a single, one-time, immutable
-// write to Firestore (dashboard/firestore.rules enforces "exactly once" and
-// the deadline - this file's checks are UX only, not security). Drafts are
-// saved to localStorage as the user fills the bracket in, and nothing
-// reaches Firestore until they hit Submit.
+// PREDICTABLE_MATCH_RANGE in bracket.js - currently Round of 16, match_89-96).
+// Submission is a single, one-time, immutable write to Firestore
+// (dashboard/firestore.rules enforces "exactly once" and the deadline - this
+// file's checks are UX only, not security). Drafts are saved to localStorage
+// as the user fills the bracket in, and nothing reaches Firestore until they
+// hit Submit.
+//
+// Each round gets its own Firestore collection (BRACKET_PREDICTIONS_COLLECTION
+// below) rather than reusing the previous round's - a person's prior-round doc
+// is immutable (rules forbid update/delete), so a new round needs a fresh
+// collection to allow a fresh "create". Bump BRACKET_ROUND_KEY,
+// BRACKET_PREDICTIONS_COLLECTION and BRACKET_R16_DEADLINE (renaming it too)
+// together, plus PREDICTABLE_MATCH_RANGE in bracket.js and a new additive rule
+// block in firestore.rules, when the next round (QF) opens.
 //
 // Rendering reuses bracket.js's tree-building functions (createBracketMatchCard,
 // buildBracketGrid, resolveBracketTeam, ...) via a pluggable "context" object,
 // so this file only owns state + the identity/submit UI around that tree.
 
-const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T19:00:00Z"; // 23:00 GMT+4
+const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T19:00:00Z"; // R32 - historical, kept for reference
+const BRACKET_ROUND_KEY = "r16";
+const BRACKET_PREDICTIONS_COLLECTION = "bracketPredictionsR16";
+const BRACKET_R16_DEADLINE = "2026-07-04T16:30:00Z"; // 30 min before match_90 (earliest R16 kickoff)
 const FALLBACK_PEOPLE = ["Ravi", "Preety", "Kunal", "Anisha", "Yeshnav"];
 
 let bracketPredictState = {
   selectedPerson: null,
   pinInput: "",
-  draft: {}, // { match_80: { predictedHomeGoals, predictedAwayGoals }, ... }
+  draft: {}, // { match_89: { predictedHomeGoals, predictedAwayGoals, predictedPenaltyWinner }, ... }
   submitting: false,
   error: null,
+  penaltyModal: null, // { matchId } | null - which match's "who wins on penalties?" popup is open
 };
 
 function isPastBracketDeadline() {
-  return Date.now() >= new Date(BRACKET_PREDICTIONS_DEADLINE).getTime();
+  return Date.now() >= new Date(BRACKET_R16_DEADLINE).getTime();
 }
 
 /**
@@ -67,7 +79,9 @@ function renderBracketPredictionsView(container) {
     return;
   }
 
-  const lockedDoc = appState.bracketPredictions && appState.bracketPredictions[person];
+  const lockedDoc = appState.bracketPredictions &&
+    appState.bracketPredictions[BRACKET_ROUND_KEY] &&
+    appState.bracketPredictions[BRACKET_ROUND_KEY][person];
   if (lockedDoc) {
     renderLockedView(container, person, lockedDoc);
     return;
@@ -100,7 +114,7 @@ function renderIdentityGate(container) {
   const wrap = document.createElement("div");
   wrap.className = "bracket-predict-gate";
   wrap.innerHTML = `
-    <p class="bracket-predict-intro">Pick your name to predict scores for the remaining Round of 32 matches.</p>
+    <p class="bracket-predict-intro">Pick your name to predict scores for the Round of 16 matches.</p>
     <select class="bracket-predict-person-select">
       <option value="">Select your name…</option>
       ${people.map((p) => `<option value="${p}">${p}</option>`).join("")}
@@ -110,7 +124,7 @@ function renderIdentityGate(container) {
     const person = e.target.value;
     if (!person) return;
     bracketPredictState.selectedPerson = person;
-    bracketPredictState.draft = loadBracketDraft(person);
+    bracketPredictState.draft = loadBracketDraft(BRACKET_ROUND_KEY, person);
     bracketPredictState.pinInput = "";
     bracketPredictState.error = null;
     renderBracket();
@@ -121,7 +135,7 @@ function renderIdentityGate(container) {
 function renderClosedBanner(container, person) {
   const banner = document.createElement("div");
   banner.className = "bracket-predict-banner bracket-predict-closed";
-  banner.innerHTML = `⏰ <strong>Predictions are closed.</strong> ${person} didn't submit before the deadline (Jul 1, 23:00 GMT+4).`;
+  banner.innerHTML = `⏰ <strong>Predictions are closed.</strong> ${person} didn't submit before the Round of 16 deadline (${formatDate(BRACKET_R16_DEADLINE)}).`;
   container.appendChild(banner);
   renderSwitchPersonButton(container);
 }
@@ -146,7 +160,13 @@ function createPredictingContext(person) {
       if (real.status === "completed") return real;
       const pick = draft[matchId];
       if (pick && pick.predictedHomeGoals != null && pick.predictedAwayGoals != null) {
-        return { ...real, homeGoals: pick.predictedHomeGoals, awayGoals: pick.predictedAwayGoals, status: "predicted" };
+        return {
+          ...real,
+          homeGoals: pick.predictedHomeGoals,
+          awayGoals: pick.predictedAwayGoals,
+          status: "predicted",
+          predictedPenaltyWinner: pick.predictedPenaltyWinner || null,
+        };
       }
       return real;
     },
@@ -155,6 +175,20 @@ function createPredictingContext(person) {
     },
     onScoreChange(matchId, side, rawValue) {
       handleScoreChange(person, matchId, side, rawValue);
+    },
+    needsPenaltyPick(matchId) {
+      const pick = draft[matchId];
+      return !!(
+        pick &&
+        pick.predictedHomeGoals != null &&
+        pick.predictedAwayGoals != null &&
+        pick.predictedHomeGoals === pick.predictedAwayGoals &&
+        !pick.predictedPenaltyWinner
+      );
+    },
+    onPenaltyPromptClick(matchId) {
+      bracketPredictState.penaltyModal = { matchId };
+      rerenderBracketPreservingScroll();
     },
   };
 }
@@ -179,6 +213,7 @@ function createLockedContext(doc) {
         // Predicted scores are always the primary display values.
         homeGoals: pick ? pick.predictedHomeGoals : null,
         awayGoals: pick ? pick.predictedAwayGoals : null,
+        predictedPenaltyWinner: pick ? pick.predictedPenaltyWinner || null : null,
         // Clear real penalty note - it belongs to the real result, not the prediction.
         penaltyScore: null,
         // If the real match has finished, attach actual result so the card can
@@ -204,9 +239,26 @@ function handleScoreChange(person, matchId, side, rawValue) {
     bracketPredictState.draft[matchId] = { predictedHomeGoals: null, predictedAwayGoals: null };
   }
   const key = side === "home" ? "predictedHomeGoals" : "predictedAwayGoals";
-  bracketPredictState.draft[matchId][key] = value;
+  const pick = bracketPredictState.draft[matchId];
+  pick[key] = value;
 
-  saveBracketDraft(person, bracketPredictState.draft);
+  const bothFilled = pick.predictedHomeGoals != null && pick.predictedAwayGoals != null;
+  const isEqual = bothFilled && pick.predictedHomeGoals === pick.predictedAwayGoals;
+
+  if (!isEqual) {
+    // Moved away from a draw (or incomplete) - any prior penalty pick is stale.
+    if (pick.predictedPenaltyWinner) delete pick.predictedPenaltyWinner;
+    if (bracketPredictState.penaltyModal && bracketPredictState.penaltyModal.matchId === matchId) {
+      bracketPredictState.penaltyModal = null;
+    }
+  } else if (!pick.predictedPenaltyWinner) {
+    // Just became equal (or still equal with no pick yet) - prompt for it.
+    // Equal-to-still-equal (e.g. 2-2 -> 3-3) intentionally keeps an existing
+    // pick and doesn't reopen the modal - the pick is about the team, not the scoreline.
+    bracketPredictState.penaltyModal = { matchId };
+  }
+
+  saveBracketDraft(BRACKET_ROUND_KEY, person, bracketPredictState.draft);
   rerenderBracketPreservingScroll();
 }
 
@@ -226,11 +278,21 @@ function rerenderBracketPreservingScroll() {
   if (newScrollWrap) newScrollWrap.scrollLeft = scrollLeft;
 }
 
+/**
+ * A match counts as fully predicted once both scores are filled - and, if
+ * those scores are equal, once a penalty-shootout winner has also been picked.
+ * @param {string} matchId
+ * @returns {boolean}
+ */
+function isMatchFullyPredicted(matchId) {
+  const pick = bracketPredictState.draft[matchId];
+  if (!pick || pick.predictedHomeGoals == null || pick.predictedAwayGoals == null) return false;
+  if (pick.predictedHomeGoals === pick.predictedAwayGoals && !pick.predictedPenaltyWinner) return false;
+  return true;
+}
+
 function countFilledPredictions() {
-  return getPredictableMatchIds().filter((id) => {
-    const pick = bracketPredictState.draft[id];
-    return pick && pick.predictedHomeGoals != null && pick.predictedAwayGoals != null;
-  }).length;
+  return getPredictableMatchIds().filter(isMatchFullyPredicted).length;
 }
 
 function renderEditableView(container, person) {
@@ -273,6 +335,76 @@ function renderEditableView(container, person) {
   });
 
   container.appendChild(panel);
+
+  if (bracketPredictState.penaltyModal) {
+    renderBracketPenaltyModal(container, person, context);
+  }
+}
+
+/**
+ * "Who wins on penalties?" popup, shown when a knockout match's entered
+ * scores are equal. Appended into the same container as the rest of the
+ * editable view - position:fixed works correctly there since nothing in the
+ * ancestor chain (the bracket's zoom is applied to a sibling subtree) creates
+ * a containing block that would confine it.
+ * @param {HTMLElement} container
+ * @param {string} person
+ * @param {object} context - the editable predicting context (for getMatch/resolveBracketTeam)
+ */
+function renderBracketPenaltyModal(container, person, context) {
+  const matchId = bracketPredictState.penaltyModal.matchId;
+  const pick = bracketPredictState.draft[matchId];
+
+  // Defends against stale state (e.g. scores changed elsewhere): if this
+  // match's draft scores are no longer equal, there's nothing to ask.
+  if (!pick || pick.predictedHomeGoals == null || pick.predictedAwayGoals == null ||
+      pick.predictedHomeGoals !== pick.predictedAwayGoals) {
+    bracketPredictState.penaltyModal = null;
+    return;
+  }
+
+  const match = context.getMatch(matchId);
+  if (!match) {
+    bracketPredictState.penaltyModal = null;
+    return;
+  }
+
+  const homeInfo = resolveBracketTeam(match.home, context);
+  const awayInfo = resolveBracketTeam(match.away, context);
+
+  const overlay = document.createElement("div");
+  overlay.className = "bracket-penalty-modal-overlay";
+  overlay.innerHTML = `
+    <div class="bracket-penalty-modal-card">
+      <button type="button" class="bracket-penalty-modal-close" aria-label="Close">×</button>
+      <p class="bracket-penalty-modal-title">${homeInfo.name} ${pick.predictedHomeGoals}-${pick.predictedAwayGoals} ${awayInfo.name} — who wins on penalties?</p>
+      <div class="bracket-penalty-modal-teams">
+        <button type="button" class="bracket-penalty-modal-team-btn" data-side="home">${getCountryFlag(homeInfo.name)} ${homeInfo.name}</button>
+        <button type="button" class="bracket-penalty-modal-team-btn" data-side="away">${getCountryFlag(awayInfo.name)} ${awayInfo.name}</button>
+      </div>
+    </div>
+  `;
+
+  const closeModal = () => {
+    bracketPredictState.penaltyModal = null;
+    rerenderBracketPreservingScroll();
+  };
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeModal();
+  });
+  overlay.querySelector(".bracket-penalty-modal-close").addEventListener("click", closeModal);
+
+  overlay.querySelectorAll(".bracket-penalty-modal-team-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      pick.predictedPenaltyWinner = btn.dataset.side;
+      bracketPredictState.penaltyModal = null;
+      saveBracketDraft(BRACKET_ROUND_KEY, person, bracketPredictState.draft);
+      rerenderBracketPreservingScroll();
+    });
+  });
+
+  container.appendChild(overlay);
 }
 
 function renderLockedView(container, person, doc) {
@@ -308,10 +440,14 @@ async function submitBracketPredictions(person) {
   const predictions = {};
   getPredictableMatchIds().forEach((matchId) => {
     const pick = bracketPredictState.draft[matchId];
-    predictions[matchId] = {
+    const entry = {
       predictedHomeGoals: pick.predictedHomeGoals,
       predictedAwayGoals: pick.predictedAwayGoals,
     };
+    if (pick.predictedHomeGoals === pick.predictedAwayGoals && pick.predictedPenaltyWinner) {
+      entry.predictedPenaltyWinner = pick.predictedPenaltyWinner;
+    }
+    predictions[matchId] = entry;
   });
 
   bracketPredictState.submitting = true;
@@ -320,17 +456,19 @@ async function submitBracketPredictions(person) {
 
   try {
     const pinHash = await sha256Hex(pin);
-    await db.collection("bracketPredictions").doc(person).set({
+    await db.collection(BRACKET_PREDICTIONS_COLLECTION).doc(person).set({
       person,
       pinHash,
+      round: BRACKET_ROUND_KEY,
       predictions,
       submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
     appState.bracketPredictions = appState.bracketPredictions || {};
-    appState.bracketPredictions[person] = { person, predictions, submittedAt: new Date().toISOString() };
+    appState.bracketPredictions[BRACKET_ROUND_KEY] = appState.bracketPredictions[BRACKET_ROUND_KEY] || {};
+    appState.bracketPredictions[BRACKET_ROUND_KEY][person] = { person, predictions, submittedAt: new Date().toISOString() };
     mergeBracketPredictionsIntoPredictions();
-    clearBracketDraft(person);
+    clearBracketDraft(BRACKET_ROUND_KEY, person);
     bracketPredictState.submitting = false;
     bracketPredictState.pinInput = "";
     renderBracket();
@@ -343,7 +481,7 @@ async function submitBracketPredictions(person) {
     // so this covers the three possible causes together rather than
     // guessing which one applies.
     bracketPredictState.error =
-      "Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the deadline (Jul 1, 23:00 GMT+4) hasn't passed.";
+      `Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the Round of 16 deadline (${formatDate(BRACKET_R16_DEADLINE)}) hasn't passed.`;
     renderBracket();
   }
 }

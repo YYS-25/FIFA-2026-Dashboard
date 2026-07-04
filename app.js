@@ -5,10 +5,13 @@
 let appState = {
   predictions: [],
   matchResults: {},
-  bracketPredictions: {}, // locked match_80+ predictions from Firestore, keyed by person
+  bracketPredictions: {}, // locked bracket predictions from Firestore, keyed by round then person: { r32: {person: doc}, r16: {person: doc} }
   lastUpdated: null,
   error: null,
 };
+
+// Which Firestore collection backs each round's locked bracket predictions.
+const BRACKET_ROUND_COLLECTIONS = { r32: "bracketPredictions", r16: "bracketPredictionsR16" };
 
 // Configuration constants
 const PREDICTIONS_JSON_URL = "./predictions.json";
@@ -63,19 +66,22 @@ async function fetchBracketPredictions() {
   const db = typeof getFirestoreDb === "function" ? getFirestoreDb() : null;
   if (!db) return;
 
-  try {
-    const snapshot = await db.collection("bracketPredictions").get();
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      appState.bracketPredictions[doc.id] = {
-        person: data.person,
-        predictions: data.predictions,
-        submittedAt: data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toISOString() : null,
-      };
-    });
-    console.log(`✓ Loaded ${snapshot.size} locked bracket prediction(s) from Firestore`);
-  } catch (err) {
-    console.warn("Could not load bracket predictions from Firestore:", err.message);
+  for (const [round, collectionName] of Object.entries(BRACKET_ROUND_COLLECTIONS)) {
+    appState.bracketPredictions[round] = {};
+    try {
+      const snapshot = await db.collection(collectionName).get();
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        appState.bracketPredictions[round][doc.id] = {
+          person: data.person,
+          predictions: data.predictions,
+          submittedAt: data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toISOString() : null,
+        };
+      });
+      console.log(`✓ Loaded ${snapshot.size} locked ${round} bracket prediction(s) from Firestore`);
+    } catch (err) {
+      console.warn(`Could not load ${round} bracket predictions from Firestore:`, err.message);
+    }
   }
 }
 
@@ -95,17 +101,20 @@ async function fetchBracketPredictions() {
 function mergeBracketPredictionsIntoPredictions() {
   if (!appState.bracketPredictions) return;
 
-  Object.values(appState.bracketPredictions).forEach((doc) => {
-    if (!doc.predictions) return;
-    Object.entries(doc.predictions).forEach(([matchId, pick]) => {
-      appState.predictions = appState.predictions.filter(
-        (p) => !(p.person === doc.person && p.matchId === matchId)
-      );
-      appState.predictions.push({
-        person: doc.person,
-        matchId,
-        predictedHomeGoals: pick.predictedHomeGoals,
-        predictedAwayGoals: pick.predictedAwayGoals,
+  Object.values(appState.bracketPredictions).forEach((roundBucket) => {
+    Object.values(roundBucket).forEach((doc) => {
+      if (!doc.predictions) return;
+      Object.entries(doc.predictions).forEach(([matchId, pick]) => {
+        appState.predictions = appState.predictions.filter(
+          (p) => !(p.person === doc.person && p.matchId === matchId)
+        );
+        appState.predictions.push({
+          person: doc.person,
+          matchId,
+          predictedHomeGoals: pick.predictedHomeGoals,
+          predictedAwayGoals: pick.predictedAwayGoals,
+          predictedPenaltyWinner: pick.predictedPenaltyWinner || null,
+        });
       });
     });
   });
@@ -878,6 +887,9 @@ function updateByUserView() {
       predictedWinnerName = match.home;
     } else if (pred.predictedWinner === "away") {
       predictedWinnerName = match.away;
+    } else if (pred.predictedWinner === "draw" && pred.predictedPenaltyWinner) {
+      const penaltyPickName = pred.predictedPenaltyWinner === "home" ? match.home : match.away;
+      predictedWinnerName = `Draw (${penaltyPickName} on pens)`;
     }
 
     // Start prediction card

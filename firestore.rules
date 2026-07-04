@@ -22,7 +22,12 @@ service cloud.firestore {
     }
 
     // One doc per person, created exactly once at final submission and
-    // never modified afterward.
+    // never modified afterward. This is the Round of 32 round - now closed
+    // (no new docs expected here) and kept as-is, untouched, for history.
+    // Round of 16 predictions live in their own sibling collection below
+    // (bracketPredictionsR16) rather than reusing this one, since a person's
+    // doc here is already immutable - a fresh round needs a fresh collection
+    // to allow a fresh "create".
     match /bracketPredictions/{person} {
       // Predictions are public once locked, same as the rest of the
       // dashboard already shows everyone's predictions/scores openly.
@@ -39,22 +44,59 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // Submission deadline: 2026-07-01T15:30:00Z (19:30 GMT+4), 30 min before
-    // match_80 (England v DR Congo, 16:00 UTC) — the first of the remaining R32.
-    function deadline() {
-      return timestamp.date(2026, 7, 1) + duration.value(55800, 's'); // 15:30:00 UTC
+    // Round of 16 (match_89-96). Same one-doc-per-person, create-once,
+    // immutable pattern as bracketPredictions above, in its own collection.
+    // Each match's prediction entry may additionally carry a
+    // predictedPenaltyWinner ("home"/"away") when its scores are equal - not
+    // validated in detail here, same looseness as isValidPredictionsMap
+    // below, consistent with this file's stated threat model.
+    match /bracketPredictionsR16/{person} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.person == person &&
+        request.resource.data.pinHash is string &&
+        request.resource.data.pinHash ==
+          get(/databases/$(database)/documents/pins/$(person)).data.pinHash &&
+        isValidR16PredictionsMap(request.resource.data.predictions) &&
+        request.time < r16Deadline();
+
+      allow update, delete: if false;
     }
 
-    // Checks that predictions is a map with exactly the currently-open round's
+    // Submission deadline: 2026-07-01T19:00:00Z (23:00 GMT+4). R32 - historical.
+    function deadline() {
+      return timestamp.date(2026, 7, 1) + duration.value(68400, 's'); // 19:00:00 UTC
+    }
+
+    // Checks that predictions is a map with exactly the Round of 32 round's
     // match keys (remaining Round of 32: match_80-88; match_73-79 are admin-
-    // filled). Bump this alongside PREDICTABLE_MATCH_RANGE in bracket.js and
-    // the deadline() above when the next round (R16) opens.
+    // filled). Historical - round is closed, kept for reference.
     function isValidPredictionsMap(p) {
       return p.size() == 9 &&
         p.keys().hasAll([
           'match_80', 'match_81', 'match_82',
           'match_83', 'match_84', 'match_85',
           'match_86', 'match_87', 'match_88'
+        ]);
+    }
+
+    // Round of 16 submission deadline: 2026-07-04T16:30:00Z (30 min before
+    // match_90, the earliest R16 kickoff). TIME-SENSITIVE - if this has
+    // already passed by the time this is deployed, bump it forward before
+    // going live or every submission will be rejected.
+    function r16Deadline() {
+      return timestamp.date(2026, 7, 4) + duration.value(59400, 's'); // 16:30:00 UTC
+    }
+
+    // Round of 16 = match_89..match_96 (8 matches). Bump the key list +
+    // collection name again (e.g. bracketPredictionsQf /
+    // isValidQfPredictionsMap) when the next round (Quarterfinals) opens.
+    function isValidR16PredictionsMap(p) {
+      return p.size() == 8 &&
+        p.keys().hasAll([
+          'match_89', 'match_90', 'match_91', 'match_92',
+          'match_93', 'match_94', 'match_95', 'match_96'
         ]);
     }
   }

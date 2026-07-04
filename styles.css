@@ -1204,6 +1204,97 @@ select:focus, input[type="text"]:focus, input[type="date"]:focus {
   color: var(--bracket-text-faint);
 }
 
+.bracket-pens-tag {
+  display: block;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: var(--bracket-gold-dim);
+}
+
+.bracket-penalty-prompt-btn {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  background: var(--bracket-navy-950);
+  border: 1px dashed var(--bracket-gold-dim);
+  color: var(--bracket-gold-dim);
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.bracket-penalty-prompt-btn:hover {
+  border-style: solid;
+  color: var(--bracket-gold);
+  border-color: var(--bracket-gold);
+}
+
+.bracket-penalty-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+}
+
+.bracket-penalty-modal-card {
+  position: relative;
+  background: linear-gradient(155deg, var(--bracket-navy-800), var(--bracket-navy-900));
+  border: 1px solid var(--bracket-gold-dim);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+}
+
+.bracket-penalty-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--bracket-gold-dim);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.bracket-penalty-modal-title {
+  color: var(--bracket-gold);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 4px 24px 16px;
+}
+
+.bracket-penalty-modal-teams {
+  display: flex;
+  gap: 12px;
+}
+
+.bracket-penalty-modal-team-btn {
+  flex: 1;
+  background: var(--bracket-navy-950);
+  border: 1px solid var(--bracket-navy-700);
+  border-radius: 8px;
+  padding: 12px 8px;
+  color: var(--bracket-gold);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.bracket-penalty-modal-team-btn:hover,
+.bracket-penalty-modal-team-btn:focus {
+  border-color: var(--bracket-gold);
+  background: var(--bracket-navy-700);
+  outline: none;
+}
+
 .bracket-predict-submit-panel {
   background: var(--bracket-navy-900);
   border: 1px solid var(--bracket-navy-700);

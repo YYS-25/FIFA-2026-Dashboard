@@ -229,14 +229,53 @@ function getMatchStatus(match) {
 
 /**
  * Calculate prediction points based on actual result
- * @param {object} prediction - Prediction object with {predictedWinner, predictedHomeGoals, predictedAwayGoals}
- * @param {object} actualResult - Actual result object with {homeGoals, awayGoals}
+ * @param {object} prediction - Prediction object with {predictedWinner, predictedHomeGoals, predictedAwayGoals, predictedPenaltyWinner}
+ * @param {object} actualResult - Actual result object with {homeGoals, awayGoals, stage, penaltyScore}
  * @returns {object} {points: 0|1|3, breakdown: string}
  */
 function calculatePredictionPoints(prediction, actualResult) {
   if (!actualResult || actualResult.homeGoals === null || actualResult.homeGoals === undefined ||
       actualResult.awayGoals === null || actualResult.awayGoals === undefined) {
     return { points: 0, breakdown: 'No result yet' };
+  }
+
+  // Knockout matches can be drawn after 90 minutes and decided on penalties, so a
+  // predicted draw carries a separate predictedPenaltyWinner pick that stands in
+  // for "who I think wins" instead of home/away/draw. Group-stage draws just
+  // stand as final results, so this branch only applies to knockout stages.
+  const isKnockout = !!actualResult.stage && actualResult.stage !== 'Group Stage';
+
+  if (isKnockout) {
+    const actualWinner = determineBracketWinner(actualResult); // resolves goals, falling back to penaltyScore
+    const predictedIsDraw = prediction.predictedWinner === 'draw';
+
+    if (predictedIsDraw && !prediction.predictedPenaltyWinner) {
+      return { points: 0, breakdown: 'No penalty pick' };
+    }
+
+    const effectivePredictedWinner = predictedIsDraw
+      ? prediction.predictedPenaltyWinner
+      : prediction.predictedWinner;
+
+    if (effectivePredictedWinner !== actualWinner) {
+      return { points: 0, breakdown: predictedIsDraw ? 'Wrong penalty winner' : 'Wrong winner' };
+    }
+
+    const exactScoreMatch =
+      prediction.predictedHomeGoals === actualResult.homeGoals &&
+      prediction.predictedAwayGoals === actualResult.awayGoals;
+
+    if (exactScoreMatch) {
+      return {
+        points: 3,
+        breakdown: predictedIsDraw ? 'Exact score + correct penalty winner' : 'Exact score',
+      };
+    }
+
+    return {
+      points: 1,
+      breakdown: predictedIsDraw ? 'Correct penalty winner' : 'Correct winner',
+    };
   }
 
   const actualWinner = determineWinner(actualResult.homeGoals, actualResult.awayGoals);
