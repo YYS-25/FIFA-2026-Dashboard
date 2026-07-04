@@ -208,12 +208,19 @@ function createLockedContext(doc) {
       const real = appState.matchResults[matchId];
       if (!real) return null;
       const pick = doc.predictions[matchId];
+      // resolveBracketTeam also calls getMatch on *feeder* match IDs (e.g. the
+      // Round of 32 match behind a "W83" placeholder) to resolve them into
+      // team names - those aren't part of this round's own predictions doc,
+      // so there's no pick for them. Return the real (already-completed)
+      // result untouched in that case, rather than incorrectly nulling out
+      // real goals that are needed to determine the feeder's winner.
+      if (!pick) return real;
       return {
         ...real,
         // Predicted scores are always the primary display values.
-        homeGoals: pick ? pick.predictedHomeGoals : null,
-        awayGoals: pick ? pick.predictedAwayGoals : null,
-        predictedPenaltyWinner: pick ? pick.predictedPenaltyWinner || null : null,
+        homeGoals: pick.predictedHomeGoals,
+        awayGoals: pick.predictedAwayGoals,
+        predictedPenaltyWinner: pick.predictedPenaltyWinner || null,
         // Clear real penalty note - it belongs to the real result, not the prediction.
         penaltyScore: null,
         // If the real match has finished, attach actual result so the card can
