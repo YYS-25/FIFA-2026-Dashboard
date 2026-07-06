@@ -23,7 +23,7 @@
 const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T19:00:00Z"; // R32 - historical, kept for reference
 const BRACKET_ROUND_KEY = "r16";
 const BRACKET_PREDICTIONS_COLLECTION = "bracketPredictionsR16";
-const BRACKET_R16_DEADLINE = "2026-07-05T19:00:00Z"; // 23:00 GMT+4 Jul 5
+const BRACKET_R16_DEADLINE = "2026-07-06T18:45:00Z"; // 22:45 GMT+4 Jul 6
 const FALLBACK_PEOPLE = ["Ravi", "Preety", "Kunal", "Anisha", "Yeshnav"];
 
 let bracketPredictState = {
@@ -157,7 +157,16 @@ function createPredictingContext(person) {
     getMatch(matchId) {
       const real = appState.matchResults[matchId];
       if (!real) return null;
-      if (real.status === "completed") return real;
+      const isOwnMatch = predictableSet.has(matchId);
+      // Feeder matches from earlier rounds (referenced only to resolve a
+      // "W83"-style placeholder into a team name) should show their real,
+      // completed result as normal. But a match that's actually one of THIS
+      // round's own predictable matches must never leak its real score into
+      // a not-yet-submitted person's editable view, even if it has already
+      // been played by the time they get around to submitting (e.g. the
+      // deadline got pushed past kickoff for stragglers) - so this only
+      // early-returns the real result for matches outside our own set.
+      if (real.status === "completed" && !isOwnMatch) return real;
       const pick = draft[matchId];
       if (pick && pick.predictedHomeGoals != null && pick.predictedAwayGoals != null) {
         return {
@@ -167,6 +176,12 @@ function createPredictingContext(person) {
           status: "predicted",
           predictedPenaltyWinner: pick.predictedPenaltyWinner || null,
         };
+      }
+      if (isOwnMatch) {
+        // No draft pick yet - blank the score (even though the real match
+        // may have already been played) and present it as not-yet-decided,
+        // so it renders as an empty input rather than showing the answer.
+        return { ...real, homeGoals: null, awayGoals: null, status: "upcoming" };
       }
       return real;
     },
