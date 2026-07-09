@@ -38,14 +38,13 @@ const BRACKET_CENTER = {
   thirdPlace: "match_103",
 };
 
-// Currently-open round for end-user predictions: Round of 16 (match_89-96).
+// Round of 16 (match_89-96) - the last round on the legacy hardcoded path.
 // Round of 32 (match_73-88) is closed - those predictions are locked in the
-// "bracketPredictions" Firestore collection. Round of 16 predictions live in
-// their own "bracketPredictionsR16" collection instead (see bracket-predict.js),
-// so this range only ever needs to describe the round currently open for
-// picks. Later rounds (QF, SF, Final) aren't open yet - bump this range and
-// add a new collection/rule block (following the same pattern) when the next
-// round opens.
+// "bracketPredictions" Firestore collection; Round of 16 predictions live in
+// their own "bracketPredictionsR16" collection (see bracket-predict.js).
+// Every round from QF onward instead uses the generic, data-driven system
+// below (getMatchIdsForRound/GENERIC_BRACKET_ROUNDS) - this range is kept
+// exactly as-is since R16 is done and not worth migrating.
 const PREDICTABLE_MATCH_RANGE = { from: 89, to: 96 };
 
 function getPredictableMatchIds() {
@@ -54,6 +53,67 @@ function getPredictableMatchIds() {
     ids.push(`match_${n}`);
   }
   return ids;
+}
+
+// Rounds handled by the generic, data-driven system (see bracket-predict.js):
+// each round's match ids come straight out of BRACKET_SIDES/BRACKET_CENTER
+// (fixed once FIFA sets the bracket shape, never edited per round), and
+// whether the round is currently open + its deadline come from a
+// "roundConfig/{roundKey}" Firestore doc the admin publishes once per round
+// (see suggestRoundConfig below) - so opening a new round needs zero code
+// changes. R32/R16 predate this and stay on their own hardcoded path above.
+const GENERIC_BRACKET_ROUNDS = ["qf", "sf", "thirdPlace", "final"];
+const GENERIC_ROUND_LABELS = {
+  qf: "Quarterfinals",
+  sf: "Semifinals",
+  thirdPlace: "3rd Place Playoff",
+  final: "Final",
+};
+const GENERIC_BRACKET_COLLECTION = "bracketPredictionsByRound";
+
+/**
+ * All match ids belonging to a given round key, derived from the fixed
+ * bracket shape (BRACKET_SIDES/BRACKET_CENTER) rather than a hand-maintained
+ * range - works for any of GENERIC_BRACKET_ROUNDS without further edits.
+ * @param {string} roundKey - "qf" | "sf" | "thirdPlace" | "final"
+ * @returns {string[]}
+ */
+function getMatchIdsForRound(roundKey) {
+  if (roundKey === "final") return [BRACKET_CENTER.final];
+  if (roundKey === "thirdPlace") return [BRACKET_CENTER.thirdPlace];
+  return ["left", "right"].flatMap((side) => {
+    const column = BRACKET_SIDES[side].find((c) => c.key === roundKey);
+    return column ? column.matches : [];
+  });
+}
+
+/**
+ * Admin convenience helper - run from the browser devtools console (e.g.
+ * `suggestRoundConfig('qf')`) once a round's matchups are known, to get the
+ * values to paste into a new `roundConfig/{roundKey}` Firestore document
+ * (fields: matchCount, deadline). Computes the deadline as 15 minutes before
+ * the earliest kickoff among that round's matches, using live match data.
+ * @param {string} roundKey - "qf" | "sf" | "thirdPlace" | "final"
+ * @returns {{matchCount: number, deadline: string}|null}
+ */
+function suggestRoundConfig(roundKey) {
+  const matchIds = getMatchIdsForRound(roundKey);
+  const kickoffs = matchIds
+    .map((id) => appState.matchResults[id])
+    .filter(Boolean)
+    .map((m) => new Date(m.date).getTime())
+    .filter((t) => !Number.isNaN(t));
+
+  if (kickoffs.length === 0) {
+    console.warn(`suggestRoundConfig: no match data found for round "${roundKey}"`);
+    return null;
+  }
+
+  const earliestKickoff = Math.min(...kickoffs);
+  const deadline = new Date(earliestKickoff - 15 * 60 * 1000).toISOString();
+  const result = { matchCount: matchIds.length, deadline };
+  console.log(`roundConfig/${roundKey} ->`, result);
+  return result;
 }
 
 /**

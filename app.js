@@ -11,6 +11,9 @@ let appState = {
 };
 
 // Which Firestore collection backs each round's locked bracket predictions.
+// R32/R16 predate the generic system and each got their own collection;
+// every round from QF onward shares one generic collection instead (see
+// GENERIC_BRACKET_COLLECTION below), keyed by "{round}_{person}" doc ids.
 const BRACKET_ROUND_COLLECTIONS = { r32: "bracketPredictions", r16: "bracketPredictionsR16" };
 
 // Configuration constants
@@ -32,9 +35,24 @@ async function fetchPredictions() {
 
     const predictions = [];
 
+    // predictions.json carries placeholder (usually 0-0) rows for every
+    // knockout match for every person, submitted or not - fine for R32/R16
+    // where mergeBracketPredictionsIntoPredictions() overwrites them once
+    // someone locks in real picks, but it means a person who *skips* a round
+    // still shows a fake prediction for it. For QF onward, skip those
+    // placeholder rows here entirely - a row only exists for these matches
+    // if it comes from an actual Firestore submission via
+    // mergeBracketPredictionsIntoPredictions().
+    const genericRoundMatchIds = new Set(
+      typeof GENERIC_BRACKET_ROUNDS !== "undefined"
+        ? GENERIC_BRACKET_ROUNDS.flatMap((round) => getMatchIdsForRound(round))
+        : []
+    );
+
     // Flatten nested structure: each person's predictions array into flat array
     predictionsData.predictions.forEach((personData) => {
       personData.predictions.forEach((pred) => {
+        if (genericRoundMatchIds.has(pred.matchId)) return;
         predictions.push({
           person: personData.person,
           matchId: pred.matchId,
@@ -82,6 +100,54 @@ async function fetchBracketPredictions() {
     } catch (err) {
       console.warn(`Could not load ${round} bracket predictions from Firestore:`, err.message);
     }
+  }
+
+  // Generic collection (QF onward) - one doc per (round, person), so unlike
+  // the loop above this can't be fetched per-round; instead fetch it once
+  // and bucket each doc by its own `round`/`person` fields.
+  try {
+    const snapshot = await db.collection(GENERIC_BRACKET_COLLECTION).get();
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      appState.bracketPredictions[data.round] = appState.bracketPredictions[data.round] || {};
+      appState.bracketPredictions[data.round][data.person] = {
+        person: data.person,
+        predictions: data.predictions,
+        submittedAt: data.submittedAt && data.submittedAt.toDate ? data.submittedAt.toDate().toISOString() : null,
+      };
+    });
+    console.log(`✓ Loaded ${snapshot.size} locked bracket prediction(s) from ${GENERIC_BRACKET_COLLECTION}`);
+  } catch (err) {
+    console.warn(`Could not load ${GENERIC_BRACKET_COLLECTION} bracket predictions from Firestore:`, err.message);
+  }
+}
+
+/**
+ * Fetch published round configs (deadline + matchCount per round key) for
+ * the generic QF-onward system. Populates appState.roundConfigs, e.g.
+ * { qf: { deadline: "2026-07-16T...Z", matchCount: 4 } }. A round only shows
+ * up here once the admin has manually published its roundConfig doc (see
+ * suggestRoundConfig in bracket.js) - safe to call before any exist.
+ * @returns {Promise<void>}
+ */
+async function fetchRoundConfigs() {
+  appState.roundConfigs = {};
+
+  const db = typeof getFirestoreDb === "function" ? getFirestoreDb() : null;
+  if (!db) return;
+
+  try {
+    const snapshot = await db.collection("roundConfig").get();
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      appState.roundConfigs[doc.id] = {
+        matchCount: data.matchCount,
+        deadline: data.deadline && data.deadline.toDate ? data.deadline.toDate().toISOString() : data.deadline,
+      };
+    });
+    console.log(`✓ Loaded ${snapshot.size} published round config(s) from Firestore`);
+  } catch (err) {
+    console.warn("Could not load round configs from Firestore:", err.message);
   }
 }
 
@@ -234,6 +300,7 @@ async function loadAllData() {
     // Load any locked-in match_80+ predictions from Firestore and fold them
     // into appState.predictions so they score/leaderboard exactly like the
     // existing group-stage predictions, no separate totals to track.
+    await fetchRoundConfigs();
     await fetchBracketPredictions();
     mergeBracketPredictionsIntoPredictions();
 

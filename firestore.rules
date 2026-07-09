@@ -64,6 +64,38 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Round config for QF onward - one small admin-authored doc per round
+    // ({deadline, matchCount}), seeded manually via the Firebase console
+    // (same pattern as pins/{person} below) whenever that round's matchups
+    // and kickoff times are known. This is the *only* per-round manual step
+    // in the new system - no rules redeploy and no code edits needed to open
+    // a round, unlike bracketPredictions/bracketPredictionsR16 above.
+    match /roundConfig/{round} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Generic collection for QF onward - one doc per (round, person), id
+    // "{round}_{person}" (e.g. "qf_Kunal"), since a person's doc is
+    // immutable once created and each round needs its own doc. Validated
+    // against the matching roundConfig/{round} doc instead of a hardcoded
+    // per-round function, so this block never needs to change again.
+    match /bracketPredictionsByRound/{docId} {
+      allow read: if true;
+
+      allow create: if
+        docId == request.resource.data.round + '_' + request.resource.data.person &&
+        request.resource.data.pinHash is string &&
+        request.resource.data.pinHash ==
+          get(/databases/$(database)/documents/pins/$(request.resource.data.person)).data.pinHash &&
+        request.resource.data.predictions.size() ==
+          get(/databases/$(database)/documents/roundConfig/$(request.resource.data.round)).data.matchCount &&
+        request.time <
+          get(/databases/$(database)/documents/roundConfig/$(request.resource.data.round)).data.deadline;
+
+      allow update, delete: if false;
+    }
+
     // Submission deadline: 2026-07-01T19:00:00Z (23:00 GMT+4). R32 - historical.
     function deadline() {
       return timestamp.date(2026, 7, 1) + duration.value(68400, 's'); // 19:00:00 UTC
@@ -81,17 +113,19 @@ service cloud.firestore {
         ]);
     }
 
-    // Round of 16 submission deadline: 2026-07-04T16:30:00Z (30 min before
-    // match_90, the earliest R16 kickoff). TIME-SENSITIVE - if this has
-    // already passed by the time this is deployed, bump it forward before
-    // going live or every submission will be rejected.
+    // Round of 16 submission deadline: reopened to 2026-07-16T00:00:00Z to
+    // give Kunal and Anisha a window to submit - R16 matches are already
+    // over by this point, so this is purely a straggler submission window,
+    // not a real prediction deadline. Safe: everyone who already submitted
+    // is still locked out of resubmitting by "allow update, delete: if false"
+    // below - this only opens the *create* path for people without a doc yet.
     function r16Deadline() {
-      return timestamp.date(2026, 7, 4) + duration.value(59400, 's'); // 16:30:00 UTC
+      return timestamp.date(2026, 7, 16);
     }
 
-    // Round of 16 = match_89..match_96 (8 matches). Bump the key list +
-    // collection name again (e.g. bracketPredictionsQf /
-    // isValidQfPredictionsMap) when the next round (Quarterfinals) opens.
+    // Round of 16 = match_89..match_96 (8 matches). Historical - kept as-is;
+    // every round from QF onward is validated generically via
+    // bracketPredictionsByRound + roundConfig above instead.
     function isValidR16PredictionsMap(p) {
       return p.size() == 8 &&
         p.keys().hasAll([

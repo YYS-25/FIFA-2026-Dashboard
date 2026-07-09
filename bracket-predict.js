@@ -1,20 +1,21 @@
 // bracket-predict.js - End-user bracket predictions ("My Picks")
 //
-// Lets each of the 5 people predict scores for the current open round (see
-// PREDICTABLE_MATCH_RANGE in bracket.js - currently Round of 16, match_89-96).
+// Lets each of the 5 people predict scores for the current open round.
 // Submission is a single, one-time, immutable write to Firestore
 // (dashboard/firestore.rules enforces "exactly once" and the deadline - this
 // file's checks are UX only, not security). Drafts are saved to localStorage
 // as the user fills the bracket in, and nothing reaches Firestore until they
 // hit Submit.
 //
-// Each round gets its own Firestore collection (BRACKET_PREDICTIONS_COLLECTION
-// below) rather than reusing the previous round's - a person's prior-round doc
-// is immutable (rules forbid update/delete), so a new round needs a fresh
-// collection to allow a fresh "create". Bump BRACKET_ROUND_KEY,
-// BRACKET_PREDICTIONS_COLLECTION and BRACKET_R16_DEADLINE (renaming it too)
-// together, plus PREDICTABLE_MATCH_RANGE in bracket.js and a new additive rule
-// block in firestore.rules, when the next round (QF) opens.
+// Round of 32 and Round of 16 predate the generic system below and each got
+// their own hardcoded Firestore collection + deadline (BRACKET_ROUND_KEY /
+// BRACKET_PREDICTIONS_COLLECTION / BRACKET_R16_DEADLINE) - kept as-is here,
+// untouched, since those rounds are done. Every round from QF onward instead
+// uses getActiveRoundDescriptor() below, which derives the round's match ids
+// from bracket.js's fixed BRACKET_SIDES/BRACKET_CENTER shape and its deadline
+// from a "roundConfig/{round}" Firestore doc the admin publishes once per
+// round (see suggestRoundConfig in bracket.js) - no code edits needed to open
+// a new round.
 //
 // Rendering reuses bracket.js's tree-building functions (createBracketMatchCard,
 // buildBracketGrid, resolveBracketTeam, ...) via a pluggable "context" object,
@@ -23,7 +24,7 @@
 const BRACKET_PREDICTIONS_DEADLINE = "2026-07-01T19:00:00Z"; // R32 - historical, kept for reference
 const BRACKET_ROUND_KEY = "r16";
 const BRACKET_PREDICTIONS_COLLECTION = "bracketPredictionsR16";
-const BRACKET_R16_DEADLINE = "2026-07-06T18:45:00Z"; // 22:45 GMT+4 Jul 6
+const BRACKET_R16_DEADLINE = "2026-07-16T00:00:00Z"; // reopened briefly so Kunal/Anisha can self-serve submit; R16 matches are already over so this is just a submission-window extension, not a real prediction deadline
 const FALLBACK_PEOPLE = ["Ravi", "Preety", "Kunal", "Anisha", "Yeshnav"];
 
 let bracketPredictState = {
@@ -35,8 +36,45 @@ let bracketPredictState = {
   penaltyModal: null, // { matchId } | null - which match's "who wins on penalties?" popup is open
 };
 
-function isPastBracketDeadline() {
-  return Date.now() >= new Date(BRACKET_R16_DEADLINE).getTime();
+/**
+ * The round currently shown in "My Picks": the most recently published
+ * generic round (QF onward) if any roundConfig doc exists yet, otherwise the
+ * legacy Round of 16 path. Recomputed on every render rather than cached, so
+ * publishing a new roundConfig doc takes effect the next time someone loads
+ * the page - no deploy involved.
+ * @returns {{roundKey: string, label: string, collection: string, matchIds: string[], deadline: string, isGeneric: boolean}}
+ */
+function getActiveRoundDescriptor() {
+  const configs = appState.roundConfigs || {};
+  let genericRoundKey = null;
+  GENERIC_BRACKET_ROUNDS.forEach((key) => {
+    if (configs[key]) genericRoundKey = key;
+  });
+
+  if (genericRoundKey) {
+    const config = configs[genericRoundKey];
+    return {
+      roundKey: genericRoundKey,
+      label: GENERIC_ROUND_LABELS[genericRoundKey],
+      collection: GENERIC_BRACKET_COLLECTION,
+      matchIds: getMatchIdsForRound(genericRoundKey),
+      deadline: config.deadline,
+      isGeneric: true,
+    };
+  }
+
+  return {
+    roundKey: BRACKET_ROUND_KEY,
+    label: "Round of 16",
+    collection: BRACKET_PREDICTIONS_COLLECTION,
+    matchIds: getPredictableMatchIds(),
+    deadline: BRACKET_R16_DEADLINE,
+    isGeneric: false,
+  };
+}
+
+function isPastBracketDeadline(descriptor) {
+  return Date.now() >= new Date(descriptor.deadline).getTime();
 }
 
 /**
@@ -73,26 +111,28 @@ async function sha256Hex(text) {
 function renderBracketPredictionsView(container) {
   container.classList.add("bracket-predict-view");
 
+  const descriptor = getActiveRoundDescriptor();
+
   const person = bracketPredictState.selectedPerson;
   if (!person) {
-    renderIdentityGate(container);
+    renderIdentityGate(container, descriptor);
     return;
   }
 
   const lockedDoc = appState.bracketPredictions &&
-    appState.bracketPredictions[BRACKET_ROUND_KEY] &&
-    appState.bracketPredictions[BRACKET_ROUND_KEY][person];
+    appState.bracketPredictions[descriptor.roundKey] &&
+    appState.bracketPredictions[descriptor.roundKey][person];
   if (lockedDoc) {
     renderLockedView(container, person, lockedDoc);
     return;
   }
 
-  if (isPastBracketDeadline()) {
-    renderClosedBanner(container, person);
+  if (isPastBracketDeadline(descriptor)) {
+    renderClosedBanner(container, person, descriptor);
     return;
   }
 
-  renderEditableView(container, person);
+  renderEditableView(container, person, descriptor);
 }
 
 function renderSwitchPersonButton(container) {
@@ -109,12 +149,12 @@ function renderSwitchPersonButton(container) {
   container.appendChild(btn);
 }
 
-function renderIdentityGate(container) {
+function renderIdentityGate(container, descriptor) {
   const people = getKnownPeople();
   const wrap = document.createElement("div");
   wrap.className = "bracket-predict-gate";
   wrap.innerHTML = `
-    <p class="bracket-predict-intro">Pick your name to predict scores for the Round of 16 matches.</p>
+    <p class="bracket-predict-intro">Pick your name to predict scores for the ${descriptor.label} matches.</p>
     <select class="bracket-predict-person-select">
       <option value="">Select your name…</option>
       ${people.map((p) => `<option value="${p}">${p}</option>`).join("")}
@@ -124,7 +164,7 @@ function renderIdentityGate(container) {
     const person = e.target.value;
     if (!person) return;
     bracketPredictState.selectedPerson = person;
-    bracketPredictState.draft = loadBracketDraft(BRACKET_ROUND_KEY, person);
+    bracketPredictState.draft = loadBracketDraft(descriptor.roundKey, person);
     bracketPredictState.pinInput = "";
     bracketPredictState.error = null;
     renderBracket();
@@ -132,10 +172,10 @@ function renderIdentityGate(container) {
   container.appendChild(wrap);
 }
 
-function renderClosedBanner(container, person) {
+function renderClosedBanner(container, person, descriptor) {
   const banner = document.createElement("div");
   banner.className = "bracket-predict-banner bracket-predict-closed";
-  banner.innerHTML = `⏰ <strong>Predictions are closed.</strong> ${person} didn't submit before the Round of 16 deadline (${formatDate(BRACKET_R16_DEADLINE)}).`;
+  banner.innerHTML = `⏰ <strong>Predictions are closed.</strong> ${person} didn't submit before the ${descriptor.label} deadline (${formatDate(descriptor.deadline)}).`;
   container.appendChild(banner);
   renderSwitchPersonButton(container);
 }
@@ -146,9 +186,9 @@ function renderClosedBanner(container, person) {
  * @param {string} person
  * @returns {object}
  */
-function createPredictingContext(person) {
+function createPredictingContext(person, descriptor) {
   const draft = bracketPredictState.draft;
-  const predictableSet = new Set(getPredictableMatchIds());
+  const predictableSet = new Set(descriptor.matchIds);
   return {
     editable: true,
     isPredictable(matchId) {
@@ -189,7 +229,7 @@ function createPredictingContext(person) {
       return !!match && (match.status === "completed" || match.status === "predicted");
     },
     onScoreChange(matchId, side, rawValue) {
-      handleScoreChange(person, matchId, side, rawValue);
+      handleScoreChange(person, matchId, side, rawValue, descriptor.roundKey);
     },
     needsPenaltyPick(matchId) {
       const pick = draft[matchId];
@@ -253,7 +293,7 @@ function createLockedContext(doc) {
   };
 }
 
-function handleScoreChange(person, matchId, side, rawValue) {
+function handleScoreChange(person, matchId, side, rawValue, roundKey) {
   const parsed = rawValue === "" ? null : parseInt(rawValue, 10);
   const value = parsed === null || Number.isNaN(parsed) ? null : Math.max(0, Math.min(20, parsed));
 
@@ -280,7 +320,7 @@ function handleScoreChange(person, matchId, side, rawValue) {
     bracketPredictState.penaltyModal = { matchId };
   }
 
-  saveBracketDraft(BRACKET_ROUND_KEY, person, bracketPredictState.draft);
+  saveBracketDraft(roundKey, person, bracketPredictState.draft);
   rerenderBracketPreservingScroll();
 }
 
@@ -313,25 +353,25 @@ function isMatchFullyPredicted(matchId) {
   return true;
 }
 
-function countFilledPredictions() {
-  return getPredictableMatchIds().filter(isMatchFullyPredicted).length;
+function countFilledPredictions(descriptor) {
+  return descriptor.matchIds.filter(isMatchFullyPredicted).length;
 }
 
-function renderEditableView(container, person) {
+function renderEditableView(container, person, descriptor) {
   const banner = document.createElement("div");
   banner.className = "bracket-predict-banner";
-  banner.innerHTML = `Filling in predictions as <strong>${person}</strong>.`;
+  banner.innerHTML = `Filling in ${descriptor.label} predictions as <strong>${person}</strong>.`;
   container.appendChild(banner);
   renderSwitchPersonButton(container);
 
-  const context = createPredictingContext(person);
+  const context = createPredictingContext(person, descriptor);
   const scrollWrap = document.createElement("div");
   scrollWrap.className = "bracket-scroll";
   scrollWrap.appendChild(buildBracketGrid(context));
   container.appendChild(scrollWrap);
 
-  const totalCount = getPredictableMatchIds().length;
-  const filledCount = countFilledPredictions();
+  const totalCount = descriptor.matchIds.length;
+  const filledCount = countFilledPredictions(descriptor);
   const allFilled = filledCount === totalCount;
 
   const panel = document.createElement("div");
@@ -353,13 +393,13 @@ function renderEditableView(container, person) {
   });
 
   panel.querySelector(".bracket-predict-submit-btn").addEventListener("click", () => {
-    submitBracketPredictions(person);
+    submitBracketPredictions(person, descriptor);
   });
 
   container.appendChild(panel);
 
   if (bracketPredictState.penaltyModal) {
-    renderBracketPenaltyModal(container, person, context);
+    renderBracketPenaltyModal(container, person, context, descriptor);
   }
 }
 
@@ -372,8 +412,9 @@ function renderEditableView(container, person) {
  * @param {HTMLElement} container
  * @param {string} person
  * @param {object} context - the editable predicting context (for getMatch/resolveBracketTeam)
+ * @param {object} descriptor - the active round descriptor (for saving the draft under the right round key)
  */
-function renderBracketPenaltyModal(container, person, context) {
+function renderBracketPenaltyModal(container, person, context, descriptor) {
   const matchId = bracketPredictState.penaltyModal.matchId;
   const pick = bracketPredictState.draft[matchId];
 
@@ -421,7 +462,7 @@ function renderBracketPenaltyModal(container, person, context) {
     btn.addEventListener("click", () => {
       pick.predictedPenaltyWinner = btn.dataset.side;
       bracketPredictState.penaltyModal = null;
-      saveBracketDraft(BRACKET_ROUND_KEY, person, bracketPredictState.draft);
+      saveBracketDraft(descriptor.roundKey, person, bracketPredictState.draft);
       rerenderBracketPreservingScroll();
     });
   });
@@ -444,7 +485,7 @@ function renderLockedView(container, person, doc) {
   container.appendChild(scrollWrap);
 }
 
-async function submitBracketPredictions(person) {
+async function submitBracketPredictions(person, descriptor) {
   const pin = bracketPredictState.pinInput.trim();
   if (!pin) {
     bracketPredictState.error = "Enter your PIN to submit.";
@@ -460,7 +501,7 @@ async function submitBracketPredictions(person) {
   }
 
   const predictions = {};
-  getPredictableMatchIds().forEach((matchId) => {
+  descriptor.matchIds.forEach((matchId) => {
     const pick = bracketPredictState.draft[matchId];
     const entry = {
       predictedHomeGoals: pick.predictedHomeGoals,
@@ -476,21 +517,27 @@ async function submitBracketPredictions(person) {
   bracketPredictState.error = null;
   renderBracket();
 
+  // Legacy rounds (R32/R16) keep doc id = person, one dedicated collection
+  // each. Generic rounds (QF onward) share one collection, so the doc id
+  // needs the round baked in too ("qf_Kunal") - see bracketPredictionsByRound
+  // in firestore.rules.
+  const docId = descriptor.isGeneric ? `${descriptor.roundKey}_${person}` : person;
+
   try {
     const pinHash = await sha256Hex(pin);
-    await db.collection(BRACKET_PREDICTIONS_COLLECTION).doc(person).set({
+    await db.collection(descriptor.collection).doc(docId).set({
       person,
       pinHash,
-      round: BRACKET_ROUND_KEY,
+      round: descriptor.roundKey,
       predictions,
       submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
     appState.bracketPredictions = appState.bracketPredictions || {};
-    appState.bracketPredictions[BRACKET_ROUND_KEY] = appState.bracketPredictions[BRACKET_ROUND_KEY] || {};
-    appState.bracketPredictions[BRACKET_ROUND_KEY][person] = { person, predictions, submittedAt: new Date().toISOString() };
+    appState.bracketPredictions[descriptor.roundKey] = appState.bracketPredictions[descriptor.roundKey] || {};
+    appState.bracketPredictions[descriptor.roundKey][person] = { person, predictions, submittedAt: new Date().toISOString() };
     mergeBracketPredictionsIntoPredictions();
-    clearBracketDraft(BRACKET_ROUND_KEY, person);
+    clearBracketDraft(descriptor.roundKey, person);
     bracketPredictState.submitting = false;
     bracketPredictState.pinInput = "";
     renderBracket();
@@ -503,7 +550,7 @@ async function submitBracketPredictions(person) {
     // so this covers the three possible causes together rather than
     // guessing which one applies.
     bracketPredictState.error =
-      `Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the Round of 16 deadline (${formatDate(BRACKET_R16_DEADLINE)}) hasn't passed.`;
+      `Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the ${descriptor.label} deadline (${formatDate(descriptor.deadline)}) hasn't passed.`;
     renderBracket();
   }
 }
