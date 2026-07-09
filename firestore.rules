@@ -64,15 +64,32 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // Round config for QF onward - one small admin-authored doc per round
-    // ({deadline, matchCount}), seeded manually via the Firebase console
-    // (same pattern as pins/{person} below) whenever that round's matchups
-    // and kickoff times are known. This is the *only* per-round manual step
-    // in the new system - no rules redeploy and no code edits needed to open
-    // a round, unlike bracketPredictions/bracketPredictionsR16 above.
+    // Round config for QF onward - one small doc per round ({deadline,
+    // matchCount}). Auto-published by app.js the first time anyone loads the
+    // dashboard after that round's matches are fully decided (see
+    // autoPublishReadyRoundConfigs in app.js) - no admin step at all. Any
+    // client can create one (not an admin-only write like pins/{person}
+    // above), but only once per round: matchCount is checked against the
+    // fixed, known-in-advance count for that round, deadline must be a real
+    // timestamp, and it's immutable afterward - so a stray/race write can't
+    // do worse than publish a shape-valid doc once, matching this file's
+    // stated threat model (friends, not an attacker).
+    function expectedMatchCountForRound(round) {
+      return round == 'qf' ? 4 :
+             round == 'sf' ? 2 :
+             round == 'thirdPlace' ? 1 :
+             round == 'final' ? 1 : -1;
+    }
+
     match /roundConfig/{round} {
       allow read: if true;
-      allow write: if false;
+
+      allow create: if
+        expectedMatchCountForRound(round) > 0 &&
+        request.resource.data.matchCount == expectedMatchCountForRound(round) &&
+        request.resource.data.deadline is timestamp;
+
+      allow update, delete: if false;
     }
 
     // Generic collection for QF onward - one doc per (round, person), id

@@ -59,9 +59,12 @@ function getPredictableMatchIds() {
 // each round's match ids come straight out of BRACKET_SIDES/BRACKET_CENTER
 // (fixed once FIFA sets the bracket shape, never edited per round), and
 // whether the round is currently open + its deadline come from a
-// "roundConfig/{roundKey}" Firestore doc the admin publishes once per round
-// (see suggestRoundConfig below) - so opening a new round needs zero code
-// changes. R32/R16 predate this and stay on their own hardcoded path above.
+// "roundConfig/{roundKey}" Firestore doc - auto-published by app.js
+// (autoPublishReadyRoundConfigs) the moment that round's matches are fully
+// decided, so opening a new round needs zero manual steps at all.
+// suggestRoundConfig below is kept as a devtools fallback/debug tool in case
+// auto-publish ever needs a manual nudge. R32/R16 predate this and stay on
+// their own hardcoded path above.
 const GENERIC_BRACKET_ROUNDS = ["qf", "sf", "thirdPlace", "final"];
 const GENERIC_ROUND_LABELS = {
   qf: "Quarterfinals",
@@ -88,11 +91,12 @@ function getMatchIdsForRound(roundKey) {
 }
 
 /**
- * Admin convenience helper - run from the browser devtools console (e.g.
- * `suggestRoundConfig('qf')`) once a round's matchups are known, to get the
- * values to paste into a new `roundConfig/{roundKey}` Firestore document
- * (fields: matchCount, deadline). Computes the deadline as 15 minutes before
- * the earliest kickoff among that round's matches, using live match data.
+ * Computes the { matchCount, deadline } a round's roundConfig doc should
+ * have - deadline is 15 minutes before the earliest kickoff among that
+ * round's matches, using live match data. Used by autoPublishReadyRoundConfigs
+ * (app.js) to auto-open a round; also callable directly from the browser
+ * devtools console (e.g. `suggestRoundConfig('qf')`) as a manual fallback if
+ * auto-publish ever needs a nudge (e.g. to paste into the Firebase console).
  * @param {string} roundKey - "qf" | "sf" | "thirdPlace" | "final"
  * @returns {{matchCount: number, deadline: string}|null}
  */

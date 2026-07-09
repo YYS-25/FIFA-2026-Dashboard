@@ -126,8 +126,9 @@ async function fetchBracketPredictions() {
  * Fetch published round configs (deadline + matchCount per round key) for
  * the generic QF-onward system. Populates appState.roundConfigs, e.g.
  * { qf: { deadline: "2026-07-16T...Z", matchCount: 4 } }. A round only shows
- * up here once the admin has manually published its roundConfig doc (see
- * suggestRoundConfig in bracket.js) - safe to call before any exist.
+ * up here once its roundConfig doc has been published - either automatically
+ * by autoPublishReadyRoundConfigs() below, or (historically) by hand via the
+ * Firebase console - safe to call before any exist.
  * @returns {Promise<void>}
  */
 async function fetchRoundConfigs() {
@@ -148,6 +149,54 @@ async function fetchRoundConfigs() {
     console.log(`✓ Loaded ${snapshot.size} published round config(s) from Firestore`);
   } catch (err) {
     console.warn("Could not load round configs from Firestore:", err.message);
+  }
+}
+
+/**
+ * Auto-opens a round for predictions the moment its matches are fully
+ * decided (both teams resolved, live) - the first person to load the
+ * dashboard after that publishes the round's roundConfig doc, so nobody
+ * (not even the admin) has to manually trigger it. Safe to call on every
+ * refresh: publishing is a Firestore "create" only (firestore.rules makes
+ * roundConfig docs immutable once written), so if two people load the page
+ * at the same moment, one publish succeeds and the other is harmlessly
+ * rejected.
+ * @returns {Promise<void>}
+ */
+async function autoPublishReadyRoundConfigs() {
+  const db = typeof getFirestoreDb === "function" ? getFirestoreDb() : null;
+  if (!db || typeof GENERIC_BRACKET_ROUNDS === "undefined") return;
+
+  const officialContext = createOfficialBracketContext();
+
+  for (const round of GENERIC_BRACKET_ROUNDS) {
+    if (appState.roundConfigs[round]) continue;
+
+    const matchIds = getMatchIdsForRound(round);
+    const isReady = matchIds.every((matchId) => {
+      const match = appState.matchResults[matchId];
+      if (!match) return false;
+      const home = resolveBracketTeam(match.home, officialContext);
+      const away = resolveBracketTeam(match.away, officialContext);
+      return !home.isPlaceholder && !away.isPlaceholder;
+    });
+    if (!isReady) continue;
+
+    const suggestion = suggestRoundConfig(round);
+    if (!suggestion) continue;
+
+    try {
+      await db.collection("roundConfig").doc(round).set({
+        matchCount: suggestion.matchCount,
+        deadline: firebase.firestore.Timestamp.fromDate(new Date(suggestion.deadline)),
+      });
+      appState.roundConfigs[round] = suggestion;
+      console.log(`✓ Auto-published roundConfig/${round}`, suggestion);
+    } catch (err) {
+      // Most likely someone else's browser published it a moment earlier -
+      // not fatal, the round is open either way.
+      console.warn(`Could not auto-publish roundConfig/${round}:`, err.message);
+    }
   }
 }
 
@@ -310,6 +359,10 @@ async function loadAllData() {
     // Use the same API refresh mechanism as the admin panel
     console.log("🔄 Refreshing match results from ESPN API...");
     appState.matchResults = await refreshMatchResults();
+
+    // Now that live results are in, open any round whose matches just became
+    // fully decided (both teams known) - see autoPublishReadyRoundConfigs.
+    await autoPublishReadyRoundConfigs();
 
     appState.lastUpdated = new Date();
     updateFooter();

@@ -13,9 +13,9 @@
 // untouched, since those rounds are done. Every round from QF onward instead
 // uses getActiveRoundDescriptor() below, which derives the round's match ids
 // from bracket.js's fixed BRACKET_SIDES/BRACKET_CENTER shape and its deadline
-// from a "roundConfig/{round}" Firestore doc the admin publishes once per
-// round (see suggestRoundConfig in bracket.js) - no code edits needed to open
-// a new round.
+// from a "roundConfig/{round}" Firestore doc - auto-published by app.js
+// (autoPublishReadyRoundConfigs) the moment that round's matches are fully
+// decided, so a new round opens on its own with no manual step at all.
 //
 // Rendering reuses bracket.js's tree-building functions (createBracketMatchCard,
 // buildBracketGrid, resolveBracketTeam, ...) via a pluggable "context" object,
