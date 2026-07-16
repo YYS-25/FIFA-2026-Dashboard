@@ -11,11 +11,21 @@
 // their own hardcoded Firestore collection + deadline (BRACKET_ROUND_KEY /
 // BRACKET_PREDICTIONS_COLLECTION / BRACKET_R16_DEADLINE) - kept as-is here,
 // untouched, since those rounds are done. Every round from QF onward instead
-// uses getActiveRoundDescriptor() below, which derives the round's match ids
-// from bracket.js's fixed BRACKET_SIDES/BRACKET_CENTER shape and its deadline
-// from a "roundConfig/{round}" Firestore doc - auto-published by app.js
-// (autoPublishReadyRoundConfigs) the moment that round's matches are fully
-// decided, so a new round opens on its own with no manual step at all.
+// derives its match ids from bracket.js's fixed BRACKET_SIDES/BRACKET_CENTER
+// shape and its deadline from a "roundConfig/{round}" Firestore doc -
+// auto-published by app.js (autoPublishReadyRoundConfigs) the moment that
+// round's matches are fully decided, so a new round opens on its own with no
+// manual step at all.
+//
+// Usually only one generic round is open at a time (QF, then SF, ...) - but
+// 3rd Place and Final both become decided at the same moment (right after
+// the semifinals finish), are played close together, and are meant to be
+// predicted together in one sitting. getOpenGenericRoundKeys() can return
+// more than one round at once for exactly this case; buildCombinedDescriptor
+// merges whichever rounds a person hasn't locked in yet into a single
+// editable view + one PIN + one Submit click, while still writing one
+// independent Firestore doc per underlying round under the hood (each keeps
+// its own collection/validation, unaffected by this being predicted jointly).
 //
 // Rendering reuses bracket.js's tree-building functions (createBracketMatchCard,
 // buildBracketGrid, resolveBracketTeam, ...) via a pluggable "context" object,
@@ -29,6 +39,7 @@ const FALLBACK_PEOPLE = ["Ravi", "Preety", "Kunal", "Anisha", "Yeshnav"];
 
 let bracketPredictState = {
   selectedPerson: null,
+  draftLoadedFor: null, // { person, draftKey } the in-memory draft below was last loaded for
   pinInput: "",
   draft: {}, // { match_89: { predictedHomeGoals, predictedAwayGoals, predictedPenaltyWinner }, ... }
   submitting: false,
@@ -37,40 +48,108 @@ let bracketPredictState = {
 };
 
 /**
- * The round currently shown in "My Picks": the most recently published
- * generic round (QF onward) if any roundConfig doc exists yet, otherwise the
- * legacy Round of 16 path. Recomputed on every render rather than cached, so
- * publishing a new roundConfig doc takes effect the next time someone loads
- * the page - no deploy involved.
+ * Every generic round (QF onward) that currently has a published roundConfig
+ * doc, in fixed tournament order. Usually a single entry, but 3rd Place and
+ * Final both land here at once once the semifinals are done - see the file
+ * header comment.
+ * @returns {string[]}
+ */
+function getOpenGenericRoundKeys() {
+  const configs = appState.roundConfigs || {};
+  return GENERIC_BRACKET_ROUNDS.filter((key) => configs[key]);
+}
+
+/**
+ * Build the round descriptor for a specific round key - either the legacy
+ * Round of 16 (BRACKET_ROUND_KEY) or any generic round with a published
+ * roundConfig doc.
+ * @param {string} roundKey
  * @returns {{roundKey: string, label: string, collection: string, matchIds: string[], deadline: string, isGeneric: boolean}}
  */
-function getActiveRoundDescriptor() {
-  const configs = appState.roundConfigs || {};
-  let genericRoundKey = null;
-  GENERIC_BRACKET_ROUNDS.forEach((key) => {
-    if (configs[key]) genericRoundKey = key;
-  });
-
-  if (genericRoundKey) {
-    const config = configs[genericRoundKey];
+function getRoundDescriptorForKey(roundKey) {
+  if (roundKey === BRACKET_ROUND_KEY) {
     return {
-      roundKey: genericRoundKey,
-      label: GENERIC_ROUND_LABELS[genericRoundKey],
-      collection: GENERIC_BRACKET_COLLECTION,
-      matchIds: getMatchIdsForRound(genericRoundKey),
-      deadline: config.deadline,
-      isGeneric: true,
+      roundKey: BRACKET_ROUND_KEY,
+      label: "Round of 16",
+      collection: BRACKET_PREDICTIONS_COLLECTION,
+      matchIds: getPredictableMatchIds(),
+      deadline: BRACKET_R16_DEADLINE,
+      isGeneric: false,
     };
   }
 
+  const config = (appState.roundConfigs || {})[roundKey];
   return {
-    roundKey: BRACKET_ROUND_KEY,
-    label: "Round of 16",
-    collection: BRACKET_PREDICTIONS_COLLECTION,
-    matchIds: getPredictableMatchIds(),
-    deadline: BRACKET_R16_DEADLINE,
-    isGeneric: false,
+    roundKey,
+    label: GENERIC_ROUND_LABELS[roundKey],
+    collection: GENERIC_BRACKET_COLLECTION,
+    matchIds: getMatchIdsForRound(roundKey),
+    deadline: config ? config.deadline : null,
+    isGeneric: true,
   };
+}
+
+/**
+ * Combine one or more round "leaf" descriptors into a single descriptor
+ * describing everything currently pending for a person - almost always one
+ * round, but 3rd Place and Final together once both are open (see file
+ * header). Submitting a combined descriptor still writes one independent
+ * Firestore doc per underlying round (via subDescriptors), just from a
+ * single editable view / PIN entry / Submit click.
+ * @param {string[]} roundKeys
+ * @returns {{subDescriptors: object[], draftKey: string, matchIds: string[], label: string, deadline: string}}
+ */
+function buildCombinedDescriptor(roundKeys) {
+  const subDescriptors = roundKeys.map(getRoundDescriptorForKey);
+  const deadline = subDescriptors.reduce((earliest, d) => {
+    if (!d.deadline) return earliest;
+    return !earliest || new Date(d.deadline) < new Date(earliest) ? d.deadline : earliest;
+  }, null);
+
+  return {
+    subDescriptors,
+    draftKey: roundKeys.join("+"),
+    matchIds: subDescriptors.flatMap((d) => d.matchIds),
+    label: subDescriptors.map((d) => d.label).join(" & "),
+    deadline,
+  };
+}
+
+/**
+ * Merge already-locked docs across multiple rounds into one doc-shaped
+ * object, so the locked view can show everything a person has submitted
+ * (e.g. both 3rd Place and Final) together instead of picking just one.
+ * @param {string[]} roundKeys
+ * @param {string} person
+ * @returns {{person: string, predictions: object, submittedAt: string|null}}
+ */
+function buildMergedLockedDoc(roundKeys, person) {
+  const predictions = {};
+  let latestSubmittedAt = null;
+  roundKeys.forEach((roundKey) => {
+    const doc = appState.bracketPredictions && appState.bracketPredictions[roundKey] && appState.bracketPredictions[roundKey][person];
+    if (!doc) return;
+    Object.assign(predictions, doc.predictions);
+    if (doc.submittedAt && (!latestSubmittedAt || doc.submittedAt > latestSubmittedAt)) {
+      latestSubmittedAt = doc.submittedAt;
+    }
+  });
+  return { person, predictions, submittedAt: latestSubmittedAt };
+}
+
+/**
+ * Load bracketPredictState.draft for (person, draftKey) if it isn't already
+ * loaded for that exact pair - avoids clobbering in-progress edits on every
+ * re-render (score edits call renderBracket() themselves) while still
+ * picking up the right draft whenever the person or the pending rounds change.
+ * @param {string} person
+ * @param {string} draftKey
+ */
+function ensureDraftLoaded(person, draftKey) {
+  const loadedFor = bracketPredictState.draftLoadedFor;
+  if (loadedFor && loadedFor.person === person && loadedFor.draftKey === draftKey) return;
+  bracketPredictState.draft = loadBracketDraft(draftKey, person);
+  bracketPredictState.draftLoadedFor = { person, draftKey };
 }
 
 function isPastBracketDeadline(descriptor) {
@@ -111,21 +190,29 @@ async function sha256Hex(text) {
 function renderBracketPredictionsView(container) {
   container.classList.add("bracket-predict-view");
 
-  const descriptor = getActiveRoundDescriptor();
+  const openGenericRounds = getOpenGenericRoundKeys();
+  const roundKeys = openGenericRounds.length > 0 ? openGenericRounds : [BRACKET_ROUND_KEY];
 
   const person = bracketPredictState.selectedPerson;
   if (!person) {
-    renderIdentityGate(container, descriptor);
+    renderIdentityGate(container, roundKeys);
     return;
   }
 
-  const lockedDoc = appState.bracketPredictions &&
-    appState.bracketPredictions[descriptor.roundKey] &&
-    appState.bracketPredictions[descriptor.roundKey][person];
-  if (lockedDoc) {
-    renderLockedView(container, person, lockedDoc);
+  const isLocked = (key) => !!(appState.bracketPredictions && appState.bracketPredictions[key] && appState.bracketPredictions[key][person]);
+  const pendingRoundKeys = roundKeys.filter((key) => !isLocked(key));
+
+  if (pendingRoundKeys.length === 0) {
+    // Everything currently open is already locked in - show it all together
+    // (e.g. both 3rd Place and Final once both have been submitted).
+    renderLockedView(container, person, buildMergedLockedDoc(roundKeys, person));
     return;
   }
+
+  // Predict everything still pending in one sitting - usually a single
+  // round, but 3rd Place and Final together once the semifinals are done.
+  const descriptor = buildCombinedDescriptor(pendingRoundKeys);
+  ensureDraftLoaded(person, descriptor.draftKey);
 
   if (isPastBracketDeadline(descriptor)) {
     renderClosedBanner(container, person, descriptor);
@@ -149,12 +236,17 @@ function renderSwitchPersonButton(container) {
   container.appendChild(btn);
 }
 
-function renderIdentityGate(container, descriptor) {
+function renderIdentityGate(container, roundKeys) {
   const people = getKnownPeople();
+  const labels = roundKeys.map((key) => key === BRACKET_ROUND_KEY ? "Round of 16" : GENERIC_ROUND_LABELS[key]);
+  const labelText = labels.length > 1
+    ? `${labels.slice(0, -1).join(", ")} and ${labels[labels.length - 1]}`
+    : labels[0];
+
   const wrap = document.createElement("div");
   wrap.className = "bracket-predict-gate";
   wrap.innerHTML = `
-    <p class="bracket-predict-intro">Pick your name to predict scores for the ${descriptor.label} matches.</p>
+    <p class="bracket-predict-intro">Pick your name to predict scores for the ${labelText} matches.</p>
     <select class="bracket-predict-person-select">
       <option value="">Select your name…</option>
       ${people.map((p) => `<option value="${p}">${p}</option>`).join("")}
@@ -164,7 +256,6 @@ function renderIdentityGate(container, descriptor) {
     const person = e.target.value;
     if (!person) return;
     bracketPredictState.selectedPerson = person;
-    bracketPredictState.draft = loadBracketDraft(descriptor.roundKey, person);
     bracketPredictState.pinInput = "";
     bracketPredictState.error = null;
     renderBracket();
@@ -229,7 +320,7 @@ function createPredictingContext(person, descriptor) {
       return !!match && (match.status === "completed" || match.status === "predicted");
     },
     onScoreChange(matchId, side, rawValue) {
-      handleScoreChange(person, matchId, side, rawValue, descriptor.roundKey);
+      handleScoreChange(person, matchId, side, rawValue, descriptor.draftKey);
     },
     needsPenaltyPick(matchId) {
       const pick = draft[matchId];
@@ -293,7 +384,7 @@ function createLockedContext(doc) {
   };
 }
 
-function handleScoreChange(person, matchId, side, rawValue, roundKey) {
+function handleScoreChange(person, matchId, side, rawValue, draftKey) {
   const parsed = rawValue === "" ? null : parseInt(rawValue, 10);
   const value = parsed === null || Number.isNaN(parsed) ? null : Math.max(0, Math.min(20, parsed));
 
@@ -320,7 +411,7 @@ function handleScoreChange(person, matchId, side, rawValue, roundKey) {
     bracketPredictState.penaltyModal = { matchId };
   }
 
-  saveBracketDraft(roundKey, person, bracketPredictState.draft);
+  saveBracketDraft(draftKey, person, bracketPredictState.draft);
   rerenderBracketPreservingScroll();
 }
 
@@ -412,7 +503,7 @@ function renderEditableView(container, person, descriptor) {
  * @param {HTMLElement} container
  * @param {string} person
  * @param {object} context - the editable predicting context (for getMatch/resolveBracketTeam)
- * @param {object} descriptor - the active round descriptor (for saving the draft under the right round key)
+ * @param {object} descriptor - the active (possibly combined) round descriptor, for saving the draft under the right key
  */
 function renderBracketPenaltyModal(container, person, context, descriptor) {
   const matchId = bracketPredictState.penaltyModal.matchId;
@@ -462,7 +553,7 @@ function renderBracketPenaltyModal(container, person, context, descriptor) {
     btn.addEventListener("click", () => {
       pick.predictedPenaltyWinner = btn.dataset.side;
       bracketPredictState.penaltyModal = null;
-      saveBracketDraft(descriptor.roundKey, person, bracketPredictState.draft);
+      saveBracketDraft(descriptor.draftKey, person, bracketPredictState.draft);
       rerenderBracketPreservingScroll();
     });
   });
@@ -500,44 +591,51 @@ async function submitBracketPredictions(person, descriptor) {
     return;
   }
 
-  const predictions = {};
-  descriptor.matchIds.forEach((matchId) => {
-    const pick = bracketPredictState.draft[matchId];
-    const entry = {
-      predictedHomeGoals: pick.predictedHomeGoals,
-      predictedAwayGoals: pick.predictedAwayGoals,
-    };
-    if (pick.predictedHomeGoals === pick.predictedAwayGoals && pick.predictedPenaltyWinner) {
-      entry.predictedPenaltyWinner = pick.predictedPenaltyWinner;
-    }
-    predictions[matchId] = entry;
-  });
-
   bracketPredictState.submitting = true;
   bracketPredictState.error = null;
   renderBracket();
 
-  // Legacy rounds (R32/R16) keep doc id = person, one dedicated collection
-  // each. Generic rounds (QF onward) share one collection, so the doc id
-  // needs the round baked in too ("qf_Kunal") - see bracketPredictionsByRound
-  // in firestore.rules.
-  const docId = descriptor.isGeneric ? `${descriptor.roundKey}_${person}` : person;
-
   try {
     const pinHash = await sha256Hex(pin);
-    await db.collection(descriptor.collection).doc(docId).set({
-      person,
-      pinHash,
-      round: descriptor.roundKey,
-      predictions,
-      submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
 
-    appState.bracketPredictions = appState.bracketPredictions || {};
-    appState.bracketPredictions[descriptor.roundKey] = appState.bracketPredictions[descriptor.roundKey] || {};
-    appState.bracketPredictions[descriptor.roundKey][person] = { person, predictions, submittedAt: new Date().toISOString() };
+    // One Firestore doc per underlying round even when this is a combined
+    // submission (e.g. 3rd Place + Final entered together) - each round
+    // keeps its own collection/doc-id/validation, exactly as if it had been
+    // submitted on its own. Legacy rounds (R32/R16) keep doc id = person;
+    // generic rounds (QF onward) share one collection, so the doc id needs
+    // the round baked in too ("qf_Kunal") - see bracketPredictionsByRound in
+    // firestore.rules.
+    for (const sub of descriptor.subDescriptors) {
+      const predictions = {};
+      sub.matchIds.forEach((matchId) => {
+        const pick = bracketPredictState.draft[matchId];
+        const entry = {
+          predictedHomeGoals: pick.predictedHomeGoals,
+          predictedAwayGoals: pick.predictedAwayGoals,
+        };
+        if (pick.predictedHomeGoals === pick.predictedAwayGoals && pick.predictedPenaltyWinner) {
+          entry.predictedPenaltyWinner = pick.predictedPenaltyWinner;
+        }
+        predictions[matchId] = entry;
+      });
+
+      const docId = sub.isGeneric ? `${sub.roundKey}_${person}` : person;
+      await db.collection(sub.collection).doc(docId).set({
+        person,
+        pinHash,
+        round: sub.roundKey,
+        predictions,
+        submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+      appState.bracketPredictions = appState.bracketPredictions || {};
+      appState.bracketPredictions[sub.roundKey] = appState.bracketPredictions[sub.roundKey] || {};
+      appState.bracketPredictions[sub.roundKey][person] = { person, predictions, submittedAt: new Date().toISOString() };
+      clearBracketDraft(sub.roundKey, person);
+    }
+
+    clearBracketDraft(descriptor.draftKey, person);
     mergeBracketPredictionsIntoPredictions();
-    clearBracketDraft(descriptor.roundKey, person);
     bracketPredictState.submitting = false;
     bracketPredictState.pinInput = "";
     renderBracket();
@@ -548,7 +646,10 @@ async function submitBracketPredictions(person, descriptor) {
     bracketPredictState.submitting = false;
     // Firestore security rules just deny the write - they don't say *why*,
     // so this covers the three possible causes together rather than
-    // guessing which one applies.
+    // guessing which one applies. If this was a combined submission and one
+    // round's write already succeeded before the failure, the next render
+    // picks that up from appState.bracketPredictions and only re-offers the
+    // round(s) still actually pending.
     bracketPredictState.error =
       `Submission rejected. Double-check your PIN, make sure you haven't already submitted, and that the ${descriptor.label} deadline (${formatDate(descriptor.deadline)}) hasn't passed.`;
     renderBracket();
